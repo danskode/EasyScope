@@ -1,0 +1,63 @@
+<mxfile host="drawio-plugin" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" modified="2024-11-25T12:23:43.050Z" version="22.1.22" etag="5LQLL3o-m6wlTl-6tH_c" type="embed">
+  <diagram name="Page-1" id="2cc2dc42-3aac-f2a9-1cec-7a8b7cbee084">
+    <mxGraphModel dx="1400" dy="854" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="7026571954dc6520-1" value="" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.browserWindow;rSize=0;strokeColor=#666666;mainText=,;recursiveResize=0;rounded=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12" parent="1" vertex="1">
+          <mxGeometry x="25" y="120" width="1136.25" height="820" as="geometry" />
+        </mxCell>
+        <mxCell id="7026571954dc6520-2" value="Page 1" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.anchor;fontSize=17;fontColor=#666666;align=left;" parent="7026571954dc6520-1" vertex="1">
+          <mxGeometry x="60" y="12" width="110" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="7026571954dc6520-3" value="https://www.easyscope.io/welcome" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.anchor;rSize=0;fontSize=17;fontColor=#666666;align=left;" parent="7026571954dc6520-1" vertex="1">
+          <mxGeometry x="130" y="60" width="250" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="7026571954dc6520-4" value="EasyScope" style="text;html=1;points=[];align=left;verticalAlign=top;spacingTop=-4;fontSize=30;fontFamily=Verdana" parent="7026571954dc6520-1" vertex="1">
+          <mxGeometry x="30" y="140" width="340" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="7026571954dc6520-15" value="" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.mockup.markup.line;strokeColor=#999999;rounded=0;labelBackgroundColor=none;fillColor=#ffffff;fontFamily=Verdana;fontSize=12;fontColor=#000000;" parent="7026571954dc6520-1" vertex="1">
+          <mxGeometry y="220" width="1050" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7026571954dc6520-21" value="" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.mockup.markup.line;strokeColor=#999999;rounded=0;labelBackgroundColor=none;fillColor=#ffffff;fontFamily=Verdana;fontSize=12;fontColor=#000000;" parent="7026571954dc6520-1" vertex="1">
+          <mxGeometry y="730" width="1050" height="20" as="geometry" />
+        </mxCell>
+        <UserObject label="EasyScope – project calculation tool – &lt;u&gt;Contact&lt;/u&gt; &amp;nbsp;%date{yyyy}%" placeholders="1" id="4pS1J_gDfBk0JrCyh1Ln-23">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" parent="7026571954dc6520-1" vertex="1">
+            <mxGeometry x="253.75" y="760" width="542.5" height="20" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="4pS1J_gDfBk0JrCyh1Ln-25" value="Welcome, Anders, you&#39;re logged in as admin!" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" parent="7026571954dc6520-1" vertex="1">
+          <mxGeometry x="460" y="285" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="4pS1J_gDfBk0JrCyh1Ln-39" value="" style="swimlane;shape=rect;strokeColor=#EEEEEE;fillColor=#ffffff;fontColor=#000000;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=0;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;shadow=1;" parent="7026571954dc6520-1" vertex="1">
+          <mxGeometry x="190" y="420" width="280" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="4pS1J_gDfBk0JrCyh1Ln-40" value="" style="text;strokeColor=none;align=left;verticalAlign=middle;spacing=16;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;shape=mxgraph.bootstrap.topButton;rSize=3;fillColor=none;fontSize=13;fontColor=inherit;" parent="4pS1J_gDfBk0JrCyh1Ln-39" vertex="1">
+          <mxGeometry width="280" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="4pS1J_gDfBk0JrCyh1Ln-41" value="Show all users" style="text;strokeColor=none;align=left;verticalAlign=middle;spacing=16;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;shape=mxgraph.bootstrap.topButton;rSize=3;fillColor=#EEEEEE;fontSize=13;fontColor=inherit;" parent="4pS1J_gDfBk0JrCyh1Ln-39" vertex="1">
+          <mxGeometry y="10" width="280" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="4pS1J_gDfBk0JrCyh1Ln-42" value="Add new user" style="text;strokeColor=none;align=left;verticalAlign=middle;spacing=16;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;shape=mxgraph.bootstrap.topButton;rSize=3;fillColor=none;fontSize=13;fontColor=inherit;" parent="4pS1J_gDfBk0JrCyh1Ln-39" vertex="1">
+          <mxGeometry y="60" width="280" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="3" value="Logout" style="rounded=1;fillColor=#f5f5f5;strokeColor=#666666;html=1;whiteSpace=wrap;fontColor=#333333;align=center;verticalAlign=middle;fontStyle=0;fontSize=12;sketch=0;" vertex="1" parent="7026571954dc6520-1">
+          <mxGeometry x="945" y="148.5" width="86" height="33" as="geometry" />
+        </mxCell>
+        <mxCell id="4pS1J_gDfBk0JrCyh1Ln-44" value="" style="swimlane;shape=rect;strokeColor=#EEEEEE;fillColor=none;fontColor=#000000;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=0;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="570" y="540" width="280" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="4pS1J_gDfBk0JrCyh1Ln-45" value="" style="text;strokeColor=none;align=left;verticalAlign=middle;spacing=16;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;shape=mxgraph.bootstrap.topButton;rSize=3;fillColor=none;fontSize=13;fontColor=inherit;" parent="4pS1J_gDfBk0JrCyh1Ln-44" vertex="1">
+          <mxGeometry width="280" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="4pS1J_gDfBk0JrCyh1Ln-46" value="Show all projects" style="text;strokeColor=none;align=left;verticalAlign=middle;spacing=16;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;shape=mxgraph.bootstrap.topButton;rSize=3;fillColor=#EEEEEE;fontSize=13;fontColor=inherit;" parent="4pS1J_gDfBk0JrCyh1Ln-44" vertex="1">
+          <mxGeometry y="10" width="280" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="4pS1J_gDfBk0JrCyh1Ln-57" value="Add new project" style="text;strokeColor=none;align=left;verticalAlign=middle;spacing=16;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;shape=mxgraph.bootstrap.topButton;rSize=3;fillColor=none;fontSize=13;fontColor=inherit;" parent="4pS1J_gDfBk0JrCyh1Ln-44" vertex="1">
+          <mxGeometry y="60" width="280" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
