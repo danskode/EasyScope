@@ -15,7 +15,8 @@ public class Account {
     }
 
     // Constructor for Accounts without password, might be useful in HttpSession? ...
-    public Account(String accountName, AccountType accountType) {
+    public Account(int id, String accountName, AccountType accountType) {
+        this.accountID = id;
         this.accountName = accountName;
         this.accountType = accountType;
     }
