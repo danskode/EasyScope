@@ -1,5 +1,6 @@
 package org.kea.easyscope.service;
 
+import org.kea.easyscope.model.Account;
 import org.kea.easyscope.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public String getAccountFromID(int id) {
+    public Account getAccountFromID(int id) {
         return  accountRepository.getAccountFromID(id);
     }
 }

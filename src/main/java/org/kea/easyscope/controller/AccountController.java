@@ -1,5 +1,6 @@
 package org.kea.easyscope.controller;
 
+import org.kea.easyscope.model.Account;
 import org.kea.easyscope.service.AccountService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +19,11 @@ public class AccountController {
     }
 
     @GetMapping("/{id}")
-    public String account(@PathVariable int id, Model model) {
-        accountService.getAccountFromID(id);
+    public string account(@PathVariable int id, Model model) {
+        Account account = accountService.getAccountFromID(id);
 
-        // ...
+        model.addAttribute("account", account);
+
+        return "account";
     }
 }

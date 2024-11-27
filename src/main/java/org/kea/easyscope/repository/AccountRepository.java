@@ -1,5 +1,6 @@
 package org.kea.easyscope.repository;
 
+import org.kea.easyscope.model.Account;
 import org.springframework.stereotype.Repository;
 
 @Repository
