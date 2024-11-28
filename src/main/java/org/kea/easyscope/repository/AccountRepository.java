@@ -18,7 +18,7 @@ public class AccountRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Account getAccountFromID(int id) {
+    public Account getAccountFromID() {
         String sql = "SELECT account_id, account_name, account_type FROM account WHERE id = ?";
 
         RowMapper<Account> rowMapper = new RowMapper<>() {

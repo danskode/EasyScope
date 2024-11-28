@@ -19,7 +19,7 @@ public class AccountController {
     }
 
     @GetMapping("/{id}")
-    public string account(@PathVariable int id, Model model) {
+    public String account(@PathVariable int id, Model model) {
         Account account = accountService.getAccountFromID(id);
 
         model.addAttribute("account", account);
