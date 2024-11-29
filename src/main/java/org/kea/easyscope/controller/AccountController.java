@@ -22,49 +22,33 @@ public class AccountController {
     public String showAccount(HttpSession session, Model model) {
         Account account = (Account) session.getAttribute("account");
         model.addAttribute("account", account);
+
+        System.out.println(account.toString());
         return "account";
     }*/
 
-    // This is an overview of the identified visitor's (session's) account page ...
     @GetMapping
     public String showAccount(HttpSession session, Model model) {
         Account account = (Account) session.getAttribute("account");
+
+        boolean canCreateProject = account != null &&
+                (account.getAccountType() == Account.AccountType.PROJECT_MANAGER ||
+                        account.getAccountType() == Account.AccountType.ADMIN);
+
+        // Add the account and the flag to the model
         model.addAttribute("account", account);
+        // denne er grunden til at jeg har udkommenteret din showAccount metode.
+        // hvis man ikke laver denne så er det besværligt i account.html
+        // hvor den skal tjekke om man er admin eller project manager, da det jo kun er dem der må oprette projekter.
+        model.addAttribute("canCreateProject", canCreateProject);
 
         System.out.println(account.toString());
         return "account";
     }
 
-    // This lets all users edit their own accounts (accountedit.html) ...
-    @GetMapping("/edit")
-    public String editAccount(HttpSession session, Model model) {
-        Account account = (Account) session.getAttribute("account");
-        model.addAttribute("account", account);
-        return "accountedit";
-    }
+    //
 
-    // Now, let's only let admins edit the accountType for all non-admin accounts ...
-//    @GetMapping("/edit")
-//    public String editAccountTypeOnNonAdmins(HttpSession session, Model model) {
-//        // Fetch the current user's account from the session
-//        Account account = (Account) session.getAttribute("account");
-//
-//        if (account != null && account.getAccountType() == Account.AccountType.ADMIN) {
-//            // Only if the logged-in user is an admin, we proceed with displaying non-admin accounts
-//            List<Account> otherAccounts = accountService.getAllNonAdminAccounts();
-//
-//            // Add the list of other non-admin accounts to the model
-//            model.addAttribute("otherAccounts", otherAccounts);
-//
-//            // Add the current admin account to the model
-//            model.addAttribute("account", account);
-//
-//            return "accountedit";  // Return the edit page
-//        } else {
-//            // If the user is not an admin, return the page without non-admin account options
-//            model.addAttribute("account", account);
-//            return "accountedit";  // Return the same edit page
-//        }
-//    }
+    // if not logged in show login form ...
+    // if logged in show user page ...
 
 }

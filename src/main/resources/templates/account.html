@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Account Details for <span th:text="${account.accountName}">Account Name</span></title>
+    <title>Account Details</title>
 </head>
 <body>
 <h1>Welcome, <span th:text="${account.accountName}">Account name</span>, you're logged in as <span th:text="${account.accountType.toString()}">role</span>!</h1>
@@ -19,8 +19,6 @@
     <a href="/projects/list">View projects</a>
 </div>
 
-<a href="/">Go back to start</a>
-<a href="/account/edit">Edit your account details</a>
 <a href="/logout">Logout</a>
 </body>
 </html>
