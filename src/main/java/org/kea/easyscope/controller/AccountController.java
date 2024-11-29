@@ -1,12 +1,11 @@
 package org.kea.easyscope.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.kea.easyscope.model.Account;
 import org.kea.easyscope.service.AccountService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/account")
@@ -18,12 +17,18 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @GetMapping("/{id}")
-    public String account(@PathVariable int id, Model model) {
-        Account account = accountService.getAccountFromID(id);
-
+    @GetMapping
+    public String showAccount(HttpSession session, Model model) {
+        Account account = (Account) session.getAttribute("account");
         model.addAttribute("account", account);
 
+        System.out.println(account.toString());
         return "account";
     }
+
+    //
+
+    // if not logged in show login form ...
+    // if logged in show user page ...
+
 }

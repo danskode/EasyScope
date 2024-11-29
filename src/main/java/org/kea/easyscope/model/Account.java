@@ -2,12 +2,12 @@ package org.kea.easyscope.model;
 
 public class Account {
 
-    int accountID;
+    private int accountID;
     private String accountName;
     private String accountPassword;
     private AccountType accountType;
 
-    // All parameters constructor, except id which is auto incremented in DB ...
+    // Almost all parameters constructor, except id which is auto incremented in DB ...
     public Account(String accountName, String accountPassword, AccountType accountType) {
         this.accountName = accountName;
         this.accountPassword = accountPassword;
@@ -18,6 +18,14 @@ public class Account {
     public Account(int id, String accountName, AccountType accountType) {
         this.accountID = id;
         this.accountName = accountName;
+        this.accountType = accountType;
+    }
+
+    // Constructor with password for login check ...
+    public Account(int accountID, String accountName, String accountPassword, AccountType accountType){
+        this.accountID = accountID;
+        this.accountName = accountName;
+        this.accountPassword = accountPassword;
         this.accountType = accountType;
     }
 

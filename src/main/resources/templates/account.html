@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Account Details</title>
+</head>
+<body>
+<h1>Welcome, <span th:text="${account.accountName}">Account name</span>, you're logged in as <span th:text="${account.accountType.toString()}">role</span>!</h1>
+
+<a href="/logout">Logout</a>
+</body>
+</html>

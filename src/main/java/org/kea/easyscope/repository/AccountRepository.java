@@ -18,8 +18,9 @@ public class AccountRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Account getAccountFromID() {
-        String sql = "SELECT account_id, account_name, account_type FROM account WHERE id = ?";
+    public Account getAccountFromID(int id) {
+
+        String sql = "SELECT account_id, account_name, account_type FROM accounts WHERE account_id=?";
 
         RowMapper<Account> rowMapper = new RowMapper<>() {
 
@@ -28,16 +29,42 @@ public class AccountRepository {
                 String accountName = rs.getString("account_name");
                 String accountTypeString = rs.getString("account_type");
 
-                Account.AccountType accountType = Account.AccountType.valueOf(accountTypeString);
+                // Print values to verify
+                System.out.println("accountID: " + accountID + " (Type: " + ((Object) accountID).getClass().getName() + ")");
+                System.out.println("accountName: " + accountName + " (Type: " + accountName.getClass().getName() + ")");
+                System.out.println("accountTypeString: " + accountTypeString + " (Type: " + accountTypeString.getClass().getName() + ")");
 
+                Account.AccountType accountType = Account.AccountType.valueOf(accountTypeString);
                 return new Account(accountID, accountName, accountType);
             }
         };
         try {
-            // Attempt to retrieve the account
-            return jdbcTemplate.queryForObject(sql, rowMapper, id);
+            Account account;
+            account = jdbcTemplate.queryForObject(sql, rowMapper, id);
+            return account;
         } catch (EmptyResultDataAccessException e) {
-            // No account found for the provided id, return null or throw custom exception
+            return null;
+        }
+    }
+
+    public Account getAccountFromAccountName(String accountName) {
+        String sql = "SELECT account_id, account_name, account_type, account_password FROM accounts WHERE account_name=?";
+        RowMapper<Account> rowMapper = new RowMapper<>() {
+            public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
+                int accountID = rs.getInt("account_id");
+                String accountName = rs.getString("account_name");
+                String accountTypeString = rs.getString("account_type");
+                String accountPassword = rs.getString("account_password");
+
+                Account.AccountType accountType = Account.AccountType.valueOf(accountTypeString);
+                return new Account(accountID, accountName, accountPassword, accountType);
+            }
+        };
+        try {
+            Account account;
+            account = jdbcTemplate.queryForObject(sql, rowMapper, accountName);
+            return account;
+        } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }

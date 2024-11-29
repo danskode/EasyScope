@@ -13,6 +13,10 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
+    public Account getAccountFromAccountName(String accountName){
+        return accountRepository.getAccountFromAccountName(accountName);
+    }
+
     public Account getAccountFromID(int id) {
         return  accountRepository.getAccountFromID(id);
     }
