@@ -17,16 +17,6 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    /* Se i account.html
-    @GetMapping
-    public String showAccount(HttpSession session, Model model) {
-        Account account = (Account) session.getAttribute("account");
-        model.addAttribute("account", account);
-
-        System.out.println(account.toString());
-        return "account";
-    }*/
-
     @GetMapping
     public String showAccount(HttpSession session, Model model) {
         Account account = (Account) session.getAttribute("account");
@@ -37,18 +27,9 @@ public class AccountController {
 
         // Add the account and the flag to the model
         model.addAttribute("account", account);
-        // denne er grunden til at jeg har udkommenteret din showAccount metode.
-        // hvis man ikke laver denne så er det besværligt i account.html
-        // hvor den skal tjekke om man er admin eller project manager, da det jo kun er dem der må oprette projekter.
         model.addAttribute("canCreateProject", canCreateProject);
 
         System.out.println(account.toString());
         return "account";
     }
-
-    //
-
-    // if not logged in show login form ...
-    // if logged in show user page ...
-
 }
