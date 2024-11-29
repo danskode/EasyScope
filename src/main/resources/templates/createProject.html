@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Project</title>
+</head>
+<body>
+<h1>Create a new successful project!</h1>
+
+
+<!-- Formularen til at oprette projekt -->
+<form action="/projects/create" method="POST">
+    <div>
+        <label for="projectName">Client name:</label>
+        <input type="text" id="projectName" name="projectName" required>
+    </div>
+
+    <div>
+        <label for="projectDescription">What is the project about?</label>
+        <textarea id="projectDescription" name="projectDescription" required></textarea>
+    </div>
+
+    <div>
+        <button type="submit">Create Project</button>
+        <a href="/account"><button type="button">Back to Account</button></a>
+    </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project list</title>
+</head>
+<body>
+
+<h1> These are your projects!</h1>
+
+  <table>
+      <thead>
+          <tr>
+            <th>Name of the project/client</th>
+            <th>Description</th>
+            <th>Status</th>
+          </tr>
+      </thead>
+
+    <tbody>
+      <tr th:each="project : ${projects}">
+         <td th:text="${project.projectName}">Project name</td>
+         <td th:text="${project.projectDescription}">Project description</td>
+          <td th:text="${project.isActive() ? 'Active' : 'Inactive'}">Status</td>
+      </tr>
+    </tbody>
+  </table>
+
+<a href="/account">Back to account</a>
+
+</body>
+</html>
