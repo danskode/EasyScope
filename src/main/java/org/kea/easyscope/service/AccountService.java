@@ -4,6 +4,8 @@ import org.kea.easyscope.model.Account;
 import org.kea.easyscope.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AccountService {
 
@@ -15,6 +17,10 @@ public class AccountService {
 
     public Account getAccountFromAccountName(String accountName){
         return accountRepository.getAccountFromAccountName(accountName);
+    }
+
+    public List<Account> getAllNonAdminAccounts(){
+        return accountRepository.getAllNonAdminAccounts();
     }
 
     public Account getAccountFromID(int id) {

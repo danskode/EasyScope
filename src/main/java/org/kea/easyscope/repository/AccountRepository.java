@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class AccountRepository {
@@ -28,11 +30,6 @@ public class AccountRepository {
                 int accountID = rs.getInt("account_id");
                 String accountName = rs.getString("account_name");
                 String accountTypeString = rs.getString("account_type");
-
-                // Print values to verify
-                System.out.println("accountID: " + accountID + " (Type: " + ((Object) accountID).getClass().getName() + ")");
-                System.out.println("accountName: " + accountName + " (Type: " + accountName.getClass().getName() + ")");
-                System.out.println("accountTypeString: " + accountTypeString + " (Type: " + accountTypeString.getClass().getName() + ")");
 
                 Account.AccountType accountType = Account.AccountType.valueOf(accountTypeString);
                 return new Account(accountID, accountName, accountType);
@@ -66,6 +63,27 @@ public class AccountRepository {
             return account;
         } catch (EmptyResultDataAccessException e) {
             return null;
+        }
+    }
+
+    public List<Account> getAllNonAdminAccounts() {
+
+        String sql = "SELECT account_id, account_name, account_type FROM accounts WHERE account_type != 'ADMIN'";
+        RowMapper<Account> rowMapper = new RowMapper<>() {
+            public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
+                int accountID = rs.getInt("account_id");
+                String accountName = rs.getString("account_name");
+                String accountTypeString = rs.getString("account_type");
+
+                Account.AccountType accountType = Account.AccountType.valueOf(accountTypeString);
+                return new Account(accountID, accountName, accountType);
+            }
+        };
+        try {
+            // Adds the account objects to a list automatically ...
+            return jdbcTemplate.query(sql, rowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>(); // Just an empty ArrayList ...
         }
     }
 }
