@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Administer accounts site wide</title>
+</head>
+<body>
+
+<h1>Edit all other non-admin accounts from here</h1>
+
+<div th:if="${accountType == 'ADMIN'}">
+  <form action="#" th:action="@{/adm/accounts/edit}" method="post">
+    <table>
+      <thead>
+      <tr>
+        <th>Account ID</th>
+        <th>Account Name</th>
+        <th>Account Type</th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- Loop through the 'otherAccounts' list -->
+      <tr th:each="account : ${otherAccounts}">
+        <td th:text="${account.accountID}"></td> <!-- Access account ID -->
+        <td th:text="${account.accountName}"></td> <!-- Access account Name -->
+        <td>
+          <!-- Dropdown to select new account type -->
+          <select th:name="'newAccountType_' + ${account.accountID}" required>
+            <option th:each="type : ${accountTypes}"
+                    th:value="${type}"
+                    th:text="${type.getAccountTypeName()}"
+                    th:selected="${type == account.accountType}">
+            </option>
+          </select>
+        </td>
+        <td>
+          <!-- Edit button -->
+          <button type="submit" name="accountId" th:value="${account.accountID}">Save</button>
+        </td>
+        <td>
+          <!-- Delete button (Optional for now) -->
+          <button type="button">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+
+</body>
+</html>

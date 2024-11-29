@@ -8,7 +8,6 @@ import java.util.List;
 
 @Service
 public class AccountService {
-
     private final AccountRepository accountRepository;
 
     public AccountService(AccountRepository accountRepository) {
@@ -19,11 +18,15 @@ public class AccountService {
         return accountRepository.getAccountFromAccountName(accountName);
     }
 
-    public List<Account> getAllNonAdminAccounts(){
-        return accountRepository.getAllNonAdminAccounts();
+    public List<Account> getAllNonAdminAccounts(int accountID){
+        return accountRepository.getAllNonAdminAccounts(accountID);
     }
 
     public Account getAccountFromID(int id) {
         return  accountRepository.getAccountFromID(id);
+    }
+
+    public void updateAccountType(int accountID, Account.AccountType newAccountType) {
+        accountRepository.updateAccountType(accountID, newAccountType);
     }
 }

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/account")
 public class AccountController {
@@ -29,7 +31,22 @@ public class AccountController {
         model.addAttribute("account", account);
         model.addAttribute("canCreateProject", canCreateProject);
 
-        System.out.println(account.toString());
         return "account";
+    }
+
+    @GetMapping("/edit")
+    public String showEditAccount(HttpSession session, Model model) {
+        Account account = (Account) session.getAttribute("account");
+
+        if (account != null && account.getAccountType() == Account.AccountType.ADMIN) {
+            List<Account> otherAccounts = accountService.getAllNonAdminAccounts(account.getAccountID());
+            model.addAttribute("otherAccounts", otherAccounts);
+            model.addAttribute("account", account);
+            model.addAttribute("accountType", account.getAccountType().name());  // Add accountType as a string
+            return "accountedit";
+        } else {
+            model.addAttribute("account", account);
+            return "accountedit";
+        }
     }
 }

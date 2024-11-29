@@ -66,9 +66,9 @@ public class AccountRepository {
         }
     }
 
-    public List<Account> getAllNonAdminAccounts() {
+    public List<Account> getAllNonAdminAccounts(int accountID) {
 
-        String sql = "SELECT account_id, account_name, account_type FROM accounts WHERE account_type != 'ADMIN'";
+        String sql = "SELECT account_id, account_name, account_type FROM accounts WHERE account_id != ? AND account_type != 'ADMIN'";
         RowMapper<Account> rowMapper = new RowMapper<>() {
             public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
                 int accountID = rs.getInt("account_id");
@@ -81,9 +81,14 @@ public class AccountRepository {
         };
         try {
             // Adds the account objects to a list automatically ...
-            return jdbcTemplate.query(sql, rowMapper);
+            return jdbcTemplate.query(sql, rowMapper, accountID);
         } catch (EmptyResultDataAccessException e) {
             return new ArrayList<>(); // Just an empty ArrayList ...
         }
+    }
+
+    public void updateAccountType(int accountID, Account.AccountType newAccountType) {
+        String sql = "UPDATE accounts SET account_type=? WHERE account_id=?";
+        jdbcTemplate.update(sql, newAccountType.name(), accountID);
     }
 }
