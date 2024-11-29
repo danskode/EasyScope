@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>EasyScope - get it done right the first time!</title>
+</head>
+<body>
+<div th:if="${account!=null}">
+    <h1>Welcome, <span th:text="${account.accountName}">!</span></h1>
+    <p>You're logged in as <span th:if="${account!=null}" th:text="${account.accountType}">... </span> </p>
+    <a href="/logout">Logout</a>
+</div>
+
+<div th:if="${account==null}">
+    <h1>Welcome to EasyScope, dont be a stranger!</h1>
+    <p>Please <a href="/login">log in</a> or contact an administrator to get an account to access.</p>
+</div>
+
+</body>
+</html>
