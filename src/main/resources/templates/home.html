@@ -6,7 +6,8 @@
 <body>
 <div th:if="${account!=null}">
     <h1>Welcome, <span th:text="${account.accountName}">!</span></h1>
-    <p>You're logged in as <span th:if="${account!=null}" th:text="${account.accountType}">... </span> </p>
+    <p>You're logged in as <span th:if="${account!=null}" th:text="${account.accountType.getAccountTypeName()}">... </span> </p>
+    <a href="/account">See your account details</a>
     <a href="/logout">Logout</a>
 </div>
 
@@ -14,6 +15,15 @@
     <h1>Welcome to EasyScope, dont be a stranger!</h1>
     <p>Please <a href="/login">log in</a> or contact an administrator to get an account to access.</p>
 </div>
+
+<div th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'admin'}">
+    <h2>Admin menu</h2>
+    <li><a href="/adm/accounts">All accounts</a></li>
+    <li><a href="/adm/projects">All projects</a></li>
+</div>
+
+
+
 
 </body>
 </html>

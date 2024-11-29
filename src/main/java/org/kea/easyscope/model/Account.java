@@ -7,6 +7,9 @@ public class Account {
     private String accountPassword;
     private AccountType accountType;
 
+    // A no args constructor ...
+    public Account() {}
+
     // Almost all parameters constructor, except id which is auto incremented in DB ...
     public Account(String accountName, String accountPassword, AccountType accountType) {
         this.accountName = accountName;
