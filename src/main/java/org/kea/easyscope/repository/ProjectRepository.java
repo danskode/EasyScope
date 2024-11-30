@@ -23,9 +23,9 @@ public class ProjectRepository {
     // method to get a list of projects for a specific accountID
     public List<Project> getProjectFromAccountID(int accountID) {
         String sql = "SELECT * FROM project WHERE account_id_fk = ?";
-        return jdbcTemplate.query(sql, new Object[]{accountID}, (rs, rowNum) -> { // LAMBDA
+        return jdbcTemplate.query(sql, new Object[]{accountID}, (rs, rowNum) -> { // LAMBDA....
             Project project = new Project();
-            project.setProjectID(rs.getInt("project_id")); // Sørg for at få project_id korrekt
+            project.setProjectID(rs.getInt("project_id"));
             project.setProjectName(rs.getString("project_name"));
             project.setProjectDescription(rs.getString("project_description"));
             project.setActive(rs.getBoolean("project_is_active"));
@@ -38,7 +38,7 @@ public class ProjectRepository {
     public Project getProjectByProjectID(int projectID) {
         String sql = "SELECT * FROM project WHERE project_id=?";
 
-        return jdbcTemplate.queryForObject(sql, new Object[]{projectID}, (rs, rowNum) -> { // LAMBDA
+        return jdbcTemplate.queryForObject(sql, new Object[]{projectID}, (rs, rowNum) -> { // LAMBDA..
             Project project = new Project();
             project.setProjectID(rs.getInt("project_id"));
             project.setProjectName(rs.getString("project_name"));

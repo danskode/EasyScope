@@ -29,19 +29,21 @@ public class ProjectController {
         Account account = (Account) session.getAttribute("account");
 
         if (account != null) {
-            // Check if the account type is either PROJECT_MANAGER or ADMIN
+            // check if the account type is either PROJECT_MANAGER or ADMIN
             if (account.getAccountType() == Account.AccountType.PROJECT_MANAGER ||
                     account.getAccountType() == Account.AccountType.ADMIN) {
-                model.addAttribute("account", account);  // Add account to the model for use in the view
-                return "createProject";  // Allow access to create project page
+                // add account to the model for use in the view
+                model.addAttribute("account", account);
+                return "createProject";
             } else {
                 // If the account is a TEAM_MEMBER, redirect to a different page
                 model.addAttribute("error", "You don't have permission to create a project.");
-                return "redirect:/projects/list";  // Redirect to project list
+                // redirect to project list
+                return "redirect:/projects/list";
             }
         } else {
             System.out.println("No account found in session! Redirecting to login.");
-            return "redirect:/login";  // Redirect to login page if no account found
+            return "redirect:/login";
         }
     }
 
@@ -51,7 +53,7 @@ public class ProjectController {
                                 @RequestParam String projectDescription,
                                 HttpSession session,
                                 Model model) {
-        // Retrieve the account from session
+        // retrieve the account from session
         Account account = (Account) session.getAttribute("account");
 
         if (account != null) {
@@ -65,19 +67,19 @@ public class ProjectController {
                 // set the accountID to associate this project with the account
                 newProject.setAccountID(account.getAccountID());
 
-                // Call the service to create the new project in the database
+                // call the service to create the new project in the db
                 projectService.createNewProject(newProject);
 
-                // Redirect to the list of projects after successful creation
+                // redirect to the list of projects after successful creation
                 return "redirect:/projects/list";
             } else {
-                // If the account is a TEAM_MEMBER, add an error message and redirect to project list
+                // if the account is a TEAM_MEMBER, add an error message and redirect to project list
                 model.addAttribute("error", "You don't have permission to create a project.");
                 return "redirect:/projects/list";  // Redirect to project list
             }
         } else {
             model.addAttribute("error", "Something went wrong...");
-            return "redirect:/login";  // Redirect to the login page if no account found in session
+            return "redirect:/login";  // redirect to the login page if no account found in session..
         }
     }
 
@@ -102,6 +104,7 @@ public class ProjectController {
         }
     }
 
+    // a GET method to show the update page
     @GetMapping("/update/{projectID}")
     public String showUpdateProjectForm(@PathVariable int projectID, Model model) {
         // Hent projektet baseret på projekt-ID
@@ -119,6 +122,7 @@ public class ProjectController {
         return "updateProject";  // Denne side indeholder formularen
     }
 
+    // a POST method to update a project
     @PostMapping("/update")
     public String updateProject(@RequestParam int projectID, // Unique identifier for the project
                                 @RequestParam String projectName,
@@ -126,23 +130,22 @@ public class ProjectController {
                                 @RequestParam(value = "isActive", defaultValue = "false") boolean isActive,
                                 HttpSession session,
                                 Model model) {
-        // Retrieve the logged-in account
+        // retrieve the logged-in account
         Account account = (Account) session.getAttribute("account");
 
-        // Check if the user is logged in
+        // check which account is logged in
         if (account == null) {
             model.addAttribute("error", "Please log in to update a project.");
             return "redirect:/login";
         }
 
-        // Check if the account has permission to edit projects
         if (account.getAccountType() != Account.AccountType.ADMIN &&
                 account.getAccountType() != Account.AccountType.PROJECT_MANAGER) {
             model.addAttribute("error", "You don't have permission to update projects.");
             return "redirect:/projects/list";
         }
 
-        // Retrieve the existing project from the database
+        // retrieces the existing project from the db
         Project existingProject = projectService.getProjectByProjectID(projectID);
 
         if (existingProject == null) {
@@ -150,15 +153,15 @@ public class ProjectController {
             return "redirect:/projects/list";
         }
 
-        // Update project attributes
+        // update project attributes
         existingProject.setProjectName(projectName);
         existingProject.setProjectDescription(projectDescription);
         existingProject.setActive(isActive);
 
-        // Save updated project back to the database
+        // save updated project back to the db
         projectService.updateProject(existingProject);
 
-        // Redirect to project list or details page
+        // redirect to list of projects
         return "redirect:/projects/list";
     }
 
