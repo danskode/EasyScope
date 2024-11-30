@@ -23,9 +23,17 @@ public class ProjectService {
         return projectRepository.getProjectFromAccountID(accountID);
     }
 
+    public Project getProjectByProjectID(int projectID) {
+        return projectRepository.getProjectByProjectID(projectID);
+    }
+
     // method to create a new project by calling the repository method
     public void createNewProject(Project project) {
         // calls the repository to insert the new project into the db
         projectRepository.createNewProject(project);
+    }
+
+    public void updateProject(Project project) {
+        projectRepository.updateProject(project);
     }
 }

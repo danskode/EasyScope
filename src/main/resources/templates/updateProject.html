@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Project</title>
+</head>
+<body>
+
+<h1>Update Project</h1>
+
+<form th:action="@{/projects/update}" method="post">
+    <input type="hidden" name="projectID" th:value="${project.projectID}" /> <!-- This is hidden. -->
+    <label for="projectName">Name of the project:</label>
+    <input type="text" id="projectName" name="projectName" th:value="${project.projectName}" required />
+
+    <label for="projectDescription">Description:</label>
+    <textarea id="projectDescription" name="projectDescription" required th:text="${project.projectDescription}"></textarea>
+
+    <label for="isActive">Is the project active?</label>
+    <input type="checkbox" id="isActive" name="isActive" th:checked="${project.isActive}" />
+
+    <button type="submit">Update Project</button>
+</form>
+
+<a href="/projects/list">Back to project list</a>
+
+</body>
+</html>

@@ -53,7 +53,6 @@ public class ProjectController {
                                 Model model) {
         // Retrieve the account from session
         Account account = (Account) session.getAttribute("account");
-        System.out.println("Account in session before checking: " + account);  // Debugging statement
 
         if (account != null) {
             // check if the account type is either PROJECT_MANAGER or ADMIN
@@ -102,6 +101,70 @@ public class ProjectController {
             return "redirect:/login";
         }
     }
+
+    @GetMapping("/update/{projectID}")
+    public String showUpdateProjectForm(@PathVariable int projectID, Model model) {
+        // Hent projektet baseret på projekt-ID
+        Project project = projectService.getProjectByProjectID(projectID);
+
+        // Hvis projektet ikke findes, send brugeren tilbage til projektlisten
+        if (project == null) {
+            model.addAttribute("error", "Project not found.");
+            return "redirect:/projects/list";
+        }
+
+        // Send projektet til formularen
+        model.addAttribute("project", project);
+
+        return "updateProject";  // Denne side indeholder formularen
+    }
+
+    @PostMapping("/update")
+    public String updateProject(@RequestParam int projectID, // Unique identifier for the project
+                                @RequestParam String projectName,
+                                @RequestParam String projectDescription,
+                                @RequestParam(value = "isActive", defaultValue = "false") boolean isActive,
+                                HttpSession session,
+                                Model model) {
+        // Retrieve the logged-in account
+        Account account = (Account) session.getAttribute("account");
+
+        // Check if the user is logged in
+        if (account == null) {
+            model.addAttribute("error", "Please log in to update a project.");
+            return "redirect:/login";
+        }
+
+        // Check if the account has permission to edit projects
+        if (account.getAccountType() != Account.AccountType.ADMIN &&
+                account.getAccountType() != Account.AccountType.PROJECT_MANAGER) {
+            model.addAttribute("error", "You don't have permission to update projects.");
+            return "redirect:/projects/list";
+        }
+
+        // Retrieve the existing project from the database
+        Project existingProject = projectService.getProjectByProjectID(projectID);
+
+        if (existingProject == null) {
+            model.addAttribute("error", "Project not found.");
+            return "redirect:/projects/list";
+        }
+
+        // Update project attributes
+        existingProject.setProjectName(projectName);
+        existingProject.setProjectDescription(projectDescription);
+        existingProject.setActive(isActive);
+
+        // Save updated project back to the database
+        projectService.updateProject(existingProject);
+
+        // Redirect to project list or details page
+        return "redirect:/projects/list";
+    }
+
+
+    // mark project as done
+
 
 
 

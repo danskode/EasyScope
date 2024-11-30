@@ -22,23 +22,31 @@ public class ProjectRepository {
 
     // method to get a list of projects for a specific accountID
     public List<Project> getProjectFromAccountID(int accountID) {
-        // SQL statement to select all projects for a specific accountID
-        String sql = "SELECT * FROM project WHERE account_id_fk=?";
+        String sql = "SELECT * FROM project WHERE account_id_fk = ?";
+        return jdbcTemplate.query(sql, new Object[]{accountID}, (rs, rowNum) -> { // LAMBDA
+            Project project = new Project();
+            project.setProjectID(rs.getInt("project_id")); // Sørg for at få project_id korrekt
+            project.setProjectName(rs.getString("project_name"));
+            project.setProjectDescription(rs.getString("project_description"));
+            project.setActive(rs.getBoolean("project_is_active"));
+            project.setAccountID(rs.getInt("account_id_fk"));
+            return project;
+        });
+    }
 
-        // RowMapper is used so we can map each row from the resultset to a project object
-        RowMapper<Project> rowMapper = new RowMapper<Project>() {
-            public Project mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return new Project(
-                        rs.getString("project_name"),
-                        rs.getString("project_description"),
-                        rs.getBoolean("project_is_active"),
-                        rs.getInt("account_id_fk")
-                );
-            }
-        }; // end of definition on how to map the rows from the database to project objects
+    // method to retrieve a project based on projectID
+    public Project getProjectByProjectID(int projectID) {
+        String sql = "SELECT * FROM project WHERE project_id=?";
 
-        // we send the request and a list of projects is returned
-        return jdbcTemplate.query(sql, rowMapper, accountID);
+        return jdbcTemplate.queryForObject(sql, new Object[]{projectID}, (rs, rowNum) -> { // LAMBDA
+            Project project = new Project();
+            project.setProjectID(rs.getInt("project_id"));
+            project.setProjectName(rs.getString("project_name"));
+            project.setProjectDescription(rs.getString("project_description"));
+            project.setActive(rs.getBoolean("project_is_active"));
+            project.setAccountID(rs.getInt("account_id_fk"));
+            return project;
+        });
     }
 
     // method to create a new project in the db
@@ -47,5 +55,11 @@ public class ProjectRepository {
         String sql = "INSERT INTO project (project_name, project_description, account_id_fk) VALUES (?, ?, ?)";
         // this executes the update by inserting values from the project object into the db
         jdbcTemplate.update(sql, project.getProjectName(), project.getProjectDescription(), project.getAccountID());
+    }
+
+    // method to update a project
+    public void updateProject(Project project) {
+        String sql = "UPDATE project SET project_name = ?, project_description = ?, project_is_active = ? WHERE project_id = ?";
+        jdbcTemplate.update(sql, project.getProjectName(), project.getProjectDescription(), project.isActive(), project.getProjectID());
     }
 }
