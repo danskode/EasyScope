@@ -33,6 +33,7 @@ public class ProjectService {
         projectRepository.createNewProject(project);
     }
 
+    // method to update an existing project by calling the repository method
     public void updateProject(Project project) {
         projectRepository.updateProject(project);
     }
