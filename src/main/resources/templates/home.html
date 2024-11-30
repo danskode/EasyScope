@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>EasyScope - get it done right the first time!</title>
 </head>
@@ -18,8 +18,10 @@
 
 <div th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'admin'}">
     <h2>Admin menu</h2>
-    <li><a href="/adm/accounts/list">All accounts</a></li>
-    <li><a href="/projects/list">All projects</a></li>
+    <ul>
+        <li><a href="/adm/accounts/list">All accounts</a></li>
+        <li><a href="/projects/list">All projects</a></li>
+    </ul>
 </div>
 
 </body>
