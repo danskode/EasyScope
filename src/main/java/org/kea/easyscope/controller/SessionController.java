@@ -33,7 +33,7 @@ public class SessionController {
     }
 
     // First we start a session and add an account to it ...
-    @GetMapping("/login")
+    @GetMapping(value = {"/login", "/login/"})
     public String showLogin(){
         // Show the login.html page ...
         return "login";
@@ -58,7 +58,7 @@ public class SessionController {
     }
 
     // And finally we want to be able to end the session / invalidate it ...
-    @GetMapping("/logout")
+    @GetMapping(value = {"/logout", "/logout/"})
     public String endSession(HttpSession session) {
         session.invalidate();
         // The identified visitor chose to end the session, so we send them back to the main page to start over or just to go for a coffee breake ...

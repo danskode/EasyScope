@@ -19,22 +19,28 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @GetMapping
+    @GetMapping(value = {"", "/"})
     public String showAccount(HttpSession session, Model model) {
         Account account = (Account) session.getAttribute("account");
 
-        boolean canCreateProject = account != null &&
-                (account.getAccountType() == Account.AccountType.PROJECT_MANAGER ||
-                        account.getAccountType() == Account.AccountType.ADMIN);
+        if(account != null) {
 
-        // Add the account and the flag to the model
-        model.addAttribute("account", account);
-        model.addAttribute("canCreateProject", canCreateProject);
+            boolean canCreateProject = account != null &&
+                    (account.getAccountType() == Account.AccountType.PROJECT_MANAGER ||
+                            account.getAccountType() == Account.AccountType.ADMIN);
 
-        return "account";
+            // Add the account and the flag to the model
+            model.addAttribute("account", account);
+            model.addAttribute("canCreateProject", canCreateProject);
+
+            return "account";
+
+        } else {
+            return "redirect:/login";
+        }
     }
 
-    @GetMapping("/edit")
+    @GetMapping(value = {"/edit", "/edit/"})
     public String showEditAccount(HttpSession session, Model model) {
         Account account = (Account) session.getAttribute("account");
 
