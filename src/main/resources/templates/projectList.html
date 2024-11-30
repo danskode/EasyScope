@@ -8,23 +8,27 @@
 
 <h1> These are your projects!</h1>
 
-  <table>
-      <thead>
-          <tr>
-            <th>Name of the project/client</th>
-            <th>Description</th>
-            <th>Status</th>
-          </tr>
-      </thead>
+<table>
+    <thead>
+    <tr>
+        <th>Name of the project/client</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th></th>
+    </tr>
+    </thead>
 
     <tbody>
-      <tr th:each="project : ${projects}">
-         <td th:text="${project.projectName}">Project name</td>
-         <td th:text="${project.projectDescription}">Project description</td>
-          <td th:text="${project.isActive() ? 'Active' : 'Inactive'}">Status</td>
-      </tr>
+    <tr th:each="project : ${projects}">
+        <td th:text="${project.projectName}">Project name</td>
+        <td th:text="${project.projectDescription}">Project description</td>
+        <td th:text="${project.isActive() ? 'Active' : 'Inactive'}">Status</td>
+        <td>
+            <a th:href="@{/projects/update/{projectID}(projectID=${project.projectID})}">Update</a>
+        </td>
+    </tr>
     </tbody>
-  </table>
+</table>
 
 <a href="/account">Back to account</a>
 
