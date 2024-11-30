@@ -18,12 +18,9 @@
 
 <div th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'admin'}">
     <h2>Admin menu</h2>
-    <li><a href="/adm/accounts">All accounts</a></li>
-    <li><a href="/adm/projects">All projects</a></li>
+    <li><a href="/adm/accounts/list">All accounts</a></li>
+    <li><a href="/projects/list">All projects</a></li>
 </div>
-
-
-
 
 </body>
 </html>
