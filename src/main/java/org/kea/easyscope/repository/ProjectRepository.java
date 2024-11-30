@@ -62,4 +62,5 @@ public class ProjectRepository {
         String sql = "UPDATE project SET project_name = ?, project_description = ?, project_is_active = ? WHERE project_id = ?";
         jdbcTemplate.update(sql, project.getProjectName(), project.getProjectDescription(), project.isActive(), project.getProjectID());
     }
+
 }

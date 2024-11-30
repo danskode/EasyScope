@@ -145,7 +145,7 @@ public class ProjectController {
             return "redirect:/projects/list";
         }
 
-        // retrieces the existing project from the db
+        // retrieves the existing project from the db
         Project existingProject = projectService.getProjectByProjectID(projectID);
 
         if (existingProject == null) {
@@ -167,6 +167,7 @@ public class ProjectController {
 
 
     // mark project as done
+
 
 
 
