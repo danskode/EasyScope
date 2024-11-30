@@ -23,20 +23,23 @@ public class AccountController {
     public String showAccount(HttpSession session, Model model) {
         Account account = (Account) session.getAttribute("account");
 
-        if(account != null) {
-
-            boolean canCreateProject = account != null &&
-                    (account.getAccountType() == Account.AccountType.PROJECT_MANAGER ||
-                            account.getAccountType() == Account.AccountType.ADMIN);
-
-            // Add the account and the flag to the model
-            model.addAttribute("account", account);
-            model.addAttribute("canCreateProject", canCreateProject);
-
-            return "account";
-
-        } else {
+        // Set a variable to check if account should have access to creat projects ...
+        if (account == null) {
             return "redirect:/login";
+        } else {
+
+            boolean canCreateProject = (account.getAccountType() == Account.AccountType.PROJECT_MANAGER) || (account.getAccountType() == Account.AccountType.ADMIN);
+            // First is for TRUE ...
+            if (account != null && canCreateProject) {
+                model.addAttribute("account", account);
+                model.addAttribute("canCreateProject", canCreateProject);
+                return "account";
+            }
+            // Then if FALSE ...
+            else {
+                model.addAttribute("account", account);
+                return "account";
+            }
         }
     }
 
@@ -50,9 +53,11 @@ public class AccountController {
             model.addAttribute("account", account);
             model.addAttribute("accountType", account.getAccountType().name());  // Add accountType as a string
             return "accountedit";
-        } else {
+        } else if (account != null && account.getAccountType() != Account.AccountType.ADMIN){
             model.addAttribute("account", account);
             return "accountedit";
+        } else {
+            return "redirect:/login";
         }
     }
 }
