@@ -33,7 +33,7 @@ public class AdminController {
             model.addAttribute("accountType", account.getAccountType().name());  // Add accountType as a string
             model.addAttribute("accountTypes", Account.AccountType.values());  // Add enum values for dropdown
             // set view ...
-            return "admaccounts";
+            return "admAccountList";
         } else {
 
             // If a visitor is not admin, send them home ...
@@ -47,16 +47,19 @@ public class AdminController {
         Account account = (Account) session.getAttribute("account");
         if (account != null && account.getAccountType() == Account.AccountType.ADMIN) {
             model.addAttribute("account", account);
-            model.addAttribute("accountType", Account.AccountType.ADMIN.name());
-            return "addAccount";
+            model.addAttribute("accountTypes", Account.AccountType.values());  // Add enum values for dropdown
+            return "admAddAccount";
         }
         else {
             return "redirect:/";
         }
     }
 
-    @PostMapping("/adm/accounts/add")
-    public String addAccount(@RequestParam("accountName") String accountName, @RequestParam("accountPassword") String accountPassword, @RequestParam("accountType") String accountType) {
+    @PostMapping("/accounts/add")
+    public String addAccount(@RequestParam("accountName") String accountName,
+                             @RequestParam("accountPassword") String accountPassword,
+                             @RequestParam("accountType") Account.AccountType accountType) {
+        // We send the parameters tp the service layer and then to the repository layer for Account ...
         accountService.addAccount(accountName, accountPassword, accountType);
         return "redirect:/adm/accounts/list/";
     }
@@ -70,13 +73,10 @@ public class AdminController {
         if (account != null && account.getAccountType() == Account.AccountType.ADMIN) {
             // Extract the correct newAccountType using the dynamic parameter name
             String newAccountTypeParam = allParams.get("newAccountType_" + accountID);
-
             // Parse the enum value from the string
             Account.AccountType newAccountType = Account.AccountType.valueOf(newAccountTypeParam);
-
             // Call the service to update the account type
             accountService.updateAccountType(accountID, newAccountType);
-
             // Redirect to accounts page after the update
             return "redirect:/adm/accounts/list";
         } else {

@@ -30,7 +30,7 @@ public class AccountService {
         accountRepository.updateAccountType(accountID, newAccountType);
     }
 
-    public void addAccount(String accountName, String accountPassword, String accountType) {
+    public void addAccount(String accountName, String accountPassword, Account.AccountType accountType) {
         accountRepository.addAccount(accountName, accountPassword, accountType);
     }
 }

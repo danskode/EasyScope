@@ -5,15 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Accounts - Admin</title>
-
-  <!-- Link to the external CSS file -->
   <link rel="stylesheet" href="/style.css">
 
 </head>
 
 <body>
 
-<h1>Edit all other non-admin accounts from here</h1>
+<h1>Change account types for non-admins</h1>
 
 <div th:if="${accountType == 'ADMIN'}">
   <form action="#" th:action="@{/adm/accounts/list/edit}" method="post" class="form-container">
@@ -48,48 +46,18 @@
       </div>
 
       <div class="form-group">
-        <!-- Delete button (Optional for now) -->
-        <button type="button">Delete</button>
+        <!-- Delete button not programmed yet ... -->
+        <!-- <button type="button">Delete</button> -->
       </div>
 
-      <hr />
     </div>
 
   </form>
 </div>
-
 <div>
-  <form action="#" th:action="@{/adm/accounts/add}" method="post" class="form-container">
-
-    <div class="form-row">
-
-      <div class="form-group">
-        <label for="accountName">Add account name</label>
-        <input type="text" id="accountName" name="accountName" value="Account name" />
-      </div>
-
-      <div class="form-group">
-        <label for="accountPassword">Add account password</label>
-        <input type="password" id="accountPassword" name="accountPassword" value="Account password" />
-      </div>
-
-      <div class="form-group">
-        <label for="retypeAccountPassword">Retype account password</label>
-        <input type="password" id="retypeAccountPassword" name="retypeAccountPassword" value="password again" />
-      </div>
-
-      <div class="form-group">
-        <label for="accountType">Add account type</label>
-        <input type="text" id="accountType" name="accountType" value="Account type" />
-      </div>
-
-      <div class="form-group">
-        <button type="submit" name="test">Save new account</button>
-      </div>
-
-    </div>
-
-  </form>
+  <ul>
+    <li><a href="/adm/accounts/add">Add new account</a></li>
+  </ul>
 </div>
 
 </body>
