@@ -36,7 +36,7 @@ public class SubProjectController {
             // sendt subProjects and project to the formular
             model.addAttribute("subProjects", subProjects);
             model.addAttribute("project", project);
-            return "subProjectList";
+            return "subprojectList";
         } else {
             return "redirect:/projectList";
         }
@@ -55,7 +55,7 @@ public class SubProjectController {
         model.addAttribute("project", project);
 
         model.addAttribute("subProject", new SubProject());
-        return "createSubProject";
+        return "createSubproject";
     }
 
 
