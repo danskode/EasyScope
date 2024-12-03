@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sub Projects</title>
+</head>
+<body>
+<h1><span th:text="${project.projectName}"></span></h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Sub project</th>
+    <th>Description</th>
+    <th>Deadline</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="subProject : ${subProjects}">
+    <td th:text="${subProject.subProjectName}"></td>
+    <td th:text="${subProject.subProjectDescription}"></td>
+    <td th:text="${#temporals.format(subProject.subProjectDeadline, 'dd/MM/yyyy')}">Deadline</td>  </tr>
+  </tbody>
+</table>
+
+<br>
+<a th:href="@{/projects/subprojects/create/{projectID}(projectID=${project.projectID})}">
+  <button>Add Sub Project</button>
+</a>
+
+<br>
+<br>
+<a href="/projects/list">Back to client list</a>
+</body>
+</html>

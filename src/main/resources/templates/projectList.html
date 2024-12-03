@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Project list</title>
+    <title>Project List</title>
 </head>
 <body>
 
-<h1> These are your clients!</h1>
+<h1>These are your clients!</h1>
 
 <table>
     <thead>
@@ -25,6 +25,7 @@
         <td th:text="${project.isActive() ? 'Active' : 'Inactive'}">Status</td>
         <td>
             <a th:href="@{/projects/update/{projectID}(projectID=${project.projectID})}">Update</a>
+            <a th:href="@{/projects/subprojects/{projectID}(projectID=${project.projectID})}">View Sub Projects</a>
         </td>
     </tr>
     </tbody>
