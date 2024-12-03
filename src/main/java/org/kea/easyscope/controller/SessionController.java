@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("")
@@ -41,7 +42,7 @@ public class SessionController {
 
     // Then we add the postmapping method to manage the input from the form on login.html ...
     @PostMapping("/login")
-    public String loginLogic(@RequestParam String accountName, @RequestParam String accountPassword, HttpSession session, Model model){
+    public String loginLogic(@RequestParam String accountName, @RequestParam String accountPassword, HttpSession session, Model model, RedirectAttributes redirectAttributes){
         // First we find an account in our table ...
         Account account = accountService.getAccountFromAccountName(accountName);
         // And then we return it as an account object to be checked against null, name and password provided by visitor ...
@@ -51,7 +52,8 @@ public class SessionController {
             // And we send the identified visitor to their account page (account.html) ...
             return "redirect:";
         } else {
-            model.addAttribute("error", "Invalid account or password");
+            redirectAttributes.addFlashAttribute("error", "Invalid account or password");
+            //model.addAttribute("error", "Invalid account or password");
             // The visitor failed to provide the right credentials, so they have to try again. Back to start ... or almost ... back to login.html ...
             return "redirect:/login";
         }

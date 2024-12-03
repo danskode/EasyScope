@@ -2,26 +2,55 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>EasyScope - get it done right the first time!</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<div th:if="${account!=null}">
-    <h1>Welcome, <span th:text="${account.accountName}">!</span></h1>
-    <p>You're logged in as <span th:if="${account!=null}" th:text="${account.accountType.getAccountTypeName()}">... </span> </p>
-    <a href="/account">See your account details</a>
-    <a href="/logout">Logout</a>
-</div>
+<header>
+    <h1>EasyScope - time2track ...</h1>
+</header>
 
-<div th:if="${account==null}">
-    <h1>Welcome to EasyScope, dont be a stranger!</h1>
-    <p>Please <a href="/login">log in</a> or contact an administrator to get an account to access.</p>
-</div>
+<div class="container">
+    <div class="grid-container">
+        <!-- Welcome Section (for logged-in users) -->
+        <div class="grid-item" th:if="${account != null}">
+            <h1>Welcome, <span th:text="${account.accountName}">!</span></h1>
+            <p>You're logged in as <span th:if="${account != null}" th:text="${account.accountType.getAccountTypeName()}">...</span></p>
+            <a href="/account">See your account details</a>
+            <a href="/logout">Logout</a>
+        </div>
 
-<div th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'admin'}">
-    <h2>Admin menu</h2>
-    <ul>
-        <li><a href="/adm/accounts/list">All accounts</a></li>
-        <li><a href="/projects/list">All projects</a></li>
-    </ul>
+        <!-- Login Form Section (for non-logged-in users) -->
+        <div class="grid-item login-section" th:if="${account == null}">
+            <div class="login-form">
+                <p><b>Don't be a stranger.</b> You are not logged. If you don't have an account please contact an administrator.</p>
+                <form action="#" th:action="@{/login}" method="post">
+                    <div>
+                        <label for="accountName">Account Name:</label>
+                        <input type="text" id="accountName" name="accountName" required />
+                    </div>
+                    <div>
+                        <label for="accountPassword">Password:</label>
+                        <input type="password" id="accountPassword" name="accountPassword" required />
+                    </div>
+                    <div>
+                        <button type="submit">Login</button>
+                    </div>
+                    <div th:if="${errorMessage}" class="error-message">
+                        <p th:text="${errorMessage}"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Admin Section (for logged-in admin users) -->
+        <div class="grid-item" th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'admin'}">
+            <h2>Admin menu</h2>
+            <ul>
+                <li><a href="/adm/accounts/list">All accounts</a></li>
+                <li><a href="/projects/list">All projects</a></li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 </body>

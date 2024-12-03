@@ -45,7 +45,7 @@ public class AdminController {
         }
     }
 
-    @PostMapping(value = {"/accounts/edit", "/accounts/edit/"})
+    @PostMapping(value = {"/accounts/list/edit", "/accounts/list/edit/"})
     public String admEditAccount(@RequestParam("accountId") int accountID,
                                  @RequestParam Map<String, String> allParams, // Capture all parameters
                                  HttpSession session, Model model) {
@@ -62,7 +62,7 @@ public class AdminController {
             accountService.updateAccountType(accountID, newAccountType);
 
             // Redirect to accounts page after the update
-            return "redirect:/adm/accounts";
+            return "redirect:/adm/accounts/list";
         } else {
             model.addAttribute("account", account);
             return "redirect:/";
