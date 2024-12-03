@@ -10,14 +10,15 @@ import java.util.List;
 @Service
 public class CalcService {
 
-    ProjectService projectService;
-    SubProjectService subProjectService;
-//    TastService taskService;
-
-    public CalcService(ProjectService projectService,SubProjectService subProjectServicerojectService) {
-        this.projectService = projectService;
-        this.subProjectService = subProjectServicerojectService;
-    }
+//    ProjectService projectService;
+//    SubProjectService subProjectService;
+//    TaskService taskService;
+//
+//    public CalcService(ProjectService projectService,SubProjectService subProjectService, TaskService taskService) {
+//        this.projectService = projectService;
+//        this.subProjectService = subProjectService;
+//        this.taskService = taskService;
+//    }
 
     // Methode to sum up total of estimated hours for all tasks  belonging to a subproject ...
 
@@ -41,9 +42,5 @@ public class CalcService {
 //        LocalDate deadline = project.
 //
 //        // int daysTillDeadline ...
-
-
-
-    }
 
 }
