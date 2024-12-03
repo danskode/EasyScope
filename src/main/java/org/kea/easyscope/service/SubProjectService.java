@@ -19,7 +19,17 @@ public class SubProjectService {
         return subProjectRepository.getSubProjectsByProjectID(projectID);
     }
 
+    public SubProject getSubProjectBySubProjectID(int subProjectID) {
+        return subProjectRepository.getSubProjectBySubProjectID(subProjectID);
+    }
+
     public void createNewSubProject(SubProject subProject) {
         subProjectRepository.createNewSubProject(subProject);
     }
+
+    public void updateSubProject(SubProject subProject) {
+        subProjectRepository.updateSubProject(subProject);
+    }
+
 }
+

@@ -1,5 +1,7 @@
 package org.kea.easyscope.controller;
 
+import jakarta.servlet.http.HttpSession;
+import org.kea.easyscope.model.Account;
 import org.kea.easyscope.model.Project;
 import org.kea.easyscope.model.SubProject;
 import org.kea.easyscope.service.ProjectService;
@@ -8,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -59,7 +63,7 @@ public class SubProjectController {
     }
 
 
-    // a POST method to create a sub project
+    // a POST method to create a subproject
     @PostMapping("/create")
     public String createSubProject(@ModelAttribute SubProject subproject, @RequestParam int projectID, Model model) {
         Project project = projectService.getProjectByProjectID(projectID);
@@ -78,5 +82,67 @@ public class SubProjectController {
             return "redirect:/projectList";
         }
     }
+
+    @GetMapping("/update/{subProjectID}")
+    public String showUpdateSubProjectPage(@PathVariable int subProjectID, Model model) {
+        SubProject subProject = subProjectService.getSubProjectBySubProjectID(subProjectID);
+
+        if (subProject == null) {
+            model.addAttribute("error", "Subproject not found.");
+            return "redirect:/projectList";
+        }
+
+        model.addAttribute("subProject", subProject);
+        return "updateSubProject"; // Navnet på din HTML-side
+    }
+
+    @PostMapping("/update")
+    public String updateSubProject(@RequestParam int subProjectID,
+                                   @RequestParam String subProjectName,
+                                   @RequestParam String subProjectDescription,
+                                   @RequestParam LocalDate subProjectDeadline,
+                                   @RequestParam(value = "isActive", defaultValue = "false") boolean isActive,
+                                   HttpSession session,
+                                   Model model) {
+        // retrieve the logged-in account
+        Account account = (Account) session.getAttribute("account");
+
+        // Check if the user is logged in
+        if (account == null) {
+            model.addAttribute("error", "Please log in to update a subproject.");
+            return "redirect:/login";
+        }
+
+        // Check if the user has the right permissions -
+        // this is just to make sure that teamMembers don't have access to this option
+        if (account.getAccountType() != Account.AccountType.ADMIN &&
+                account.getAccountType() != Account.AccountType.PROJECT_MANAGER) {
+            model.addAttribute("error", "You don't have permission to update subprojects.");
+            return "redirect:/projects/list";
+        }
+
+        // retrieve the existing subproject from the database
+        SubProject existingSubProject = subProjectService.getSubProjectBySubProjectID(subProjectID);
+
+        if (existingSubProject == null) {
+            model.addAttribute("error", "Subproject not found.");
+            return "redirect:/projects/list";
+        }
+
+        // Update subproject attributes
+        existingSubProject.setSubProjectName(subProjectName);
+        existingSubProject.setSubProjectDescription(subProjectDescription);
+        existingSubProject.setSubProjectDeadline(subProjectDeadline);
+        existingSubProject.setActive(isActive);
+
+        // Save the updated subproject back to the database
+        subProjectService.updateSubProject(existingSubProject);
+
+        // This means that you will be redirected to this url /projects/subprojects/{projectID}.
+        return "redirect:/projects/subprojects/" + existingSubProject.getProjectID();
+    }
+
+
+
 
 }

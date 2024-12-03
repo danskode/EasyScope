@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Subproject</title>
+</head>
+<body>
+
+<h1>Update Subproject</h1>
+
+<form th:action="@{/projects/subprojects/update}" method="post">
+    <input type="hidden" name="subProjectID" th:value="${subProject.subProjectID}" /> <!-- This is a hidden field-->
+
+    <label for="subProjectName">Name of the Subproject:</label>
+    <input type="text" id="subProjectName" name="subProjectName" th:value="${subProject.subProjectName}" required />
+
+    <label for="subProjectDescription">Description:</label>
+    <textarea id="subProjectDescription" name="subProjectDescription" required th:text="${subProject.subProjectDescription}"></textarea>
+
+    <label for="subProjectDeadline">Deadline:</label>
+    <input type="date" id="subProjectDeadline" name="subProjectDeadline" th:value="${subProject.subProjectDeadline}" required />
+
+    <label for="isActive">Is the subproject active?</label>
+    <input type="checkbox" id="isActive" name="isActive" th:checked="${subProject.active}" />
+
+    <button type="submit">Update Subproject</button>
+</form>
+
+<a th:href="@{/projects/subprojects/{projectID}(projectID=${subProject.projectID})}">Back to Subproject list</a>
+
+</body>
+</html>
