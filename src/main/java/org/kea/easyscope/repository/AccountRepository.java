@@ -93,8 +93,8 @@ public class AccountRepository {
         jdbcTemplate.update(sql, newAccountType.name(), accountID);
     }
 
-    public void addAccount(String accountName, String accountPassword, String accountType) {
+    public void addAccount(String accountName, String accountPassword, Account.AccountType accountType) {
         String sql = "INSERT INTO accounts (account_name, account_password, account_type) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, accountName, accountPassword, accountType);
+        jdbcTemplate.update(sql, accountName, accountPassword, accountType.name());
     }
 }

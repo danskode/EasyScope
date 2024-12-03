@@ -14,19 +14,34 @@
   </div>
 
   <div>
-    <label for="accountPassword">Password?</label>
+    <label for="accountPassword">Password: </label>
     <input type="password" id="accountPassword" name="accountPassword" required></input>
   </div>
-  
-  <option>
-    <select name="" id=""></select>
-  </option>
+
+  <div class="form-group">
+    <label for="accountType">Account type: </label>
+    <select name="accountType" id="accountType" required>
+      <option th:each="type : ${accountTypes}"
+              th:value="${type.name()}"
+              th:text="${type.getAccountTypeName()}"
+      </option>
+    </select>
+  </div>
 
   <div>
     <button type="submit">Add new account</button>
     <a href="/"><button type="button">Back</button></a>
   </div>
 </form>
+
+<div>
+  <ul>
+    <li><a href="/adm/accounts/list">All accounts</a></li>
+    <li><a href="/">Main</a></li>
+    <li><a href="/projects/list">All projects</a></li>
+    <li><a href="/logout">Log out</a></li>
+  </ul>
+</div>
 
 </body>
 </html>
