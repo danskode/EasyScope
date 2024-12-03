@@ -105,6 +105,7 @@ public class ProjectController {
     }
 
     // a GET method to show the update page
+    // evt gøre brug af session i stedet for pathvariable????
     @GetMapping("/update/{projectID}")
     public String showUpdateProjectForm(@PathVariable int projectID, Model model) {
         // Hent projektet baseret på projekt-ID
