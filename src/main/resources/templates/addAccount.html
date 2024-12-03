@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new account</title>
+</head>
+<body>
+<h1>Add new account</h1>
+<!-- Form to add new account to system ... -->
+<form action="/adm/accounts/add" method="POST">
+  <div>
+    <label for="accountName">Account holder's username:</label>
+    <input type="text" id="accountName" name="accountName" required>
+  </div>
+
+  <div>
+    <label for="accountPassword">Password?</label>
+    <input type="password" id="accountPassword" name="accountPassword" required></input>
+  </div>
+  
+  <option>
+    <select name="" id=""></select>
+  </option>
+
+  <div>
+    <button type="submit">Add new account</button>
+    <a href="/"><button type="button">Back</button></a>
+  </div>
+</form>
+
+</body>
+</html>

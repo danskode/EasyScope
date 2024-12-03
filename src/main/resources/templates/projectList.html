@@ -25,7 +25,7 @@
         <td th:text="${project.isActive() ? 'Active' : 'Inactive'}">Status</td>
         <td>
             <a th:href="@{/projects/update/{projectID}(projectID=${project.projectID})}">Update</a>
-            <a th:href="@{/projects/subprojects/{projectID}(projectID=${project.projectID})}">View Sub Projects</a>
+            <a th:href="@{/projects/subprojects/{projectID}(projectID=${project.projectID})}">View Subprojects</a>
         </td>
     </tr>
     </tbody>

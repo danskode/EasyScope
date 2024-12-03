@@ -16,7 +16,7 @@ public class SubProjectRepository {
     }
 
     public List<SubProject> getSubProjectsByProjectID(int projectID) {
-        String sql = "SELECT * FROM sub_project WHERE sub_project_id = ?";
+        String sql = "SELECT * FROM sub_project WHERE project_id_fk = ?";
 
         return jdbcTemplate.query(sql, new Object[]{projectID}, (rs, rowNum) -> {
             SubProject subProject = new SubProject();
@@ -35,7 +35,7 @@ public class SubProjectRepository {
     // method to create a new sub project in the db
     public void createNewSubProject(SubProject subProject) {
         // SQL statement to insert a new sub project into the db
-        String sql = "INSERT INTO sub_project VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO sub_project (sub_project_name, sub_project_description, sub_project_deadline, project_id_fk)VALUES (?, ?, ?, ?)";
         // this executes the update by inserting values from the sub project object into the db
         jdbcTemplate.update(sql, subProject.getSubProjectName(), subProject.getSubProjectDescription(), subProject.getSubProjectDeadline(), subProject.getProjectID());
     }

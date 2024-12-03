@@ -5,10 +5,7 @@ import org.kea.easyscope.model.Account;
 import org.kea.easyscope.service.AccountService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -43,6 +40,25 @@ public class AdminController {
             model.addAttribute("account", account);
             return "redirect:/";
         }
+    }
+
+    @GetMapping(value = {"accounts/add","accounts/add/" })
+    public String addAccount(HttpSession session, Model model) {
+        Account account = (Account) session.getAttribute("account");
+        if (account != null && account.getAccountType() == Account.AccountType.ADMIN) {
+            model.addAttribute("account", account);
+            model.addAttribute("accountType", Account.AccountType.ADMIN.name());
+            return "addAccount";
+        }
+        else {
+            return "redirect:/";
+        }
+    }
+
+    @PostMapping("/adm/accounts/add")
+    public String addAccount(@RequestParam("accountName") String accountName, @RequestParam("accountPassword") String accountPassword, @RequestParam("accountType") String accountType) {
+        accountService.addAccount(accountName, accountPassword, accountType);
+        return "redirect:/adm/accounts/list/";
     }
 
     @PostMapping(value = {"/accounts/list/edit", "/accounts/list/edit/"})

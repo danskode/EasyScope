@@ -92,4 +92,9 @@ public class AccountRepository {
         String sql = "UPDATE accounts SET account_type=? WHERE account_id=?";
         jdbcTemplate.update(sql, newAccountType.name(), accountID);
     }
+
+    public void addAccount(String accountName, String accountPassword, String accountType) {
+        String sql = "INSERT INTO accounts (account_name, account_password, account_type) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, accountName, accountPassword, accountType);
+    }
 }

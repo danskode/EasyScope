@@ -105,22 +105,19 @@ public class ProjectController {
     }
 
     // a GET method to show the update page
-    // evt gøre brug af session i stedet for pathvariable????
     @GetMapping("/update/{projectID}")
     public String showUpdateProjectForm(@PathVariable int projectID, Model model) {
-        // Hent projektet baseret på projekt-ID
+        // retrieve a project based on project ID
         Project project = projectService.getProjectByProjectID(projectID);
 
-        // Hvis projektet ikke findes, send brugeren tilbage til projektlisten
         if (project == null) {
             model.addAttribute("error", "Project not found.");
             return "redirect:/projects/list";
         }
 
-        // Send projektet til formularen
         model.addAttribute("project", project);
 
-        return "updateProject";  // Denne side indeholder formularen
+        return "updateProject";
     }
 
     // a POST method to update a project

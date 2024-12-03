@@ -29,4 +29,8 @@ public class AccountService {
     public void updateAccountType(int accountID, Account.AccountType newAccountType) {
         accountRepository.updateAccountType(accountID, newAccountType);
     }
+
+    public void addAccount(String accountName, String accountPassword, String accountType) {
+        accountRepository.addAccount(accountName, accountPassword, accountType);
+    }
 }

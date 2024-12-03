@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sub Projects</title>
+  <title>Subprojects</title>
 </head>
 <body>
 <h1><span th:text="${project.projectName}"></span></h1>
@@ -10,7 +10,7 @@
 <table>
   <thead>
   <tr>
-    <th>Sub project</th>
+    <th>Subproject</th>
     <th>Description</th>
     <th>Deadline</th>
   </tr>
@@ -25,7 +25,7 @@
 
 <br>
 <a th:href="@{/projects/subprojects/create/{projectID}(projectID=${project.projectID})}">
-  <button>Add Sub Project</button>
+  <button>Add Subproject</button>
 </a>
 
 <br>
