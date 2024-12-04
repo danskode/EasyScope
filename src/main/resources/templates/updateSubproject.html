@@ -20,8 +20,8 @@
     <label for="subProjectDeadline">Deadline:</label>
     <input type="date" id="subProjectDeadline" name="subProjectDeadline" th:value="${subProject.subProjectDeadline}" required />
 
-    <label for="isActive">Is the subproject active?</label>
-    <input type="checkbox" id="isActive" name="isActive" th:checked="${subProject.active}" />
+    <label for="isFinished">Finished?</label>
+    <input type="checkbox" id="isFinished" name="isFinished" th:checked="${subProject.isFinished()}" />
 
     <button type="submit">Update Subproject</button>
 </form>

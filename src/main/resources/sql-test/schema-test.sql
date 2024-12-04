@@ -10,7 +10,7 @@ create table project (
                          project_id INT NOT NULL AUTO_INCREMENT,
                          project_name VARCHAR(25) NOT NULL,
                          project_description VARCHAR(255),
-                         project_is_active TINYINT,
+                         project_is_finished TINYINT,
                          account_id_fk INT,
                          PRIMARY KEY (project_id),
                          FOREIGN KEY (account_id_fk) REFERENCES accounts(account_id)
@@ -21,7 +21,7 @@ create table sub_project (
                              sub_project_id INT NOT NULL AUTO_INCREMENT,
                              sub_project_name VARCHAR(25),
                              sub_project_description VARCHAR(255),
-                             sub_project_is_active TINYINT,
+                             sub_project_is_finished TINYINT,
                              sub_project_deadline DATE,
                              project_id_fk INT,
                              PRIMARY KEY (sub_project_id),
@@ -32,7 +32,7 @@ create table task (
                       task_id INT NOT NULL AUTO_INCREMENT,
                       task_name VARCHAR(25),
                       task_description VARCHAR(255),
-                      task_is_active TINYINT,
+                      task_is_finished TINYINT,
                       sub_project_id_fk INT,
                       PRIMARY KEY (task_id),
                       FOREIGN KEY (sub_project_id_fk) REFERENCES sub_project (sub_project_id)

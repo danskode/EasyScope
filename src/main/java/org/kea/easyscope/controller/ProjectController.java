@@ -125,7 +125,7 @@ public class ProjectController {
     public String updateProject(@RequestParam int projectID, // Unique identifier for the project
                                 @RequestParam String projectName,
                                 @RequestParam String projectDescription,
-                                @RequestParam(value = "isActive", defaultValue = "false") boolean isActive,
+                                @RequestParam(value = "isFinished", defaultValue = "false") boolean isFinished,
                                 HttpSession session,
                                 Model model) {
         // retrieve the logged-in account
@@ -154,7 +154,7 @@ public class ProjectController {
         // update project attributes
         existingProject.setProjectName(projectName);
         existingProject.setProjectDescription(projectDescription);
-        existingProject.setActive(isActive);
+        existingProject.setFinished(isFinished);
 
         // save updated project back to the db
         projectService.updateProject(existingProject);

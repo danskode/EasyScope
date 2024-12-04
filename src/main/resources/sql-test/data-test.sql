@@ -4,18 +4,18 @@ INSERT INTO accounts (account_name, account_password, account_type) VALUES ('Jen
 INSERT INTO accounts (account_name, account_password, account_type) VALUES ('Otto', 'password', 'TEAM_MEMBER');
 
 -- Data in project table --
-INSERT INTO project (project_name, project_description, project_is_active, account_id_fk) VALUES ('Novo Nordisk', 'The client wants to establish a new digital footprint for its new weightloss medicine', 1, 2);
-INSERT INTO project (project_name, project_description, project_is_active, account_id_fk) VALUES ('Tesla', 'The client wants an app for more republican votes', 0, 2);
+INSERT INTO project (project_name, project_description, project_is_finished, account_id_fk) VALUES ('Novo Nordisk', 'The client wants to establish a new digital footprint for its new weightloss medicine', 1, 2);
+INSERT INTO project (project_name, project_description, project_is_finished, account_id_fk) VALUES ('Tesla', 'The client wants an app for more republican votes', 0, 2);
 
 -- Data in sub_project table --
-INSERT INTO sub_project (sub_project_name, sub_project_description, sub_project_is_active, sub_project_deadline, project_id_fk) VALUES ('A new website', 'Full-stack web app', 1, '2025-12-12', 1);
-INSERT INTO sub_project (sub_project_name, sub_project_description, sub_project_is_active, sub_project_deadline, project_id_fk) VALUES ('A political app', 'Needs to work in Tesla cars', 0, '2025-12-12', 2);
+INSERT INTO sub_project (sub_project_name, sub_project_description, sub_project_is_finished, sub_project_deadline, project_id_fk) VALUES ('A new website', 'Full-stack web app', 1, '2025-12-12', 1);
+INSERT INTO sub_project (sub_project_name, sub_project_description, sub_project_is_finished, sub_project_deadline, project_id_fk) VALUES ('A political app', 'Needs to work in Tesla cars', 0, '2025-12-12', 2);
 
 -- Data in task --
-INSERT INTO task (task_name, task_description, task_is_active, sub_project_id_fk) VALUES ('Frontend', 'Beautiful CSS', 1, 1);
-INSERT INTO task (task_name, task_description, task_is_active, sub_project_id_fk) VALUES ('Backend', 'Beautiful Java', 1, 1);
-INSERT INTO task (task_name, task_description, task_is_active, sub_project_id_fk) VALUES ('Frontend', 'Make design great again', 0, 2);
-INSERT INTO task (task_name, task_description, task_is_active, sub_project_id_fk) VALUES ('Mockup', 'Make wireframes', 0, 1);
+INSERT INTO task (task_name, task_description, task_is_finished, sub_project_id_fk) VALUES ('Frontend', 'Beautiful CSS', 1, 1);
+INSERT INTO task (task_name, task_description, task_is_finished, sub_project_id_fk) VALUES ('Backend', 'Beautiful Java', 1, 1);
+INSERT INTO task (task_name, task_description, task_is_finished, sub_project_id_fk) VALUES ('Frontend', 'Make design great again', 0, 2);
+INSERT INTO task (task_name, task_description, task_is_finished, sub_project_id_fk) VALUES ('Mockup', 'Make wireframes', 0, 1);
 
 -- Data in task_member --
 INSERT INTO task_member (account_id_fk, task_id_fk) VALUES (3, 1);

@@ -5,26 +5,62 @@
   <title>Subprojects</title>
 </head>
 <body>
-<h1><span th:text="${project.projectName}"></span></h1>
 
+<h1>These are your subprojects!</h1>
+
+<h2>Active</h2>
 <table>
   <thead>
   <tr>
     <th>Subproject</th>
     <th>Description</th>
+    <th>Status</th>
     <th>Deadline</th>
     <th>Actions</th>
   </tr>
   </thead>
   <tbody>
-  <tr th:each="subProject : ${subProjects}">
-    <td th:text="${subProject.subProjectName}"></td>
-    <td th:text="${subProject.subProjectDescription}"></td>
+  <tr
+          th:each="subProject : ${subProjects}" th:if="${!subProject.finished}">
+    <td th:text="${subProject.subProjectName}">Name</td>
+    <td th:text="${subProject.subProjectDescription}">Subproject description</td>
     <td th:text="${#temporals.format(subProject.subProjectDeadline, 'dd/MM/yyyy')}"></td>
+
+
+    <td>Active</td>
+    <td>
+      <a th:href="@{/projects/subprojects/update/{subProjectID}(subProjectID=${subProject.subProjectID})}">
+        <button>Update</button>
+      </a>      <!-- <a th:href="@{/projects/subprojects/{projectID}(projectID=${project.projectID})}">Subprojects</a> Skal være tasks-->
+    </td>
+
+  </tr>
+  </tbody>
+</table>
+
+<h2>Completed</h2>
+<table>
+  <thead>
+  <tr>
+    <th>Subproject</th>
+    <th>Description</th>
+    <th>Status</th>
+    <th>Deadline</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="subProject : ${subProjects}" th:if="${subProject.finished}"> <!-- Finished subprojects -->
+    <td th:text="${subProject.subProjectName}">Name</td>
+    <td th:text="${subProject.subProjectDescription}">Subproject description</td>
+    <td th:text="${#temporals.format(subProject.subProjectDeadline, 'dd/MM/yyyy')}"></td>
+
+    <td>Finished</td>
     <td>
       <a th:href="@{/projects/subprojects/update/{subProjectID}(subProjectID=${subProject.subProjectID})}">
         <button>Update</button>
       </a>
+      <!-- <a th:href="@{/projects/subprojects/{projectID}(projectID=${project.projectID})}">Subprojects</a> Skal være tasks-->
     </td>
   </tr>
   </tbody>
@@ -36,7 +72,8 @@
 </a>
 
 <br>
-<br>
-<a href="/projects/list">Back to client list</a>
+
+<a href="/projects/list">Back to account</a>
+
 </body>
 </html>

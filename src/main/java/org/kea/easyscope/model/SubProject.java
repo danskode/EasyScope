@@ -1,7 +1,5 @@
 package org.kea.easyscope.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.time.LocalDate;
 
 public class SubProject {
@@ -10,14 +8,14 @@ public class SubProject {
     private String subProjectName;
     private String subProjectDescription;
     private LocalDate subProjectDeadline;
-    private boolean isActive;
+    private boolean isFinished;
     private int projectID; // This is a foreign key in the database
 
-    public SubProject(String subProjectName, String subProjectDescription, LocalDate subProjectDeadline, boolean isActive, int projectID) {
+    public SubProject(String subProjectName, String subProjectDescription, LocalDate subProjectDeadline, int projectID) {
         this.subProjectName = subProjectName;
         this.subProjectDescription = subProjectDescription;
         this.subProjectDeadline = subProjectDeadline;
-        this.isActive = isActive;
+        this.isFinished = false;
         this.projectID = projectID;
     }
 
@@ -57,12 +55,12 @@ public class SubProject {
         this.subProjectDeadline = subProjectDeadline;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public boolean isFinished() {
+        return isFinished;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setFinished(boolean finished) {
+        isFinished = finished;
     }
 
     public int getProjectID() {

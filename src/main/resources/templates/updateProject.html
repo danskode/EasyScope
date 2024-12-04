@@ -2,27 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update Client</title>
+    <title>Update Project</title>
 </head>
 <body>
 
-<h1>Update client</h1>
+<h1>Update project</h1>
 
 <form th:action="@{/projects/update}" method="post">
     <input type="hidden" name="projectID" th:value="${project.projectID}" /> <!-- This is hidden. -->
-    <label for="projectName">Name of the client:</label>
-    <input type="text" id="projectName" name="projectName" th:value="${project.projectName}" required />
+
+    <label for="projectName">Project Name:</label>
+    <input type="text" id="projectName" name="projectName" th:value="${project.projectName}" required>
 
     <label for="projectDescription">Description:</label>
-    <textarea id="projectDescription" name="projectDescription" required th:text="${project.projectDescription}"></textarea>
+    <input type="text" id="projectDescription" name="projectDescription" th:value="${project.projectDescription}" required>
 
-    <label for="isActive">Is the project active?</label>
-    <input type="checkbox" id="isActive" name="isActive" th:checked="${project.isActive}" />
+    <label for="isFinished">Finished:</label>
+    <input type="checkbox" id="isFinished" name="isFinished" th:checked="${project.isFinished()}">
 
-    <button type="submit">Update client</button>
+    <button type="submit">Update</button>
 </form>
 
-<a href="/projects/list">Back to client list</a>
+<a href="/projects/list">Back to the list of projects</a>
 
 </body>
 </html>
