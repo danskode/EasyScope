@@ -9,13 +9,12 @@
 <h1>These are your subprojects!</h1>
 
 <h2>Active</h2>
-<table>
-  <thead>
+<table border="1">
   <tr>
     <th>Subproject</th>
     <th>Description</th>
-    <th>Status</th>
     <th>Deadline</th>
+    <th>Status</th>
     <th>Actions</th>
   </tr>
   </thead>
@@ -31,7 +30,10 @@
     <td>
       <a th:href="@{/projects/subprojects/update/{subProjectID}(subProjectID=${subProject.subProjectID})}">
         <button>Update</button>
-      </a>      <!-- <a th:href="@{/projects/subprojects/{projectID}(projectID=${project.projectID})}">Subprojects</a> Skal være tasks-->
+      </a>
+      <a th:href="@{/projects/subprojects/tasks/{projectID}/{subProjectID}(projectID=${project.projectID}, subProjectID=${subProject.subProjectID})}">
+        <button>Tasks</button>
+      </a>
     </td>
 
   </tr>
@@ -39,13 +41,12 @@
 </table>
 
 <h2>Completed</h2>
-<table>
-  <thead>
+<table border="1">
   <tr>
     <th>Subproject</th>
     <th>Description</th>
-    <th>Status</th>
     <th>Deadline</th>
+    <th>Status</th>
     <th>Actions</th>
   </tr>
   </thead>
@@ -60,7 +61,9 @@
       <a th:href="@{/projects/subprojects/update/{subProjectID}(subProjectID=${subProject.subProjectID})}">
         <button>Update</button>
       </a>
-      <!-- <a th:href="@{/projects/subprojects/{projectID}(projectID=${project.projectID})}">Subprojects</a> Skal være tasks-->
+      <a th:href="@{/projects/subprojects/tasks/{projectID}/{subProjectID}(projectID=${project.projectID}, subProjectID=${subProject.subProjectID})}">
+        <button>Tasks</button>
+      </a>
     </td>
   </tr>
   </tbody>
@@ -73,7 +76,7 @@
 
 <br>
 
-<a href="/projects/list">Back to account</a>
+<a href="/projects/list">Back to projects</a>
 
 </body>
 </html>
