@@ -10,9 +10,11 @@ public class Task {
     private boolean taskIsFinished; // this is a TINYINT in db (1=completed, 0=incomplete)
     private int subProjectID; // this is a foreign key from sub_project (database)
 
-    private List<TaskMember> taskMembers; // a list of task members
-    private List<TaskHoursRealized> taskHoursRealized; // a list of realized hours
-    private List<TaskHoursEstimated> taskHoursEstimated; // a list of estimated hours
+    // Represents estimated and realized hours for a task,
+    // fetched via JOIN queries for simplicity and normalized data handling.
+    private TaskHoursEstimated estimatedHours;
+    private TaskHoursRealized realizedHours;
+
 
 
 
@@ -67,27 +69,5 @@ public class Task {
         this.subProjectID = subProjectID;
     }
 
-    public List<TaskMember> getTaskMembers() {
-        return taskMembers;
-    }
 
-    public void setTaskMembers(List<TaskMember> taskMembers) {
-        this.taskMembers = taskMembers;
-    }
-
-    public List<TaskHoursRealized> getTaskHoursRealized() {
-        return taskHoursRealized;
-    }
-
-    public void setTaskHoursRealized(List<TaskHoursRealized> taskHoursRealized) {
-        this.taskHoursRealized = taskHoursRealized;
-    }
-
-    public List<TaskHoursEstimated> getTaskHoursEstimated() {
-        return taskHoursEstimated;
-    }
-
-    public void setTaskHoursEstimated(List<TaskHoursEstimated> taskHoursEstimated) {
-        this.taskHoursEstimated = taskHoursEstimated;
-    }
 }
