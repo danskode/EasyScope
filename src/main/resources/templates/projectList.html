@@ -2,30 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Project List</title>
+    <title>Projects</title>
 </head>
 <body>
 
-<h1>These are your clients!</h1>
+<h1>These are your projects!</h1>
 
+<h2>Active</h2>
 <table>
     <thead>
     <tr>
-        <th>Name of the project/client</th>
-        <th>Description</th>
+        <th>Client</th>
+        <th>Project description</th>
         <th>Status</th>
-        <th></th>
+        <th>Actions</th>
     </tr>
     </thead>
-
     <tbody>
-    <tr th:each="project : ${projects}">
-        <td th:text="${project.projectName}">Project name</td>
+    <tr
+            th:each="project : ${projects}" th:if="${!project.finished}">
+        <td th:text="${project.projectName}">Client</td>
         <td th:text="${project.projectDescription}">Project description</td>
-        <td th:text="${project.isActive() ? 'Active' : 'Inactive'}">Status</td>
+
+        <td>Active</td>
         <td>
             <a th:href="@{/projects/update/{projectID}(projectID=${project.projectID})}">Update</a>
-            <a th:href="@{/projects/subprojects/{projectID}(projectID=${project.projectID})}">View Subprojects</a>
+            <a th:href="@{/projects/subprojects/{projectID}(projectID=${project.projectID})}">Subprojects</a>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+<h2>Completed</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Client</th>
+        <th>Project description</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="project : ${projects}" th:if="${project.finished}"> <!-- Finished subprojects -->
+        <td th:text="${project.projectName}">Client</td>
+        <td th:text="${project.projectDescription}">Project description</td>
+        <td>Finished</td>
+        <td>
+            <a th:href="@{/projects/update/{projectID}(projectID=${project.projectID})}">Update</a>
+            <a th:href="@{/projects/subprojects/{projectID}(projectID=${project.projectID})}">Subprojects</a>
         </td>
     </tr>
     </tbody>

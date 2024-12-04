@@ -26,6 +26,7 @@ public class SubProjectRepository {
             subProject.setSubProjectName(rs.getString("sub_project_name"));
             subProject.setSubProjectDescription(rs.getString("sub_project_description"));
             subProject.setSubProjectDeadline(rs.getDate("sub_project_deadline").toLocalDate());
+            subProject.setFinished(rs.getBoolean("sub_project_is_finished"));
             subProject.setProjectID(rs.getInt("project_id_fk"));
             return subProject;
 
@@ -41,7 +42,7 @@ public class SubProjectRepository {
             subProject.setSubProjectName(rs.getString("sub_project_name"));
             subProject.setSubProjectDescription(rs.getString("sub_project_description"));
             subProject.setSubProjectDeadline(rs.getDate("sub_project_deadline").toLocalDate());
-            subProject.setActive(rs.getBoolean("sub_project_is_active"));
+            subProject.setFinished(rs.getBoolean("sub_project_is_finished"));
             subProject.setProjectID(rs.getInt("project_id_fk"));
             return subProject;
         });
@@ -57,8 +58,8 @@ public class SubProjectRepository {
 
     // method to update a subproject
     public void updateSubProject(SubProject subProject) {
-        String sql = "UPDATE sub_project SET sub_project_name = ?, sub_project_description = ?, sub_project_deadline = ?, sub_project_is_active = ? WHERE sub_project_id = ?";
-        jdbcTemplate.update(sql, subProject.getSubProjectName(), subProject.getSubProjectDescription(), subProject.getSubProjectDeadline(), subProject.isActive(), subProject.getProjectID());
+        String sql = "UPDATE sub_project SET sub_project_name = ?, sub_project_description = ?, sub_project_deadline = ?, sub_project_is_finished = ? WHERE sub_project_id = ?";
+        jdbcTemplate.update(sql, subProject.getSubProjectName(), subProject.getSubProjectDescription(), subProject.getSubProjectDeadline(), subProject.isFinished(), subProject.getProjectID());
     }
 
 

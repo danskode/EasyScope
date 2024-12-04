@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -65,7 +64,9 @@ public class SubProjectController {
 
     // a POST method to create a subproject
     @PostMapping("/create")
-    public String createSubProject(@ModelAttribute SubProject subproject, @RequestParam int projectID, Model model) {
+    public String createSubProject(@ModelAttribute SubProject subproject,
+                                   @RequestParam int projectID,
+                                   Model model) {
         Project project = projectService.getProjectByProjectID(projectID);
 
         if (project != null) {
@@ -84,7 +85,8 @@ public class SubProjectController {
     }
 
     @GetMapping("/update/{subProjectID}")
-    public String showUpdateSubProjectPage(@PathVariable int subProjectID, Model model) {
+    public String showUpdateSubProjectPage(@PathVariable int subProjectID,
+                                           Model model) {
         SubProject subProject = subProjectService.getSubProjectBySubProjectID(subProjectID);
 
         if (subProject == null) {
@@ -101,7 +103,7 @@ public class SubProjectController {
                                    @RequestParam String subProjectName,
                                    @RequestParam String subProjectDescription,
                                    @RequestParam LocalDate subProjectDeadline,
-                                   @RequestParam(value = "isActive", defaultValue = "false") boolean isActive,
+                                   @RequestParam(value = "isFinished", defaultValue = "false") boolean isFinished,
                                    HttpSession session,
                                    Model model) {
         // retrieve the logged-in account
@@ -133,10 +135,12 @@ public class SubProjectController {
         existingSubProject.setSubProjectName(subProjectName);
         existingSubProject.setSubProjectDescription(subProjectDescription);
         existingSubProject.setSubProjectDeadline(subProjectDeadline);
-        existingSubProject.setActive(isActive);
+        existingSubProject.setFinished(isFinished);
 
         // Save the updated subproject back to the database
         subProjectService.updateSubProject(existingSubProject);
+
+        // session.setAttribute("updatedSubProject", existingSubProject);
 
         // This means that you will be redirected to this url /projects/subprojects/{projectID}.
         return "redirect:/projects/subprojects/" + existingSubProject.getProjectID();

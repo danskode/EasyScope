@@ -2,11 +2,8 @@ package org.kea.easyscope.repository;
 
 import org.kea.easyscope.model.Project;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -28,7 +25,7 @@ public class ProjectRepository {
             project.setProjectID(rs.getInt("project_id"));
             project.setProjectName(rs.getString("project_name"));
             project.setProjectDescription(rs.getString("project_description"));
-            project.setActive(rs.getBoolean("project_is_active"));
+            project.setFinished(rs.getBoolean("project_is_finished"));
             project.setAccountID(rs.getInt("account_id_fk"));
             return project;
         });
@@ -43,7 +40,7 @@ public class ProjectRepository {
             project.setProjectID(rs.getInt("project_id"));
             project.setProjectName(rs.getString("project_name"));
             project.setProjectDescription(rs.getString("project_description"));
-            project.setActive(rs.getBoolean("project_is_active"));
+            project.setFinished(rs.getBoolean("project_is_finished"));
             project.setAccountID(rs.getInt("account_id_fk"));
             return project;
         });
@@ -59,8 +56,8 @@ public class ProjectRepository {
 
     // method to update a project
     public void updateProject(Project project) {
-        String sql = "UPDATE project SET project_name = ?, project_description = ?, project_is_active = ? WHERE project_id = ?";
-        jdbcTemplate.update(sql, project.getProjectName(), project.getProjectDescription(), project.isActive(), project.getProjectID());
+        String sql = "UPDATE project SET project_name = ?, project_description = ?, project_is_finished = ? WHERE project_id = ?";
+        jdbcTemplate.update(sql, project.getProjectName(), project.getProjectDescription(), project.isFinished(), project.getProjectID());
     }
 
 }

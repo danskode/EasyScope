@@ -1,24 +1,19 @@
 package org.kea.easyscope.model;
 
-import java.util.ArrayList;
-
 public class Project {
 
     private int projectID;
     private String projectName;
     private String projectDescription;
-    private boolean isActive;
-
+    private boolean isFinished;
     private int accountID; // This is a foreign key in the database
-    //private List<SubProject> subProjects;
 
 
-    public Project(String projectName, String projectDescription, boolean isActive, int accountID) {
+    public Project(String projectName, String projectDescription, int accountID) {
         this.projectName = projectName;
         this.projectDescription = projectDescription;
-        this.isActive = isActive;
+        this.isFinished = false; // A new project is not finished as standard
         this.accountID = accountID;
-       // this.subProjects = new ArrayList<>(); // vil starte med en tom liste. ved ikke om det skal være her. vent slut..
     }
 
 
@@ -49,12 +44,12 @@ public class Project {
         this.projectDescription = projectDescription;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public boolean isFinished() {
+        return isFinished;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setFinished(boolean finished) {
+        isFinished = finished;
     }
 
     public int getAccountID() {
@@ -65,11 +60,5 @@ public class Project {
         this.accountID = accountID;
     }
 
-   /* public List<SubProject> getSubProjects() {
-        return subProjects;
-    }
 
-    public void setSubProjects(List<SubProject> subProjects) {
-        this.subProjects = subProjects;
-    }*/
 }
