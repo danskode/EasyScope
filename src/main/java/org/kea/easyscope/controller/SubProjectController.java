@@ -93,7 +93,7 @@ public class SubProjectController {
         }
 
         model.addAttribute("subProject", subProject);
-        return "updateSubProject"; // Navnet på din HTML-side
+        return "updateSubproject"; // Navnet på din HTML-side
     }
 
     @PostMapping("/update")
@@ -141,8 +141,4 @@ public class SubProjectController {
         // This means that you will be redirected to this url /projects/subprojects/{projectID}.
         return "redirect:/projects/subprojects/" + existingSubProject.getProjectID();
     }
-
-
-
-
 }
