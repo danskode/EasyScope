@@ -12,16 +12,18 @@ public class Task {
 
     // Represents estimated and realized hours for a task,
     // fetched via JOIN queries for simplicity and normalized data handling.
-    private TaskHoursEstimated estimatedHours;
-    private TaskHoursRealized realizedHours;
+    private float estimatedHours;
+    private float realizedHours;
 
 
 
 
-    public Task(String taskName, String taskDescription, int subProjectID){
+    public Task(String taskName, String taskDescription, int subProjectID, float estimatedHours, float realizedHours){
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.subProjectID = subProjectID;
+        this.estimatedHours = estimatedHours;
+        this.realizedHours = realizedHours;
         this.taskIsFinished = false; // a task is not finished when it just got created
     }
 
@@ -69,5 +71,30 @@ public class Task {
         this.subProjectID = subProjectID;
     }
 
+    public float getEstimatedHours() {
+        return estimatedHours;
+    }
+
+    public void setEstimatedHours(float estimatedHours) {
+        this.estimatedHours = estimatedHours;
+    }
+
+    public float getRealizedHours() {
+        return realizedHours;
+    }
+
+    public void setRealizedHours(float realizedHours) {
+        this.realizedHours = realizedHours;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskID=" + taskID +
+                ", taskName='" + taskName + '\'' +
+                ", description='" + taskDescription + '\'' +
+                ", subProjectID=" + subProjectID +
+                '}';
+    }
 
 }

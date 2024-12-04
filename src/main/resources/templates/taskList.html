@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tasks</title>
+</head>
+<body>
+
+<h1>Tasks for Subproject: <span th:text="${subProject.subProjectName}"></span></h1>
+
+<h2>Active Tasks</h2>
+<table border="1">
+  <thead>
+  <tr>
+    <th>Task</th>
+    <th>Description</th>
+    <th>Status</th>
+    <th>Estimated Hours</th>
+    <th>Realized Hours</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <!-- Iterate over tasks and show only active tasks -->
+  <tr th:each="task : ${tasks}" th:if="${!task.taskIsFinished}">
+    <td th:text="${task.taskName}">Task</td>
+    <td th:text="${task.taskDescription}">Task description</td>
+    <td>Active</td>
+    <td th:text="${task.estimatedHours != 0.0 ? task.estimatedHours : 'N/A'}">Estimated hours</td>
+    <td>N/A</td> <!-- Realized hours are not shown for active tasks -->
+    <td>
+      <!-- Actions can go here (e.g. update task, etc.) -->
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<h2>Completed Tasks</h2>
+<table border="1">
+  <thead>
+  <tr>
+    <th>Task</th>
+    <th>Description</th>
+    <th>Status</th>
+    <th>Estimated Hours</th>
+    <th>Realized Hours</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <!-- Iterate over tasks and show only completed tasks -->
+  <tr th:each="task : ${tasks}" th:if="${task.taskIsFinished}">
+    <td th:text="${task.taskName}">Task</td>
+    <td th:text="${task.taskDescription}">Description</td>
+    <td>Finished</td>
+    <td th:text="${task.estimatedHours != 0.0 ? task.estimatedHours: 'N/A'}">Estimated hours</td>
+    <td th:text="${task.realizedHours != 0.0 ? task.realizedHours : 'N/A'}">Realized hours</td>
+    <td>
+      <!-- Actions for completed tasks can go here -->
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Tilbage til SubProjects -->
+<a th:href="@{/projects/subprojects/{projectID}(projectID=${projectID})}">
+  <button>Back to Subprojects</button>
+</a>
+
+</body>
+</html>
