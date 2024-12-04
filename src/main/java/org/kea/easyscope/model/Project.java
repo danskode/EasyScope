@@ -2,11 +2,12 @@ package org.kea.easyscope.model;
 
 public class Project {
 
-    private int projectID;
+    private int projectID; // this int is auto_incremented in the database
     private String projectName;
     private String projectDescription;
-    private boolean isFinished;
-    private int accountID; // This is a foreign key in the database
+    private boolean isFinished; // this is a TINYINT in db (1=completed, 0=incomplete)
+
+    private int accountID; // This is a foreign key from account (database)
 
 
     public Project(String projectName, String projectDescription, int accountID) {

@@ -4,12 +4,13 @@ import java.time.LocalDate;
 
 public class SubProject {
 
-    private int subProjectID;
+    private int subProjectID; // this int is auto_incremented in the database
     private String subProjectName;
     private String subProjectDescription;
     private LocalDate subProjectDeadline;
-    private boolean isFinished;
-    private int projectID; // This is a foreign key in the database
+    private boolean isFinished; // this is a TINYINT in db (1=completed, 0=incomplete)
+
+    private int projectID; // This is a foreign key from project (database)
 
     public SubProject(String subProjectName, String subProjectDescription, LocalDate subProjectDeadline, int projectID) {
         this.subProjectName = subProjectName;
