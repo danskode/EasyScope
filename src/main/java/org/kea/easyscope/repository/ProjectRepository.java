@@ -49,9 +49,9 @@ public class ProjectRepository {
     // method to create a new project in the db
     public void createNewProject(Project project) {
         // SQL statement to insert a new project into the db
-        String sql = "INSERT INTO project (project_name, project_description, account_id_fk) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO project (project_name, project_description, project_is_finished, account_id_fk) VALUES (?, ?, ?, ?)";
         // this executes the update by inserting values from the project object into the db
-        jdbcTemplate.update(sql, project.getProjectName(), project.getProjectDescription(), project.getAccountID());
+        jdbcTemplate.update(sql, project.getProjectName(), project.getProjectDescription(), project.isFinished(), project.getAccountID());
     }
 
     // method to update a project
