@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import org.kea.easyscope.model.Account;
 import org.kea.easyscope.model.Project;
 import org.kea.easyscope.model.SubProject;
+import org.kea.easyscope.service.CalcService;
 import org.kea.easyscope.service.ProjectService;
 import org.kea.easyscope.service.SubProjectService;
 import org.springframework.stereotype.Controller;
@@ -19,10 +20,12 @@ public class SubProjectController {
 
     private final SubProjectService subProjectService;
     private final ProjectService projectService;
+    private final CalcService calcService;
 
-    public SubProjectController(SubProjectService subProjectService, ProjectService projectService) {
+    public SubProjectController(SubProjectService subProjectService, ProjectService projectService, CalcService calcService) {
         this.subProjectService = subProjectService;
         this.projectService = projectService;
+        this.calcService = calcService;
     }
 
 
@@ -35,7 +38,6 @@ public class SubProjectController {
         // if project is found
         if (project != null) {
             List<SubProject> subProjects = subProjectService.getSubProjectsByProjectID(projectID);
-
 
             // send subProjects and project to the formular
             model.addAttribute("subProjects", subProjects);

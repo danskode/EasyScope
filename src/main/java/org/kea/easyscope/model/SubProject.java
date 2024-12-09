@@ -13,6 +13,8 @@ public class SubProject {
     private float totalEstimatedHours;
     private float totalRealizedHours;
 
+    private String deadlineNotice;
+
     private int projectID; // This is a foreign key from project (database)
 
     public SubProject(String subProjectName, String subProjectDescription, LocalDate subProjectDeadline, float totalEstimatedHours, float totalRealizedHours, int projectID) {
@@ -108,4 +110,11 @@ public class SubProject {
     public float getTotalRealizedHours() {
         return totalRealizedHours;
     }
+    public void setDeadlineNotice(String deadlineNotice) {
+        this.deadlineNotice = deadlineNotice;
+    }
+    public String getDeadlineNotice() {
+        return deadlineNotice;
+    }
+
 }

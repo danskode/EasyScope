@@ -13,47 +13,13 @@ import java.util.List;
 @Service
 public class CalcService {
     CalcRepository calcRepository;
-    ProjectService projectService;
-    SubProjectService subProjectService;
-    TaskService taskService;
-    AccountService accountService;
 
     public CalcService(CalcRepository calcRepository, ProjectService projectService,SubProjectService subProjectService, TaskService taskService, AccountService accountService) {
         this.calcRepository = calcRepository;
-        this.projectService = projectService;
-        this.subProjectService = subProjectService;
-        this.taskService = taskService;
-        this.accountService = accountService;
     }
 
-    // Methode to sum up total of estimated hours for all tasks  belonging to a subproject ...
-    public float getSumOfHoursUsedOnTasksSubProjectByID(int subProjectID) {
-        SubProject subProject = subProjectService.getSubProjectBySubProjectID(subProjectID);
-        //LocalDate deadline =  subProject.getSubProjectDeadline();
-        // int daysLeft = LocalDate.now();
-
-        if(subProject == null && subProjectID != 0 && subProject.isFinished() != true) {
-            List<Task> allTasks = taskService.getTasksBySubProjectID(subProjectID);
-
-            for(Task task : allTasks) {
-                //List<Task> tasksNotFinished;
-                float totalEstimatedHoursForSubProject = 0;
-                if (!task.isTaskIsFinished()) {
-                    //tasksNotFinished.add(task);
-                    totalEstimatedHoursForSubProject += task.getEstimatedHours();
-                }
-                return totalEstimatedHoursForSubProject;
-            }
-
-            return 0.0F;
-        }
-        if(subProject == null && subProjectID != 0 && subProject.isFinished() != true){
-            List<Task> tasks = taskService.getTasksBySubProjectID(subProjectID);
-            return 0.0F;
-        }
-        else {
-            return 0.0F;
-        }
+    public String giveNoticeAboutDeadline(int subProjectID){
+        return calcRepository.giveNoticeAboutDeadline(subProjectID);
     }
 
     // Methode to sum up total of realized hours for all tasks  belonging to a subproject still active ...
