@@ -37,10 +37,6 @@ public class SubProjectRepository {
             subProjectHoursMap.put(subProjectID, totalHours);
         });
 
-
-
-
-
         // We also need to do the same for realized hours per subproject ...
         String taskRealizedHoursSql = "SELECT t.sub_project_id_fk, SUM(DISTINCT thr.task_hours_realized) AS total_realized_hours " +
                 "FROM task t " +
