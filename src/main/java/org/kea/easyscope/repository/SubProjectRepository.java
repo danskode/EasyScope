@@ -49,7 +49,7 @@ public class SubProjectRepository {
             subProjectHoursRealizedMap.put(subProjectID, totalHours);
         });
 
-        // Then we write the call to get the rest of the subproject object from the database ...
+        // Then we write the call to get the rest to make a complete subproject object from the database ...
         String sql = "SELECT * FROM sub_project WHERE project_id_fk = ?";
 
         //  Then we use rowmapper to map the result to SubProject objects ...
@@ -68,10 +68,14 @@ public class SubProjectRepository {
                 // Then we combine the HasMap of total_estimated_hours with into the rowmapping ...
                 Float totalEstimatedHours = subProjectHoursMap.getOrDefault(subProjectID, 0.0F);
                 subProject.setTotalEstimatedHours(totalEstimatedHours);
+                System.out.println(totalEstimatedHours); // slettes
+                System.out.println(subProjectHoursMap); // slettes
 
                 // And we combine the HasMap of total_realized_hours with into the rowmapping ...
                 Float totalRealizedHours = subProjectHoursRealizedMap.getOrDefault(subProjectID, 0.0F);
                 subProject.setTotalRealizedHours(totalRealizedHours);
+                System.out.println(totalRealizedHours); // slettes
+                System.out.println(subProjectHoursRealizedMap); // slettes
 
                 // And finally we can return a complete SubProject object
                 return subProject;

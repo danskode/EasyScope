@@ -103,7 +103,7 @@ public class SubProject {
     }
 
     public void setTotalRealizedHours(Float totalRealizedHours) {
-        this.totalEstimatedHours = totalRealizedHours;
+        this.totalRealizedHours = totalRealizedHours;
     }
     public float getTotalRealizedHours() {
         return totalRealizedHours;
