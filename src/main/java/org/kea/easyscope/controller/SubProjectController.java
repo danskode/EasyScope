@@ -36,6 +36,7 @@ public class SubProjectController {
         if (project != null) {
             List<SubProject> subProjects = subProjectService.getSubProjectsByProjectID(projectID);
 
+
             // send subProjects and project to the formular
             model.addAttribute("subProjects", subProjects);
             model.addAttribute("project", project);

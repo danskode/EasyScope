@@ -14,17 +14,19 @@
     <th>Subproject</th>
     <th>Description</th>
     <th>Deadline</th>
+    <th>Estimated Hours Left</th>
+    <th>Total Hours Realized</th>
     <th>Status</th>
     <th>Actions</th>
   </tr>
   </thead>
   <tbody>
-  <tr
-          th:each="subProject : ${subProjects}" th:if="${!subProject.finished}">
+  <tr th:each="subProject : ${subProjects}" th:if="${!subProject.finished}">
     <td th:text="${subProject.subProjectName}">Name</td>
     <td th:text="${subProject.subProjectDescription}">Subproject description</td>
     <td th:text="${#temporals.format(subProject.subProjectDeadline, 'dd/MM/yyyy')}"></td>
-
+    <td th:text="${subProject.getTotalEstimatedHours()}" ></td>
+    <td th:text="${subProject.getTotalRealizedHours()}" ></td>
 
     <td>Active</td>
     <td>
@@ -46,6 +48,8 @@
     <th>Subproject</th>
     <th>Description</th>
     <th>Deadline</th>
+    <th>Estimated Hours Left</th>
+    <th>Total Hours Realized</th>
     <th>Status</th>
     <th>Actions</th>
   </tr>
@@ -55,6 +59,8 @@
     <td th:text="${subProject.subProjectName}">Name</td>
     <td th:text="${subProject.subProjectDescription}">Subproject description</td>
     <td th:text="${#temporals.format(subProject.subProjectDeadline, 'dd/MM/yyyy')}"></td>
+    <td th:text="${subProject.getTotalEstimatedHours()}" ></td>
+    <td th:text="${subProject.getTotalRealizedHours()}" ></td>
 
     <td>Finished</td>
     <td>
