@@ -10,7 +10,22 @@ public class SubProject {
     private LocalDate subProjectDeadline;
     private boolean isFinished; // this is a TINYINT in db (1=completed, 0=incomplete)
 
+    private float totalEstimatedHours;
+    private float totalRealizedHours;
+
+    private String deadlineNotice;
+
     private int projectID; // This is a foreign key from project (database)
+
+    public SubProject(String subProjectName, String subProjectDescription, LocalDate subProjectDeadline, float totalEstimatedHours, float totalRealizedHours, int projectID) {
+        this.subProjectName = subProjectName;
+        this.subProjectDescription = subProjectDescription;
+        this.subProjectDeadline = subProjectDeadline;
+        this.totalEstimatedHours = totalEstimatedHours; // join from database
+        this.totalRealizedHours = totalRealizedHours; // join from database
+        this.isFinished = false;
+        this.projectID = projectID;
+    }
 
     public SubProject(String subProjectName, String subProjectDescription, LocalDate subProjectDeadline, int projectID) {
         this.subProjectName = subProjectName;
@@ -72,6 +87,13 @@ public class SubProject {
         this.projectID = projectID;
     }
 
+    public float getTotalEstimatedHours() {
+        return totalEstimatedHours;
+    }
+    public void setTotalEstimatedHours(float totalEstimatedHours) {
+        this.totalEstimatedHours = totalEstimatedHours;
+    }
+
     @Override
     public String toString() {
         return "SubProject{" +
@@ -81,4 +103,18 @@ public class SubProject {
                 ", subProjectDeadline=" + subProjectDeadline +
                 '}';
     }
+
+    public void setTotalRealizedHours(Float totalRealizedHours) {
+        this.totalRealizedHours = totalRealizedHours;
+    }
+    public float getTotalRealizedHours() {
+        return totalRealizedHours;
+    }
+    public void setDeadlineNotice(String deadlineNotice) {
+        this.deadlineNotice = deadlineNotice;
+    }
+    public String getDeadlineNotice() {
+        return deadlineNotice;
+    }
+
 }

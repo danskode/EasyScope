@@ -2,25 +2,25 @@ package org.kea.easyscope.service;
 
 import org.kea.easyscope.model.Project;
 import org.kea.easyscope.model.SubProject;
+import org.kea.easyscope.model.Task;
+import org.kea.easyscope.repository.CalcRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class CalcService {
+    CalcRepository calcRepository;
 
-//    ProjectService projectService;
-//    SubProjectService subProjectService;
-//    TaskService taskService;
-//
-//    public CalcService(ProjectService projectService,SubProjectService subProjectService, TaskService taskService) {
-//        this.projectService = projectService;
-//        this.subProjectService = subProjectService;
-//        this.taskService = taskService;
-//    }
+    public CalcService(CalcRepository calcRepository, ProjectService projectService,SubProjectService subProjectService, TaskService taskService, AccountService accountService) {
+        this.calcRepository = calcRepository;
+    }
 
-    // Methode to sum up total of estimated hours for all tasks  belonging to a subproject ...
+    public String giveNoticeAboutDeadline(int subProjectID){
+        return calcRepository.giveNoticeAboutDeadline(subProjectID);
+    }
 
     // Methode to sum up total of realized hours for all tasks  belonging to a subproject still active ...
 
