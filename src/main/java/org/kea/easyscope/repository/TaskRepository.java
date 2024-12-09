@@ -56,35 +56,7 @@ public class TaskRepository {
 
     // metode til at hente en task ud fra et task_id
 
-    // metode til at tilføje en ny task
-//    public Task createNewTask(Task task, int memberID, float estimatedHours) {
-//
-//        String insertTaskSQL = """
-//                INSERT INTO task (task_name, task_description, sub_project_id_fk, task_hours_realized, task_is_finished)
-//                VALUES (?, ?, ?, 0.0F, 0)
-//                """;
-//        String getTaskIDSQL = "SELECT LAST_INSERT_ID()"; // NOTE : H2 DOESN'T SUPPORT THIS SQL STATEMENT! SWITCH TO DEV
-//
-//        String assignTeamMemberSQL = """
-//                INSERT INTO task_member (task_id_fk, account_id_fk)
-//                VALUES (?, ?)
-//                """;
-//        String insertEstimatedHoursSQL = """
-//                INSERT INTO task_hours_estimated (task_id_fk, task_hours_estimated)
-//                VALUES (?, ?)
-//                """;
-//
-//        jdbcTemplate.update(insertTaskSQL, task.getTaskName(), task.getTaskDescription(), task.getSubProjectID());
-//
-//        int taskID = jdbcTemplate.queryForObject(getTaskIDSQL, Integer.class);
-//
-//        jdbcTemplate.update(assignTeamMemberSQL, taskID, memberID);
-//
-//        jdbcTemplate.update(insertEstimatedHoursSQL, taskID, estimatedHours);
-//
-//        return task;
-//    }
-
+    // Method to create new task and set fill out some data in task_hours_realized and task_hours_estimated ...
     public Task createNewTask(Task task, int memberID, float estimatedHours) {
 
         String insertTaskSQL = """
