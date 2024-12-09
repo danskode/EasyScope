@@ -1,5 +1,6 @@
 package org.kea.easyscope.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.kea.easyscope.model.Account;
 import org.kea.easyscope.model.SubProject;
 import org.kea.easyscope.model.Task;
@@ -55,6 +56,7 @@ public class TaskController {
     @GetMapping("/create/{projectID}/{subProjectID}")
     public String showCreateTaskForm(@PathVariable int projectID,
                                      @PathVariable int subProjectID,
+                                     HttpSession session,
                                      Model model) {
 
         // Tilføj kun de nødvendige data til modellen

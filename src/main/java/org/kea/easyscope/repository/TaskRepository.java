@@ -2,6 +2,8 @@ package org.kea.easyscope.repository;
 
 import org.kea.easyscope.model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -55,31 +57,87 @@ public class TaskRepository {
     // metode til at hente en task ud fra et task_id
 
     // metode til at tilføje en ny task
+//    public Task createNewTask(Task task, int memberID, float estimatedHours) {
+//
+//        String insertTaskSQL = """
+//                INSERT INTO task (task_name, task_description, sub_project_id_fk, task_hours_realized, task_is_finished)
+//                VALUES (?, ?, ?, 0.0F, 0)
+//                """;
+//        String getTaskIDSQL = "SELECT LAST_INSERT_ID()"; // NOTE : H2 DOESN'T SUPPORT THIS SQL STATEMENT! SWITCH TO DEV
+//
+//        String assignTeamMemberSQL = """
+//                INSERT INTO task_member (task_id_fk, account_id_fk)
+//                VALUES (?, ?)
+//                """;
+//        String insertEstimatedHoursSQL = """
+//                INSERT INTO task_hours_estimated (task_id_fk, task_hours_estimated)
+//                VALUES (?, ?)
+//                """;
+//
+//        jdbcTemplate.update(insertTaskSQL, task.getTaskName(), task.getTaskDescription(), task.getSubProjectID());
+//
+//        int taskID = jdbcTemplate.queryForObject(getTaskIDSQL, Integer.class);
+//
+//        jdbcTemplate.update(assignTeamMemberSQL, taskID, memberID);
+//
+//        jdbcTemplate.update(insertEstimatedHoursSQL, taskID, estimatedHours);
+//
+//        return task;
+//    }
+
     public Task createNewTask(Task task, int memberID, float estimatedHours) {
+
         String insertTaskSQL = """
-                INSERT INTO task (task_name, task_description, sub_project_id_fk) 
-                VALUES (?, ?, ?)
-                """;
-        String getTaskIDSQL = "SELECT LAST_INSERT_ID()"; // NOTE : H2 DOESN'T SUPPORT THIS SQL STATEMENT! SWITCH TO DEV
+            INSERT INTO task (task_name, task_description, sub_project_id_fk, task_is_finished) 
+            VALUES (?, ?, ?, 0)
+            """;
 
         String assignTeamMemberSQL = """
-                INSERT INTO task_member (task_id_fk, account_id_fk)
-                VALUES (?, ?)
-                """;
+            INSERT INTO task_member (task_id_fk, account_id_fk)
+            VALUES (?, ?)
+            """;
+
         String insertEstimatedHoursSQL = """
-                INSERT INTO task_hours_estimated (task_id_fk, task_hours_estimated)
-                VALUES (?, ?)
-                """;
-        jdbcTemplate.update(insertTaskSQL, task.getTaskName(), task.getTaskDescription(), task.getSubProjectID());
+            INSERT INTO task_hours_estimated (task_id_fk, task_hours_estimated, account_id_fk)
+            VALUES (?, ?, ?)
+            """;
 
-        int taskID = jdbcTemplate.queryForObject(getTaskIDSQL, Integer.class);
+        String insertRealizedHoursSQL = """
+            INSERT INTO task_hours_realized (task_id_fk, task_hours_realized, account_id_fk)
+            VALUES (?, 0.0, ?)
+            """;
 
+        // KeyHolder for capturing auto-generated task ID
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        // Create task and capture the generated taskID using KeyHolder
+        jdbcTemplate.update(connection -> {
+            // Create a prepared statement with auto-generated key (task_id)
+            var ps = connection.prepareStatement(insertTaskSQL, new String[] { "task_id" });
+            ps.setString(1, task.getTaskName());
+            ps.setString(2, task.getTaskDescription());
+            ps.setInt(3, task.getSubProjectID());
+            return ps;
+        }, keyHolder);
+
+        // Get the generated task ID from the KeyHolder
+        int taskID = keyHolder.getKey().intValue();
+
+        // Assign the team member to the task
         jdbcTemplate.update(assignTeamMemberSQL, taskID, memberID);
 
-        jdbcTemplate.update(insertEstimatedHoursSQL, taskID, estimatedHours);
+        // Insert the estimated hours for the task
+        jdbcTemplate.update(insertEstimatedHoursSQL, taskID, estimatedHours, memberID);
 
+        // Set realized hours for the task to zero ...
+        jdbcTemplate.update(insertRealizedHoursSQL, taskID, memberID);
+
+        // Return the task with the generated taskID
+        task.setTaskID(taskID);
         return task;
     }
+
+
 
     public Task updateTask(Task task, int memberID, float estimatedHours) {
         // SQL statement that updates a task
