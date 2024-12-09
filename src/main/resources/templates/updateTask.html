@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Task</title>
+</head>
+<body>
+
+<h1>Update Task</h1>
+
+<!-- Formular til at opdatere task -->
+<form action="#" th:action="@{/update/{taskID}(taskID=${task.taskID})}" th:object="${task}" method="post">
+    <!-- Skjult felt for taskID -->
+    <input type="hidden" th:field="*{taskID}" />
+
+    <label for="taskName">Task Name:</label>
+    <input type="text" th:field="*{taskName}" required />
+
+    <label for="taskDescription">Task Description:</label>
+    <textarea th:field="*{taskDescription}" required></textarea>
+
+    <label for="teamMember">Assign to Team Member:</label>
+    <select id="teamMember" name="memberID">
+        <option th:each="member : ${teamMembers}"
+                th:value="${member.accountID}"
+                th:text="${member.accountName}">
+        </option>
+    </select>
+
+    <label for="estimatedHours">Estimated Hours:</label>
+    <input type="number" th:field="*{estimatedHours}" step="0.1" required />
+
+    <button type="submit">Update Task</button>
+</form>
+
+<!-- Tilbageknap -->
+<a th:href="@{/projects/subprojects/tasks/{taskID}(taskID=${task.taskID})}">
+    <button>Back to Task List</button>
+</a>
+
+</body>
+</html>

@@ -8,6 +8,11 @@
 
 <h1>Tasks for Subproject: <span th:text="${subProject.subProjectName}"></span></h1>
 
+<form th:action="@{/projects/subprojects/tasks/create/{projectID}/{subProjectID}(projectID=${projectID}, subProjectID=${subProject.subProjectID})}" method="get">
+  <input type="hidden" name="accountID" th:value="${accountID}" />
+  <button type="submit">Create Task</button>
+</form>
+
 <h2>Active Tasks</h2>
 <table border="1">
   <thead>
@@ -16,7 +21,6 @@
     <th>Description</th>
     <th>Status</th>
     <th>Estimated Hours</th>
-    <th>Realized Hours</th>
     <th>Actions</th>
   </tr>
   </thead>
@@ -27,7 +31,6 @@
     <td th:text="${task.taskDescription}">Task description</td>
     <td>Active</td>
     <td th:text="${task.estimatedHours != 0.0 ? task.estimatedHours : 'N/A'}">Estimated hours</td>
-    <td>N/A</td> <!-- Realized hours are not shown for active tasks -->
     <td>
       <!-- Actions can go here (e.g. update task, etc.) -->
     </td>

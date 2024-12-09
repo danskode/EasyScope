@@ -20,4 +20,20 @@ public class TaskService {
         return taskRepository.getTasksBySubProjectID(subProjectID);
     }
 
+    public Task createNewTask(Task task, int memberID, float estimatedHours){
+        return taskRepository.createNewTask(task, memberID, estimatedHours);
+    }
+
+    public Task getTaskByID(int TaskID){
+        return taskRepository.getTaskById(TaskID);
+    }
+
+    public Task updateTask(Task task, int memberID, float estimatedHours){
+        return taskRepository.updateTask(task, memberID, estimatedHours);
+    }
+
+
+
+
+
 }

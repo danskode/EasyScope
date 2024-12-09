@@ -62,7 +62,9 @@ public class SubProjectRepository {
         jdbcTemplate.update(sql, subProject.getSubProjectName(), subProject.getSubProjectDescription(), subProject.getSubProjectDeadline(), subProject.isFinished(), subProject.getProjectID());
     }
 
+// metode der gør at team member kan se sin opgave og indsætte realiserede timetal og arkivere
 
+    // en delete funktion som kun viser sig hvis task
 
     }
 
