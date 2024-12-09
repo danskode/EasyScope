@@ -46,11 +46,87 @@ public class TaskRepository {
         });
     }
 
+    // a project manager can assign a task to a team member -- bliver ikke brugt endnu
+    public void assignTaskToMember(int taskID, int accountID) {
+        String sql = "INSERT INTO task_member (task_id_fk, account_id_fk) VALUES (?, ?)";
+        jdbcTemplate.update(sql, taskID, accountID);
+    }
+
     // metode til at hente en task ud fra et task_id
 
     // metode til at tilføje en ny task
+    public Task createNewTask(Task task, int memberID, float estimatedHours) {
+        String insertTaskSQL = """
+                INSERT INTO task (task_name, task_description, sub_project_id_fk) 
+                VALUES (?, ?, ?)
+                """;
+        String getTaskIDSQL = "SELECT LAST_INSERT_ID()"; // NOTE : H2 DOESN'T SUPPORT THIS SQL STATEMENT! SWITCH TO DEV
 
+        String assignTeamMemberSQL = """
+                INSERT INTO task_member (task_id_fk, account_id_fk)
+                VALUES (?, ?)
+                """;
+        String insertEstimatedHoursSQL = """
+                INSERT INTO task_hours_estimated (task_id_fk, task_hours_estimated)
+                VALUES (?, ?)
+                """;
+        jdbcTemplate.update(insertTaskSQL, task.getTaskName(), task.getTaskDescription(), task.getSubProjectID());
 
+        int taskID = jdbcTemplate.queryForObject(getTaskIDSQL, Integer.class);
+
+        jdbcTemplate.update(assignTeamMemberSQL, taskID, memberID);
+
+        jdbcTemplate.update(insertEstimatedHoursSQL, taskID, estimatedHours);
+
+        return task;
+    }
+
+    public Task updateTask(Task task, int memberID, float estimatedHours) {
+        // SQL statement that updates a task
+        String updateTaskSQL = """
+            UPDATE task
+            SET task_name = ?, task_description = ?, sub_project_id_fk = ?
+            WHERE task_id = ?
+            """;
+
+        // SQL statement that updates the assigned team member
+        String updateTeamMemberSQL = """
+            UPDATE task_member
+            SET account_id_fk = ?
+            WHERE task_id_fk = ?
+            """;
+
+        // SQL statement that updates estimated hours
+        String updateEstimatedHoursSQL = """
+            UPDATE task_hours_estimated
+            SET task_hours_estimated = ?
+            WHERE task_id_fk = ?
+            """;
+
+        // Updates the tasks info
+        jdbcTemplate.update(updateTaskSQL, task.getTaskName(), task.getTaskDescription(), task.getSubProjectID(), task.getTaskID());
+        // updates the team member
+        jdbcTemplate.update(updateTeamMemberSQL, memberID, task.getTaskID());
+        // updates estimated hours
+        jdbcTemplate.update(updateEstimatedHoursSQL, estimatedHours, task.getTaskID());
+
+        // returns the updated task object
+        return task;
+    }
+
+    public Task getTaskById(int taskID) {
+        String sql = "SELECT * FROM task WHERE task_id = ?";
+
+        return jdbcTemplate.queryForObject(sql, new Object[]{taskID}, (rs, rowNum) -> {
+            Task task = new Task();
+            task.setTaskID(rs.getInt("task_id"));
+            task.setTaskName(rs.getString("task_name"));
+            task.setTaskDescription(rs.getString("task_description"));
+            task.setTaskIsFinished(rs.getBoolean("task_is_finished"));
+            task.setSubProjectID(rs.getInt("sub_project_id_fk"));
+            return task;
+        });
+    }
 
 
 

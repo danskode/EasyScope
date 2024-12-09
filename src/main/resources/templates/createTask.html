@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Create a Task</title>
+</head>
+<body>
+
+<h1>Create New Task</h1>
+
+<form th:action="@{/projects/subprojects/tasks/create}" method="post">
+  <input type="hidden" name="projectID" th:value="${projectID}">
+  <input type="hidden" name="subProjectID" th:value="${subProjectID}">
+
+  <label for="taskName">Task Name:</label>
+  <input type="text" id="taskName" name="taskName" required>
+
+  <label for="taskDescription">Task Description:</label>
+  <textarea id="taskDescription" name="taskDescription" required></textarea>
+
+  <label for="teamMember">Assign to Team Member:</label>
+  <select id="teamMember" name="accountID" required>
+    <option th:each="member : ${teamMembers}"
+            th:value="${member.accountID}"
+            th:text="${member.accountName}">
+    </option>
+  </select>
+
+  <label for="estimatedHours">Estimated Hours:</label>
+  <input type="number" id="estimatedHours" name="estimatedHours" step="0.1" required>
+
+  <button type="submit">Create Task</button>
+</form>
+
+<a th:href="@{/projects/subprojects/tasks/{projectID}/{subProjectID}(projectID=${projectID}, subProjectID=${subProjectID})}">
+  <button>Back to list of tasks</button>
+</a>
+
+</body>
+</html>

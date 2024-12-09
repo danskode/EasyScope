@@ -97,4 +97,20 @@ public class AccountRepository {
         String sql = "INSERT INTO accounts (account_name, account_password, account_type) VALUES (?, ?, ?)";
         jdbcTemplate.update(sql, accountName, accountPassword, accountType.name());
     }
+
+    public List<Account> getAllTeamMembers() {
+        String sql = "SELECT * FROM accounts WHERE account_type = 'TEAM_MEMBER'";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Account account = new Account();
+            account.setAccountID(rs.getInt("account_id"));
+            account.setAccountName(rs.getString("account_name"));
+
+            // Hent 'account_type' fra databasen og konverter til enum
+            String accountTypeString = rs.getString("account_type");
+            Account.AccountType accountType = Account.AccountType.valueOf(accountTypeString);
+
+            account.setAccountType(accountType);
+            return account;
+        });
+    }
 }
