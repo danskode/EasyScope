@@ -11,7 +11,7 @@
   <input type="hidden" name="projectID" th:value="${project.projectID}" />
 
   <label for="name">Subproject name:</label>
-  <input type="text" id="name" name="subProjectName" required/>
+  <input type="text" id="name" name="subProjectName" required maxlength="25"/>
 
   <label for="description">Description:</label>
   <textarea id="description" name="subProjectDescription" required></textarea>

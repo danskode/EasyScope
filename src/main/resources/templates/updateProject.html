@@ -12,7 +12,7 @@
     <input type="hidden" name="projectID" th:value="${project.projectID}" /> <!-- This is hidden. -->
 
     <label for="projectName">Project Name:</label>
-    <input type="text" id="projectName" name="projectName" th:value="${project.projectName}" required>
+    <input type="text" id="projectName" name="projectName" th:value="${project.projectName}" required maxlength="25">
 
     <label for="projectDescription">Description:</label>
     <input type="text" id="projectDescription" name="projectDescription" th:value="${project.projectDescription}" required>

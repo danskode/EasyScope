@@ -9,15 +9,15 @@
 <h1>Update Task</h1>
 
 <!-- Formular til at opdatere task -->
-<form action="#" th:action="@{/update/{taskID}(taskID=${task.taskID})}" th:object="${task}" method="post">
+<form th:action="@{/projects/subporjects/tasks/update}" method="post">
     <!-- Skjult felt for taskID -->
-    <input type="hidden" th:field="*{taskID}" />
+    <input type="hidden" name="taskID" th:value="*{task.taskID}" />
 
-    <label for="taskName">Task Name:</label>
-    <input type="text" th:field="*{taskName}" required />
+    <label for="taskName">Name of the task:</label>
+    <input type="text" id="taskName" name="taskName" th:value="*{task.taskName}" required maxlength="25" />
 
     <label for="taskDescription">Task Description:</label>
-    <textarea th:field="*{taskDescription}" required></textarea>
+    <textarea id="taskDescription" name="taskDescription" th:text="*{task.taskDescription}" required></textarea>
 
     <label for="teamMember">Assign to Team Member:</label>
     <select id="teamMember" name="memberID">
@@ -28,13 +28,13 @@
     </select>
 
     <label for="estimatedHours">Estimated Hours:</label>
-    <input type="number" th:field="*{estimatedHours}" step="0.1" required />
+    <input type="number" id="estimatedHours" name="estimatedHours" th:value="*{task.estimatedHours}" step="0.1" required />
 
     <button type="submit">Update Task</button>
 </form>
 
 <!-- Tilbageknap -->
-<a th:href="@{/projects/subprojects/tasks/{taskID}(taskID=${task.taskID})}">
+<a th:href="@{/projects/subprojects/tasks/{projectID}/{subProjectID}(projectID=${subProject.projectID}, subProjectID=${task.subProjectID})}">
     <button>Back to Task List</button>
 </a>
 

@@ -32,8 +32,9 @@
     <td>Active</td>
     <td th:text="${task.estimatedHours != 0.0 ? task.estimatedHours : 'N/A'}">Estimated hours</td>
     <td>
-      <!-- Actions can go here (e.g. update task, etc.) -->
-    </td>
+      <a th:href="@{/projects/subprojects/tasks/update/{taskID}(taskID=${task.taskID})}">
+        <button>Update</button>
+      </a>    </td>
   </tr>
   </tbody>
 </table>
