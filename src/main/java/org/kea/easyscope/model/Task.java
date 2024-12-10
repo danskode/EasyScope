@@ -92,9 +92,10 @@ public class Task {
         return "Task{" +
                 "taskID=" + taskID +
                 ", taskName='" + taskName + '\'' +
-                ", description='" + taskDescription + '\'' +
+                ", taskDescription='" + taskDescription + '\'' +
+                ", taskIsFinished=" + taskIsFinished +
                 ", subProjectID=" + subProjectID +
+                ", estimatedHours=" + estimatedHours +
                 '}';
     }
-
 }

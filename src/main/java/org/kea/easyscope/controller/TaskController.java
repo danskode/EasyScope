@@ -96,21 +96,26 @@ public class TaskController {
         // Hent tasken fra databasen baseret på taskID
         Task task = taskService.getTaskByID(taskID);
 
+        SubProject subProject = subProjectService.getSubProjectBySubProjectID(task.getSubProjectID());
+
         // Hent alle teammedlemmer, hvis de skal vises i formularen
         List<Account> teamMembers = accountRepository.getAllTeamMembers();
 
         // Tilføj task og teamMembers til model, så de kan bruges i formularen
         model.addAttribute("task", task);
         model.addAttribute("teamMembers", teamMembers);
+        model.addAttribute("subProject", subProject);
+        //model.addAttribute("task", taskService.getTaskByID(taskID));
+        System.out.println("task: " + task);
 
         return "updateTask";
     }
 
-    @PostMapping("/update/{taskID}")
-    public String updateTask(@PathVariable int taskID,
-                             @ModelAttribute Task task,
+    @PostMapping("/update")
+    public String updateTask(@RequestParam int taskID,
                              @RequestParam int memberID,
-                             @RequestParam float estimatedHours) {
+                             @RequestParam float estimatedHours,
+                             @ModelAttribute Task task) {
         task.setTaskID(taskID);  // sørger for at taskID bliver sat korrekt
         taskService.updateTask(task, memberID, estimatedHours);
         return "redirect:/projects/subprojects/tasks/" + taskID;
