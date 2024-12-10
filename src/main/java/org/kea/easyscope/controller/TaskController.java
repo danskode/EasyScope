@@ -59,7 +59,6 @@ public class TaskController {
     @GetMapping("/create/{projectID}/{subProjectID}")
     public String showCreateTaskForm(@PathVariable int projectID,
                                      @PathVariable int subProjectID,
-                                     HttpSession session,
                                      Model model) {
 
         // add necessary data to the model
