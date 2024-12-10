@@ -15,6 +15,8 @@ public class Task {
     private float estimatedHours;
     private float realizedHours;
 
+    private Account assignedTo;
+
 
 
 
@@ -85,6 +87,14 @@ public class Task {
 
     public void setRealizedHours(float realizedHours) {
         this.realizedHours = realizedHours;
+    }
+
+    public Account getAssignedTo() {
+        return assignedTo;
+    }
+
+    public void setAssignedTo(Account assignedTo) {
+        this.assignedTo = assignedTo;
     }
 
     @Override
