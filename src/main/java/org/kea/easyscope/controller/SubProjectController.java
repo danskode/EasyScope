@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import org.kea.easyscope.model.Account;
 import org.kea.easyscope.model.Project;
 import org.kea.easyscope.model.SubProject;
+import org.kea.easyscope.repository.CalcRepository;
 import org.kea.easyscope.service.CalcService;
 import org.kea.easyscope.service.ProjectService;
 import org.kea.easyscope.service.SubProjectService;
@@ -34,6 +35,7 @@ public class SubProjectController {
     public String showSubProjectList(@PathVariable int projectID, Model model) {
         // retrieve a project based on project ID
         Project project = projectService.getProjectByProjectID(projectID);
+        CalcService cs = calcService;
 
         // if project is found
         if (project != null) {
@@ -42,6 +44,7 @@ public class SubProjectController {
             // send subProjects and project to the formular
             model.addAttribute("subProjects", subProjects);
             model.addAttribute("project", project);
+            model.addAttribute("cs", cs);
             return "subprojectList";
         } else {
             return "redirect:/projectList";

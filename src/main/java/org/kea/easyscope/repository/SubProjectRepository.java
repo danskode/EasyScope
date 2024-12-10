@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,18 +74,6 @@ public class SubProjectRepository {
                 Float totalRealizedHours = subProjectHoursRealizedMap.getOrDefault(subProjectID, 0.0F);
                 subProject.setTotalRealizedHours(totalRealizedHours);
 
-                // Set a notice according to deadline ...
-                long daysLeftOnTaskHours = (long) Math.ceil(totalEstimatedHours / 7);
-                // Add the correct number of days
-                LocalDate daysLeft = LocalDate.now().plusDays((long) daysLeftOnTaskHours);
-                // Check if the deadline is before or after the calculated days left
-                LocalDate deadline = subProject.getSubProjectDeadline();
-                if (deadline.isBefore(daysLeft)) {
-                    subProject.setDeadlineNotice("Attention! Behind deadline!");
-                }
-                if (deadline.isAfter(daysLeft)) {
-                    subProject.setDeadlineNotice("You are on schedule!");
-                }
                 return subProject;
             }
         });

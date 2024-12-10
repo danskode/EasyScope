@@ -26,7 +26,7 @@
     <td th:text="${subProject.subProjectName}">Name</td>
     <td th:text="${subProject.subProjectDescription}">Subproject description</td>
     <td th:text="${#temporals.format(subProject.subProjectDeadline, 'dd/MM/yyyy')}"></td>
-    <td th:text="${subProject.getDeadlineNotice()}" ></td>
+    <td th:text="${cs.giveNoticeAboutDeadline(subProject.subProjectID)}"></td>
     <td th:text="${subProject.getTotalEstimatedHours()}" ></td>
     <td th:text="${subProject.getTotalRealizedHours()}" ></td>
 
@@ -63,7 +63,6 @@
     <td th:text="${#temporals.format(subProject.subProjectDeadline, 'dd/MM/yyyy')}"></td>
     <td th:text="${subProject.getTotalEstimatedHours()}" ></td>
     <td th:text="${subProject.getTotalRealizedHours()}" ></td>
-
     <td>Finished</td>
     <td>
       <a th:href="@{/projects/subprojects/update/{subProjectID}(subProjectID=${subProject.subProjectID})}">
