@@ -6,6 +6,7 @@ import org.kea.easyscope.service.SubProjectService;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Repository
@@ -17,20 +18,31 @@ public class CalcRepository {
         this.subProjectService = subProjectService;
     }
 
-    public String giveNoticeAboutDeadline(int subProjectID) {
-        SubProject subProject = subProjectService.getSubProjectBySubProjectID(subProjectID);
-        if (subProject != null) {
-                LocalDate deadline = subProject.getSubProjectDeadline();
-                Long daysLeftOnTaskHours = ((long)subProject.getTotalEstimatedHours())/7;
-                LocalDate daysLeft = LocalDate.now().plusDays( daysLeftOnTaskHours);
+    // Working method to get a notice about deadline for tasks / subproject ...
+    public String giveNoticeAboutDeadline(SubProject subProject) {
 
-                if (deadline.isBefore(daysLeft)) {
-                    return "You need to add more team members to this assignment to make it within deadline!";
-                }
-                if (deadline.isAfter(daysLeft)) {
-                    return "You are on schedule!";
-                }
+       // if (subProject != null) {
+            LocalDate deadline = subProject.getSubProjectDeadline();
+            long daysLeftOnTaskHours = (long) Math.ceil(subProject.getTotalEstimatedHours() / 7);
+            LocalDate today = LocalDate.now();
+            LocalDate daysLeft = today.plusDays(daysLeftOnTaskHours);
+
+            // Define the formatter with the desired pattern
+            DateTimeFormatter europeanFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+            if(deadline.isBefore(daysLeft)) {
+                return "You need to add more team members to this assignment to make it within deadline! You will be finished at " + daysLeft.format(europeanFormatter);
             }
-        return "You are missing a subProjectID to continue";
+            if(deadline.isAfter(daysLeft)) {
+                return "You are on schedule! You will be finished at " + daysLeft.format(europeanFormatter);
+            }
+            if (deadline.isEqual(daysLeft)) {
+                return "You are RIGHT on schedule!";
+            }
+            else {
+                return "";
+            }
     }
+
+
 }

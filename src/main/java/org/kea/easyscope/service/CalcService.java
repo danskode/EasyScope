@@ -18,8 +18,8 @@ public class CalcService {
         this.calcRepository = calcRepository;
     }
 
-    public String giveNoticeAboutDeadline(int subProjectID){
-        return calcRepository.giveNoticeAboutDeadline(subProjectID);
+    public String giveNoticeAboutDeadline(SubProject subProject){
+        return calcRepository.giveNoticeAboutDeadline(subProject);
     }
 
     // Methode to sum up total of realized hours for all tasks  belonging to a subproject still active ...
