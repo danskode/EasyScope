@@ -15,6 +15,7 @@
     <th>Description</th>
     <th>Deadline</th>
     <th>Deadline Notice</th>
+    <th>Team Members</th>
     <th>Estimated Hours Left</th>
     <th>Total Hours Realized</th>
     <th>Status</th>
@@ -27,9 +28,8 @@
     <td th:text="${subProject.subProjectDescription}">Subproject description</td>
     <td th:text="${#temporals.format(subProject.subProjectDeadline, 'dd/MM/yyyy')}"></td>
     <td th:text="${cs.giveNoticeAboutDeadline(subProject)}"></td>
-<!--    <td th:text="${subProject.getTotalEstimatedHours()}" ></td>-->
+    <td th:text="${cs.numbersOfTeamMembersOnSubProject(subProject)}"></td>
     <td th:text="${cs.getTotalHoursForASubProject(subProject)}" ></td>
-<!--    <td th:text="${subProject.getTotalRealizedHours()}" ></td>-->
     <td th:text="${cs.getTotalHoursRealizedForASubProject(subProject)}" ></td>
 
     <td>Active</td>

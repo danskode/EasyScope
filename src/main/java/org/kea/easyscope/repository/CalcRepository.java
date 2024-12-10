@@ -23,30 +23,36 @@ public class CalcRepository {
     // Working method to get a notice about deadline for tasks / subproject ...
     public String giveNoticeAboutDeadline(SubProject subProject) {
 
-       // if (subProject != null) {
-            LocalDate deadline = subProject.getSubProjectDeadline();
-            long daysLeftOnTaskHours = (long) Math.ceil(subProject.getTotalEstimatedHours() / 7);
-            LocalDate today = LocalDate.now();
-            LocalDate daysLeft = today.plusDays(daysLeftOnTaskHours);
+        // Get numbers of team members associated with sub project ...
+        int numMembers = numbersOfTeamMembersOnSubProject(subProject);
+        System.out.println(numMembers);
 
-            // Define the formatter with the desired pattern
-            DateTimeFormatter europeanFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        // Each team member can work for 7 hours a day
+        numMembers = numMembers * 7;
 
-            if(deadline.isBefore(daysLeft)) {
-                return "You need to add more team members to this assignment to make it within deadline! You will be finished at " + daysLeft.format(europeanFormatter);
-            }
-            if(deadline.isAfter(daysLeft)) {
-                return "You are on schedule! You will be finished at " + daysLeft.format(europeanFormatter);
-            }
-            if (deadline.isEqual(daysLeft)) {
-                return "You are RIGHT on schedule!";
-            }
-            else {
-                return "";
-            }
+        LocalDate deadline = subProject.getSubProjectDeadline();
+        long daysLeftOnTaskHours = (long) Math.ceil(getTotalHoursForASubProject(subProject) / numMembers );
+        LocalDate today = LocalDate.now();
+        LocalDate daysLeft = today.plusDays(daysLeftOnTaskHours);
+
+        // Define the date format ...
+        DateTimeFormatter europeanFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        if(deadline.isBefore(daysLeft)) {
+            return "You need to add more team members to this assignment to make it within deadline! You will be finished at " + daysLeft.format(europeanFormatter);
+        }
+        if(deadline.isAfter(daysLeft)) {
+            return "You are on schedule! You will be finished at " + daysLeft.format(europeanFormatter);
+        }
+        if (deadline.isEqual(daysLeft)) {
+            return "You are RIGHT on schedule!";
+        }
+        else {
+            return "";
+        }
     }
 
-    // Sum up all hours left (estimated) for a subproject and see if a project is on track ...
+    // Sum up all hours left (estimated) for a subproject and see if a project is on track dived by numbers of team members associated with sub project ...
     public boolean isAnyTasksInProjectExceedingDeadline(Project project) {
         int projectID = project.getProjectID();
 
@@ -62,10 +68,10 @@ public class CalcRepository {
         // Execute the query
         List<Map<String, Object>> results = jdbcTemplate.queryForList(sql, projectID);
 
-        // Current date
+        // Current date ...
         LocalDate currentDate = LocalDate.now();
 
-        // Iterate over the results and check if any sub-project exceeds its deadline
+        // Iterate over the results and check if any sub-project exceeds its deadline ...
         for (Map<String, Object> row : results) {
             LocalDate subProjectDeadline = ((java.sql.Date) row.get("sub_project_deadline")).toLocalDate();
             long totalEstimatedHours = ((Number) row.get("total_estimated_hours")).longValue();
@@ -91,8 +97,8 @@ public class CalcRepository {
                 "FROM task_hours_estimated the " +
                 "JOIN task t ON the.task_id_fk = t.task_id " +
                 "JOIN sub_project sp ON t.sub_project_id_fk = sp.sub_project_id " +
-                "WHERE t.sub_project_id_fk = ? AND sp.sub_project_is_finished=0 AND t.task_is_finished=0";
-
+                "WHERE t.sub_project_id_fk = ? AND t.task_is_finished=0";
+//                "WHERE t.sub_project_id_fk = ? AND sp.sub_project_is_finished=0 AND t.task_is_finished=0";
         //Here's a list to collect all estemated hours per task for subproject ...
         List<Float> totalHoursEstimatedOnSubProject = new ArrayList<>();
 
@@ -125,7 +131,7 @@ public class CalcRepository {
 
         // Here we do the sql magic with a Lampda for the total hours estimated part ...
         jdbcTemplate.query(sql, new Object[]{subProjectID}, (rs) -> {
-            Float totalHours = rs.getFloat("task_hours_realizeded");
+            Float totalHours = rs.getFloat("task_hours_realized");
             totalHoursRealizedOnSubProject.add(totalHours);
         });
 
@@ -135,6 +141,23 @@ public class CalcRepository {
             totalHoursRealizedForSubProject += throsp;
         }
         return totalHoursRealizedForSubProject;
+    }
+
+    // Count numbers of team members associated with a specific subproject ...
+    public int numbersOfTeamMembersOnSubProject(SubProject subProject) {
+        int subProjectID = subProject.getSubProjectID();
+
+        String sql =    "SELECT COUNT(DISTINCT the.account_id_fk) AS distinct_account_count " +
+                        "FROM task_hours_estimated the " +
+                        "JOIN task t ON the.task_id_fk = t.task_id " +
+                        "JOIN sub_project sp ON t.sub_project_id_fk = sp.sub_project_id " +
+                        "WHERE sp.sub_project_id = ? AND t.task_is_finished=0";
+
+        // Query for a single result ...
+        Integer distinctAccountCount = jdbcTemplate.queryForObject(sql, new Object[]{subProjectID}, Integer.class);
+
+        // If no accounts are found, return 1 to not break math ...
+        return distinctAccountCount != null ? distinctAccountCount : 1;
     }
 
 }

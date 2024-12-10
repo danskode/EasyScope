@@ -38,4 +38,8 @@ public class CalcService {
     public float getTotalHoursRealizedForASubProject(SubProject subProject){
         return calcRepository.getTotalHoursRealizedForASubProject(subProject);
     }
+
+    public int numbersOfTeamMembersOnSubProject(SubProject subProject){
+        return calcRepository.numbersOfTeamMembersOnSubProject(subProject);
+    }
 }
