@@ -25,7 +25,7 @@ public class TaskService {
     }
 
     public Task getTaskByID(int TaskID){
-        return taskRepository.getTaskById(TaskID);
+        return taskRepository.getTaskByID(TaskID);
     }
 
     public Task updateTask(Task task, int memberID, float estimatedHours){
