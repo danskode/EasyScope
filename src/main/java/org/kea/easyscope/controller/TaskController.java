@@ -21,56 +21,59 @@ public class TaskController {
     private final SubProjectService subProjectService;
     private final AccountRepository accountRepository;
 
+    // constructor for dependency injection
     public TaskController(TaskService taskService, SubProjectService subProjectService, AccountRepository accountRepository) {
         this.taskService = taskService;
         this.subProjectService = subProjectService;
         this.accountRepository = accountRepository;
     }
 
+    // method to display the list of tasks for a given project and subproject
     @GetMapping("/{projectID}/{subProjectID}")
     public String showTasksList(@PathVariable int projectID,
                                 @PathVariable int subProjectID,
                                 Model model) {
-        // Retrieve the subproject based on subProjectID
+        // retrieve the subproject based on subProjectID
         SubProject subProject = subProjectService.getSubProjectBySubProjectID(subProjectID);
 
         if (subProject != null) {
-            // Fetch tasks associated with the subProjectID
+            // fetch tasks associated with the subProjectID
             List<Task> tasks = taskService.getTasksBySubProjectID(subProjectID);
 
-            // Add tasks and subProject to the model
+            // add tasks and subProject to the model for the view
             model.addAttribute("tasks", tasks);
             model.addAttribute("subProject", subProject);
 
-            // Add projectID to the model for the back button functionality
+            // add projectID to the model for the back button functionality
             model.addAttribute("projectID", projectID);
 
-            // Return the taskList view
+            // return the task list view
             return "taskList";
         } else {
-            // Redirect to the subproject list if subProject is not found
+            // redirect to the subproject list if the subProject is not found
             return "redirect:/subprojectList";
         }
     }
 
+    // method to show the form to create a new task
     @GetMapping("/create/{projectID}/{subProjectID}")
     public String showCreateTaskForm(@PathVariable int projectID,
                                      @PathVariable int subProjectID,
-                                     HttpSession session,
                                      Model model) {
 
-        // Tilføj kun de nødvendige data til modellen
+        // add necessary data to the model
         model.addAttribute("projectID", projectID);
         model.addAttribute("subProjectID", subProjectID);
 
-        // Hent teammedlemmer og tilføj dem til modellen
+        // retrieve team members and add them to the model for selection in the form
         List<Account> teamMembers = accountRepository.getAllTeamMembers();
-
         model.addAttribute("teamMembers", teamMembers);
 
-        return "createTask"; // Returnerer view, der skal vise formularen
+        // return the view that will show the create task form
+        return "createTask";
     }
 
+    // method to create a new task after the form is submitted
     @PostMapping("/create")
     public String createTask(@RequestParam int projectID,
                              @RequestParam int subProjectID,
@@ -78,78 +81,67 @@ public class TaskController {
                              @RequestParam String taskName,
                              @RequestParam String taskDescription,
                              @RequestParam float estimatedHours) {
-        // Opret task objekt
+        // create a new task object
         Task task = new Task();
         task.setTaskName(taskName);
         task.setTaskDescription(taskDescription);
         task.setSubProjectID(subProjectID);
 
-        // Brug repository til at oprette task og tildele medlemmet
+        // use the service to create the task and assign the team member
         taskService.createNewTask(task, accountID, estimatedHours);
 
-        // Redirect tilbage til tasks-listen
+        // redirect back to the task list for the given project and subproject
         return "redirect:/projects/subprojects/tasks/" + projectID + "/" + subProjectID;
     }
 
+    // method to show the page where the task can be updated
     @GetMapping("/update/{taskID}")
     public String showUpdateTaskPage(@PathVariable int taskID, Model model) {
-        // Hent tasken fra databasen baseret på taskID
+        // fetch the task from the database based on taskID
         Task task = taskService.getTaskByID(taskID);
 
+        // retrieve the subproject related to the task
         SubProject subProject = subProjectService.getSubProjectBySubProjectID(task.getSubProjectID());
 
-        // Hent alle teammedlemmer, hvis de skal vises i formularen
+        // fetch all team members, if they need to be displayed in the update form
         List<Account> teamMembers = accountRepository.getAllTeamMembers();
 
-        // Tilføj task og teamMembers til model, så de kan bruges i formularen
+        // add the task, team members, and subproject to the model for the update form
         model.addAttribute("task", task);
         model.addAttribute("teamMembers", teamMembers);
         model.addAttribute("subProject", subProject);
 
+        // return the update task page
         return "updateTask";
     }
 
+    // method to update the task after the form is submitted
     @PostMapping("/update")
     public String updateTask(@RequestParam int taskID,
                              @RequestParam int memberID,
                              @RequestParam float estimatedHours,
+                             @RequestParam int projectID,
+                             @RequestParam int subProjectID,
                              @ModelAttribute Task task) {
-        task.setTaskID(taskID);  // sørger for at taskID bliver sat korrekt
+        // set the taskID to the task object
+        task.setTaskID(taskID);
+
+        // update the task using the service method
         taskService.updateTask(task, memberID, estimatedHours);
-        return "redirect:/projects/subprojects/tasks/" + taskID;
+
+        // redirect back to the task list for the given project and subproject
+        return "redirect:/projects/subprojects/tasks/" + projectID + "/" + subProjectID;
     }
 
-    // DELETE ON CASCADE DATABASE
+    // method to delete a task
     @PostMapping("/delete")
     public String deleteTask(@RequestParam int taskID,
                              @RequestParam int projectID,
                              @RequestParam int subProjectID) {
-        taskService.deleteTaskByID(taskID); // Slet tasken fra databasen
+        // delete the task by its ID using the service
+        taskService.deleteTaskByID(taskID);
+
+        // redirect back to the task list for the given project and subproject
         return "redirect:/projects/subprojects/tasks/" + projectID + "/" + subProjectID;
     }
-
-//    @PostMapping("/delete/{taskID}")
-//    public String deleteTask(@PathVariable int taskID) {
-//        // Kald service-metoden, der håndterer sletningen
-//        taskService.deleteTask(taskID);
-//
-//        return "redirect:/projects/subprojects/tasks/";
-//    }
-
-
-//
-//    @PostMapping("/delete/{taskID}")
-//    public String deleteTask(@PathVariable int taskID) {
-//        // Tjek om der er tilknyttede realized hours
-//        if (taskService.hasRealizedHours(taskID)) {
-//            // Hvis der er realized hours, kan du ikke slette tasken
-//            return "redirect:/projects/subprojects/tasks?error=taskHasRealizedHours";
-//        }
-//
-//        // Hvis der ikke er realized hours, slet tasken
-//        taskService.deleteTask(taskID);
-//        return "redirect:/projects/subprojects/tasks/";
-//    }
-
-
 }

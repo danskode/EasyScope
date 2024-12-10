@@ -9,9 +9,11 @@
 <h1>Update Task</h1>
 
 <!-- Formular til at opdatere task -->
-<form th:action="@{/projects/subporjects/tasks/update}" method="post">
+<form th:action="@{/projects/subprojects/tasks/update}" method="post">
     <!-- Skjult felt for taskID -->
     <input type="hidden" name="taskID" th:value="*{task.taskID}" />
+    <input type="hidden" name="subProjectID" th:value="*{task.subProjectID}" />
+    <input type="hidden" name="projectID" th:value="*{subProject.projectID}" />
 
     <label for="taskName">Name of the task:</label>
     <input type="text" id="taskName" name="taskName" th:value="*{task.taskName}" required maxlength="25" />
