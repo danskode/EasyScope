@@ -15,7 +15,7 @@
         <div class="grid-item" th:if="${account != null}">
             <h1>Welcome, <span th:text="${account.accountName}">!</span></h1>
             <p>You're logged in as <span th:if="${account != null}" th:text="${account.accountType.getAccountTypeName()}">...</span></p>
-            <a href="/account">See your account details</a>
+            <a href="/account/edit">See and edit your account details</a>
             <a href="/logout">Logout</a>
         </div>
 
@@ -48,7 +48,6 @@
             <ul>
                 <li><a href="/adm/accounts/list">All accounts</a></li>
                 <li><a href="/adm/accounts/add">Add new account</a></li>
-                <li><a href="/projects/list">All projects</a></li>
             </ul>
         </div>
         <!-- Section for project managers -->
