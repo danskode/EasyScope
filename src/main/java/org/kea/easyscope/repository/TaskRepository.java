@@ -133,6 +133,7 @@ public class TaskRepository {
             WHERE task_id_fk = ?
             """;
 
+
         // Updates the tasks info
         jdbcTemplate.update(updateTaskSQL, task.getTaskName(), task.getTaskDescription(), task.getSubProjectID(), task.getTaskID());
         // updates the team member
