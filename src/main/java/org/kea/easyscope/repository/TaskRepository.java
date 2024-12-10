@@ -1,5 +1,6 @@
 package org.kea.easyscope.repository;
 
+import org.kea.easyscope.model.Account;
 import org.kea.easyscope.model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -19,15 +20,18 @@ public class TaskRepository {
 
     // this method retrieves all the task for a specific subproject
     public List<Task> getTasksBySubProjectID(int subProjectID) {
-        // SQL-query for at hente task-data sammen med hours_estimated og hours_realized
+        // SQL-query for at hente task-data sammen med hours_estimated, hours_realized og assignedTo
         String sql = """
         SELECT t.task_id, t.task_name, t.task_description, t.task_is_finished, 
                t.sub_project_id_fk, 
                thr.task_hours_realized, 
-               the.task_hours_estimated
+               the.task_hours_estimated,
+               a.account_id, a.account_name AS account_name
         FROM task t
         LEFT JOIN task_hours_realized thr ON t.task_id = thr.task_id_fk
         LEFT JOIN task_hours_estimated the ON t.task_id = the.task_id_fk
+        LEFT JOIN task_member tm ON t.task_id = tm.task_id_fk
+        LEFT JOIN accounts a ON tm.account_id_fk = a.account_id
         WHERE t.sub_project_id_fk = ?
     """;
 
@@ -44,9 +48,18 @@ public class TaskRepository {
             task.setRealizedHours(rs.getFloat("task_hours_realized")); // Kan være NULL
             task.setEstimatedHours(rs.getFloat("task_hours_estimated")); // Kan være NULL
 
+            // Tildel det tildelte medlem, hvis der er en
+            if (rs.getInt("account_id") != 0) { // Tjek for NULL eller tomme værdier
+                Account assignedTo = new Account();
+                assignedTo.setAccountID(rs.getInt("account_id"));
+                assignedTo.setAccountName(rs.getString("account_name"));
+                task.setAssignedTo(assignedTo);
+            }
+
             return task;
         });
     }
+
 
     // a project manager can assign a task to a team member -- bliver ikke brugt endnu
     public void assignTaskToMember(int taskID, int accountID) {
