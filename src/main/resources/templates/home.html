@@ -51,6 +51,16 @@
                 <li><a href="/projects/list">All projects</a></li>
             </ul>
         </div>
+        <!-- Section for project managers -->
+        <div>
+            <div class="grid-item" th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'project manager'}">
+                <h2>Project manager menu</h2>
+                <ul>
+                    <li><a href="/projects/list">All your projects</a></li>
+                    <li><a href="/projects/create">Add a new project</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 
