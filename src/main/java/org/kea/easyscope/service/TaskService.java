@@ -32,6 +32,13 @@ public class TaskService {
         return taskRepository.updateTask(task, memberID, estimatedHours);
     }
 
+    public void deleteTaskByID(int taskID) {
+        taskRepository.deleteTaskMembers(taskID);
+        taskRepository.deleteTaskHoursRealized(taskID);
+
+        taskRepository.deleteTask(taskID);
+    }
+
 
 
 
