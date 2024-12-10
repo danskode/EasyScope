@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Clients | Projects</title>
+    <title>Clients/Projects</title>
 </head>
 <body>
 
-<h1>These are your clients | projects!</h1>
+<h1>These are your clients/projects!</h1>
 
 <h2>Active</h2>
 <table border="1">
     <tr>
         <th>Project | Client</th>
         <th>Description</th>
-        <th>Warnings</th>
+        <th>Progress Status</th>
         <th>Status</th>
         <th>Actions</th>
     </tr>
@@ -23,8 +23,8 @@
             th:each="project : ${projects}" th:if="${!project.finished}">
         <td th:text="${project.projectName}">Client</td>
         <td th:text="${project.projectDescription}">Project description</td>
-        <td th:if="${cs.isAnyTasksInProjectExceedingDeadline(project)}">You're on track with client / project</td>
-        <td th:if="${!cs.isAnyTasksInProjectExceedingDeadline(project)}">Estimated hours left exceeds a deadline!</td>
+        <td th:if="${!cs.isAnyTasksInProjectExceedingDeadline(project)}">You're on track with client / project</td>
+        <td th:if="${cs.isAnyTasksInProjectExceedingDeadline(project)}">Estimated hours left exceeds a deadline!</td>
         <td>Active</td>
         <td>
             <a th:href="@{/projects/update/{projectID}(projectID=${project.projectID})}">Update</a>
