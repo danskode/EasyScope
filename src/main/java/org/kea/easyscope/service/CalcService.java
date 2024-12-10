@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CalcService {
@@ -18,6 +20,7 @@ public class CalcService {
         this.calcRepository = calcRepository;
     }
 
+    // Add deadline feedback to subprojectList.html
     public String giveNoticeAboutDeadline(SubProject subProject){
         return calcRepository.giveNoticeAboutDeadline(subProject);
     }
