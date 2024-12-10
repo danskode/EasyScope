@@ -3,6 +3,7 @@ package org.kea.easyscope.controller;
 import jakarta.servlet.http.HttpSession;
 import org.kea.easyscope.model.Account;
 import org.kea.easyscope.model.Project;
+import org.kea.easyscope.service.CalcService;
 import org.kea.easyscope.service.ProjectService;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Controller;
@@ -18,11 +19,13 @@ public class ProjectController {
     // declares a ProjectService to interact with the Service layer
     private final ProjectService projectService;
     private final ChatClient chatClient;
+    private final CalcService calcService;
 
     // constructor to inject the ProjectService dependency
-    public ProjectController(ProjectService projectService, ChatClient chatClient) {
+    public ProjectController(ProjectService projectService, ChatClient chatClient, CalcService calcService) {
         this.projectService = projectService;
         this.chatClient = chatClient;
+        this.calcService = calcService;
     }
 
     // a GET method to show the "createProject" html
@@ -124,12 +127,15 @@ public class ProjectController {
     public String showProjectList(HttpSession session, Model model) {
         // get the account from the ongoing session
         Account account = (Account) session.getAttribute("account");
+        CalcService cs = calcService;
 
         if (account != null) {
             // get the list of projects associated with the logged in account
             List<Project> projects = projectService.getProjectFromAccountID(account.getAccountID());
             // add the list of projects to the model for use in html
             model.addAttribute("projects", projects);
+            //make calcService available in thymeleaf ...
+            model.addAttribute("cs", cs);
             // return the html where the projects are listed
             return "projectList";
         } else {

@@ -26,6 +26,13 @@ public class CalcService {
     }
 
     // Methode to sum up total of realized hours for all tasks  belonging to a subproject still active ...
+    public float getTotalHoursForASubProject(SubProject subProject){
+        return calcRepository.getTotalHoursForASubProject(subProject);
+    }
+
+    public boolean isAnyTasksInProjectExceedingDeadline(Project project){
+        return calcRepository.isAnyTasksInProjectExceedingDeadline(project);
+    }
 
     // Methode to sum up total of realized hours for all tasks  belonging to a subproject been archived/finished ...
 

@@ -48,23 +48,42 @@ public class CalcRepository {
             }
     }
 
+    // Check deadline for a subProject against active tasks estimated hours...
+
+    // Sum up all hours left (Estimated) for a subproject ...
+    public boolean isAnyTasksInProjectExceedingDeadline(Project project) {
+        int projectID = project.getProjectID();
+        String sql ="SELECT 1 FROM project p " +
+                    "JOIN sub_project sp ON p.project_id = sp.project_id_fk " +
+                    "JOIN task t ON sp.sub_project_id = t.sub_project_id_fk " +
+                    "JOIN task_hours_estimated the ON t.task_id = the.task_id_fk " +
+                    "WHERE p.project_id = ? AND sp.sub_project_is_finished=0 " +
+                    "GROUP BY sp.sub_project_id " +
+                    "HAVING sp.sub_project_deadline < DATEADD('DAY', CEIL(SUM(the.task_hours_estimated) / 7), CURRENT_DATE)";
+
+        List<Map<String, Object>> results = jdbcTemplate.queryForList(sql, projectID);
+        System.out.println(results);
+        // If any row is returned, at least one sub-project is behind schedule
+        return results.isEmpty(); // Returns true if on schedule, false if any sub-project is behind
+    }
+
     // Sum up all hours left (Estimated) for a subproject ...
     public float getTotalHoursForASubProject(SubProject subProject){
         int subProjectID = subProject.getSubProjectID();
         // SQL statement to get all active tasks' estimated hours from a specific subProjectID ...
-        String sql="SELECT t.task_id, the.task_hours_estimated " +
-                "FROM task " +
-                "JOIN sub_project sp " +
-                "JOIN task_hours_estimated the " +
-                "WHERE t.sub_project_id_fk=? AND the.task_id_fk=t.task_id";
+        String sql = "SELECT the.task_hours_estimated " +
+                "FROM task_hours_estimated the " +
+                "JOIN task t ON the.task_id_fk = t.task_id " +
+                "JOIN sub_project sp ON t.sub_project_id_fk = sp.sub_project_id " +
+                "WHERE t.sub_project_id_fk = ?";
 
         // Here we use a (Hash)Map to save the SUM'med total hours above into from every subproject (id is the int)
         // Map<Integer, Float> subProjectHoursMap = new HashMap<>();
         List<Float> totalHoursEstimatedOnSubProject = new ArrayList<>();
 
         // Here we do the sql magic with a Lampda for the total hours estimated part ...
-        jdbcTemplate.query(sql, new Object[]{}, (rs) -> {
-            Float totalHours = rs.getFloat("total_estimated_hours");
+        jdbcTemplate.query(sql, new Object[]{subProjectID}, (rs) -> {
+            Float totalHours = rs.getFloat("task_hours_estimated");
             totalHoursEstimatedOnSubProject.add(totalHours);
         });
 
