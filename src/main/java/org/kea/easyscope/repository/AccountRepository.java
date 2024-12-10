@@ -113,4 +113,16 @@ public class AccountRepository {
             return account;
         });
     }
+
+    public Account getTeamMemberByTaskID(int taskID) {
+        String sql = "SELECT a.* FROM accounts a JOIN task_member tm ON a.account_id = tm.account_id_fk WHERE tm.task_id_fk = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[] { taskID },
+                (rs, rowNum) -> {
+                    Account account = new Account();
+                    account.setAccountID(rs.getInt("account_id"));
+                    account.setAccountName(rs.getString("name"));
+
+                    return account;
+                });
+    }
 }

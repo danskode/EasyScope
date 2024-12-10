@@ -33,4 +33,12 @@ public class AccountService {
     public void addAccount(String accountName, String accountPassword, Account.AccountType accountType) {
         accountRepository.addAccount(accountName, accountPassword, accountType);
     }
+
+    public List <Account> getAllTeamMembers(){
+        return accountRepository.getAllTeamMembers();
+    }
+
+    public Account getTeamMemberByTaskID(int taskID) {
+        return accountRepository.getTeamMemberByTaskID(taskID);
+    }
 }

@@ -5,6 +5,7 @@ import org.kea.easyscope.model.Account;
 import org.kea.easyscope.model.SubProject;
 import org.kea.easyscope.model.Task;
 import org.kea.easyscope.repository.AccountRepository;
+import org.kea.easyscope.service.AccountService;
 import org.kea.easyscope.service.SubProjectService;
 import org.kea.easyscope.service.TaskService;
 import org.springframework.stereotype.Controller;
@@ -19,13 +20,13 @@ public class TaskController {
 
     private final TaskService taskService;
     private final SubProjectService subProjectService;
-    private final AccountRepository accountRepository;
+    private final AccountService accountService;
 
     // constructor for dependency injection
-    public TaskController(TaskService taskService, SubProjectService subProjectService, AccountRepository accountRepository) {
+    public TaskController(TaskService taskService, SubProjectService subProjectService, AccountService accountService) {
         this.taskService = taskService;
         this.subProjectService = subProjectService;
-        this.accountRepository = accountRepository;
+        this.accountService = accountService;
     }
 
     // method to display the list of tasks for a given project and subproject
@@ -35,6 +36,7 @@ public class TaskController {
                                 Model model) {
         // retrieve the subproject based on subProjectID
         SubProject subProject = subProjectService.getSubProjectBySubProjectID(subProjectID);
+
 
         if (subProject != null) {
             // fetch tasks associated with the subProjectID
@@ -66,7 +68,7 @@ public class TaskController {
         model.addAttribute("subProjectID", subProjectID);
 
         // retrieve team members and add them to the model for selection in the form
-        List<Account> teamMembers = accountRepository.getAllTeamMembers();
+        List<Account> teamMembers = accountService.getAllTeamMembers();
         model.addAttribute("teamMembers", teamMembers);
 
         // return the view that will show the create task form
@@ -104,7 +106,7 @@ public class TaskController {
         SubProject subProject = subProjectService.getSubProjectBySubProjectID(task.getSubProjectID());
 
         // fetch all team members, if they need to be displayed in the update form
-        List<Account> teamMembers = accountRepository.getAllTeamMembers();
+        List<Account> teamMembers = accountService.getAllTeamMembers();
 
         // add the task, team members, and subproject to the model for the update form
         model.addAttribute("task", task);
