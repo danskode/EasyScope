@@ -15,8 +15,6 @@
         <div class="grid-item" th:if="${account != null}">
             <h1>Welcome, <span th:text="${account.accountName}">!</span></h1>
             <p>You're logged in as <span th:if="${account != null}" th:text="${account.accountType.getAccountTypeName()}">...</span></p>
-            <a href="/account">See your account details</a>
-            <a href="/logout">Logout</a>
         </div>
 
         <!-- Login Form Section (for non-logged-in users) -->
@@ -46,10 +44,35 @@
         <div class="grid-item" th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'admin'}">
             <h2>Admin menu</h2>
             <ul>
-                <li><a href="/adm/accounts/list">All accounts</a></li>
+                <li><a href="/adm/accounts/list">See all non admin accounts</a></li>
                 <li><a href="/adm/accounts/add">Add new account</a></li>
-                <li><a href="/projects/list">All projects</a></li>
+                <li><a href="/account/edit">Edit your account details</a></li>
+                <li><a href="/logout">Log out</a></li>
             </ul>
+        </div>
+        <!-- Section for project managers -->
+        <div>
+            <div class="grid-item" th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'project manager'}">
+                <h2>Project manager menu</h2>
+                <ul>
+                    <li><a href="/projects/list">See all your projects</a></li>
+                    <li><a href="/projects/create">Add a new project</a></li>
+                    <li><a href="/account/edit">Edit your account details</a></li>
+                    <li><a href="/logout">Log out</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Section for team members -->
+        <div>
+            <div class="grid-item" th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'team member'}">
+                <h2>Team member menu</h2>
+                <ul>
+                    <li><a href="#">See all your open tasks</a></li>
+                    <li><a href="#">See all your finished tasks</a></li>
+                    <li><a href="/account/edit">Edit your account details</a></li>
+                    <li><a href="/logout">Log out</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

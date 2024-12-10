@@ -30,14 +30,13 @@ public class SessionController {
         model.addAttribute("account", account);
         // Send the visitor back to home.html ....
         return "home";
-
     }
 
     // First we start a session and add an account to it ...
     @GetMapping(value = {"/login", "/login/"})
     public String showLogin(){
         // Show the login.html page ...
-        return "login";
+        return "redirect:/";
     }
 
     // Then we add the postmapping method to manage the input from the form on login.html ...
@@ -55,7 +54,7 @@ public class SessionController {
             redirectAttributes.addFlashAttribute("error", "Invalid account or password");
             //model.addAttribute("error", "Invalid account or password");
             // The visitor failed to provide the right credentials, so they have to try again. Back to start ... or almost ... back to login.html ...
-            return "redirect:/login";
+            return "redirect:/";
         }
     }
 

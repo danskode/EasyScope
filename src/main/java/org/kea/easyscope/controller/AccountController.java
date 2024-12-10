@@ -19,29 +19,29 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @GetMapping(value = {"", "/"})
-    public String showAccount(HttpSession session, Model model) {
-        Account account = (Account) session.getAttribute("account");
-
-        // Set a variable to check if account should have access to creat projects ...
-        if (account == null) {
-            return "redirect:/login";
-        } else {
-
-            boolean canCreateProject = (account.getAccountType() == Account.AccountType.PROJECT_MANAGER) || (account.getAccountType() == Account.AccountType.ADMIN);
-            // First is for TRUE ...
-            if (account != null && canCreateProject) {
-                model.addAttribute("account", account);
-                model.addAttribute("canCreateProject", canCreateProject);
-                return "account";
-            }
-            // Then if FALSE ...
-            else {
-                model.addAttribute("account", account);
-                return "account";
-            }
-        }
-    }
+//    @GetMapping(value = {"", "/"})
+//    public String showAccount(HttpSession session, Model model) {
+//        Account account = (Account) session.getAttribute("account");
+//
+//        // Set a variable to check if account should have access to creat projects ...
+//        if (account == null) {
+//            return "redirect:/";
+//        } else {
+//
+//            boolean canCreateProject = (account.getAccountType() == Account.AccountType.PROJECT_MANAGER) || (account.getAccountType() == Account.AccountType.ADMIN);
+//            // First is for TRUE ...
+//            if (account != null && canCreateProject) {
+//                model.addAttribute("account", account);
+//                model.addAttribute("canCreateProject", canCreateProject);
+//                return "account";
+//            }
+//            // Then if FALSE ...
+//            else {
+//                model.addAttribute("account", account);
+//                return "account";
+//            }
+//        }
+//    }
 
     @GetMapping(value = {"/edit", "/edit/"})
     public String showEditAccount(HttpSession session, Model model) {
@@ -57,7 +57,7 @@ public class AccountController {
             model.addAttribute("account", account);
             return "accountedit";
         } else {
-            return "redirect:/login";
+            return "redirect:/";
         }
     }
 }
