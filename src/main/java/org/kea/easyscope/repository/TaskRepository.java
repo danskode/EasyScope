@@ -144,8 +144,14 @@ public class TaskRepository {
         return task;
     }
 
-    public Task getTaskById(int taskID) {
-        String sql = "SELECT * FROM task WHERE task_id = ?";
+    public Task getTaskByID(int taskID) {
+        String sql = """
+        SELECT t.task_id, t.task_name, t.task_description, t.task_is_finished, t.sub_project_id_fk,
+               the.task_hours_estimated
+        FROM task t
+        LEFT JOIN task_hours_estimated the ON t.task_id = the.task_id_fk
+        WHERE t.task_id = ?
+        """;
 
         return jdbcTemplate.queryForObject(sql, new Object[]{taskID}, (rs, rowNum) -> {
             Task task = new Task();
@@ -154,6 +160,8 @@ public class TaskRepository {
             task.setTaskDescription(rs.getString("task_description"));
             task.setTaskIsFinished(rs.getBoolean("task_is_finished"));
             task.setSubProjectID(rs.getInt("sub_project_id_fk"));
+            // from "mellemtabel" task_hours_estimated
+            task.setEstimatedHours(rs.getFloat("task_hours_estimated"));
             return task;
         });
     }
