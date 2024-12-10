@@ -105,8 +105,6 @@ public class TaskController {
         model.addAttribute("task", task);
         model.addAttribute("teamMembers", teamMembers);
         model.addAttribute("subProject", subProject);
-        //model.addAttribute("task", taskService.getTaskByID(taskID));
-        System.out.println("task: " + task);
 
         return "updateTask";
     }
@@ -120,6 +118,38 @@ public class TaskController {
         taskService.updateTask(task, memberID, estimatedHours);
         return "redirect:/projects/subprojects/tasks/" + taskID;
     }
+
+    // DELETE ON CASCADE DATABASE
+    @PostMapping("/delete")
+    public String deleteTask(@RequestParam int taskID,
+                             @RequestParam int projectID,
+                             @RequestParam int subProjectID) {
+        taskService.deleteTaskByID(taskID); // Slet tasken fra databasen
+        return "redirect:/projects/subprojects/tasks/" + projectID + "/" + subProjectID;
+    }
+
+//    @PostMapping("/delete/{taskID}")
+//    public String deleteTask(@PathVariable int taskID) {
+//        // Kald service-metoden, der håndterer sletningen
+//        taskService.deleteTask(taskID);
+//
+//        return "redirect:/projects/subprojects/tasks/";
+//    }
+
+
+//
+//    @PostMapping("/delete/{taskID}")
+//    public String deleteTask(@PathVariable int taskID) {
+//        // Tjek om der er tilknyttede realized hours
+//        if (taskService.hasRealizedHours(taskID)) {
+//            // Hvis der er realized hours, kan du ikke slette tasken
+//            return "redirect:/projects/subprojects/tasks?error=taskHasRealizedHours";
+//        }
+//
+//        // Hvis der ikke er realized hours, slet tasken
+//        taskService.deleteTask(taskID);
+//        return "redirect:/projects/subprojects/tasks/";
+//    }
 
 
 }

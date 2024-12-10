@@ -167,5 +167,25 @@ public class TaskRepository {
     }
 
 
+    // Delete methods
+    // delete task_id foreign key from tabels before you delete a task
+    public void deleteTaskMembers(int taskID) {
+        String sql = "DELETE FROM task_member WHERE task_id_fk = ?";
+        jdbcTemplate.update(sql, taskID);
+    }
+
+    public void deleteTaskHoursRealized(int taskID) {
+        String sql = "DELETE FROM task_hours_realized WHERE task_id_fk = ?";
+        jdbcTemplate.update(sql, taskID);
+    }
+
+    public void deleteTask(int taskID) {
+        String sql = "DELETE FROM task WHERE task_id = ?";
+        jdbcTemplate.update(sql, taskID);
+    }
+
+
+
+
 
 }
