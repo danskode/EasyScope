@@ -40,8 +40,8 @@ public class TaskService {
         return taskRepository.finishTask(task, isFinished, realizedHours);
     }
 
-    public List<Task> getFinishedTasks() {
-        return taskRepository.getFinishedTasks();
+    public List<Task> getFinishedTasks(int accountID) {
+        return taskRepository.getFinishedTasks(accountID);
     }
 
     public void deleteTaskByID(int taskID) {

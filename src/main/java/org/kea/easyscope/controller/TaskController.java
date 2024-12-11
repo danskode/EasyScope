@@ -185,8 +185,10 @@ public class TaskController {
 
     // list of finished tasks
     @GetMapping("/finished")
-    public String showFinishedTasks(Model model) {
-        List<Task> finishedTasks = taskService.getFinishedTasks();
+    public String showFinishedTasks(@RequestParam int accountID,
+                                    Model model) {
+        List<Task> finishedTasks = taskService.getFinishedTasks(accountID);
+        model.addAttribute("accountID", accountID);
         model.addAttribute("finishedTasks", finishedTasks);
 
         return "assignedFinishedTaskList";
