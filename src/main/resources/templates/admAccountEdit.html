@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit account</title>
+</head>
+<body>
+  <h1>Make changes to <span th:text="${otherAccount.getAccountName()}"></span>'s account</h1>
+  <div th:if="${otherAccount.accountType?.name() == 'PROJECT_MANAGER'}">
+        <form action="#" th:action="@{/adm/accounts/edit/projectmanager}" method="post">
+
+          <div class="form-group">
+            <label for="accountName">Account Name</label>
+            <input type="text" id="accountName" name="accountName" th:value="${otherAccount.accountName}" disabled />
+          </div>
+
+          <div class="form-group">
+            <label for="accountType">Account Type</label>
+            <select th:name="newAccountType" id="accountType" >
+              <option value="">-- Select account type --</option>
+              <option th:each="type : ${accountTypes}"
+                      th:value="${type}"
+                      th:text="${type.getAccountTypeName()}"
+                      th:selected="${type == otherAccount.accountType}">
+              </option>
+            </select>
+          </div>
+          <!-- Give all projects to another project manager .... -->
+          <div class="form-group"th:if="${otherAccount.accountType?.name() == 'PROJECT_MANAGER'}">
+            <label for="newProjectManager">Transfer all projects to:</label>
+            <select th:name="newProjectManagerID" id="newProjectManager" >
+              <option value="">-- Select Project Manager --</option>
+              <option th:each="projectManager : ${projectManagers}"
+                      th:if="${projectManager.accountID != otherAccount.accountID}"
+                      th:value="${projectManager.accountID}"
+                      th:text="${projectManager.getAccountName()}">
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <!-- Edit button -->
+            <button type="submit" name="accountId" th:value="${otherAccount.accountID}">Save</button>
+          </div>
+
+        <div>
+          <!-- Links -->
+          <a href="/adm/accounts/list">Go back</a>
+          <a href="/">Go home</a>
+          <a href="/logout">Logout</a>
+        </div>
+  </div>
+
+  <div th:if="${otherAccount.accountType?.name() == 'TEAM_MEMBER'}">
+    <form action="#" th:action="@{/adm/accounts/edit/teammember}" method="post">
+
+      <input type="hidden" name="accountType" value="PROJECT_MANAGER" />
+
+      <div class="form-group">
+        <label for="accountID">Account ID</label>
+        <input type="text" id="accountID" name="accountID" th:value="${otherAccount.accountID}" disabled />
+      </div>
+
+      <div class="form-group">
+        <label for="accountName">Account Name</label>
+        <input type="text" id="accountName" name="accountName" th:value="${otherAccount.accountName}" disabled />
+      </div>
+
+      <div class="form-group">
+        <label for="accountType">Account Type</label>
+        <select th:name="newAccountType" id="accountType" >
+          <option value="">-- Select account type --</option>
+          <option th:each="type : ${accountTypes}"
+                  th:value="${type}"
+                  th:text="${type.getAccountTypeName()}"
+                  th:selected="${type == otherAccount.accountType}">
+          </option>
+        </select>
+      </div>
+      <!-- Give all tasks to another team members .... -->
+      <div class="form-group"th:if="${otherAccount.accountType?.name() == 'TEAM_MEMBER'}">
+        <label for="newTeamMember">Transfer all projects to:</label>
+        <select th:name="newTeamMemberID" id="newTeamMember" >
+          <option value="">-- Select Team Member --</option>
+          <option th:each="teamMember : ${teamMembers}"
+                  th:if="${teamMember.accountID != otherAccount.accountID}"
+                  th:value="${teamMember.accountID}"
+                  th:text="${teamMember.getAccountName()}">
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <!-- Edit button -->
+        <button type="submit" name="accountId" th:value="${otherAccount.accountID}">Save</button>
+      </div>
+
+      <div>
+        <!-- Links -->
+        <a href="/adm/accounts/list">Go back</a>
+        <a href="/">Go home</a>
+        <a href="/logout">Logout</a>
+      </div>
+  </div>
+</body>
+</html>
