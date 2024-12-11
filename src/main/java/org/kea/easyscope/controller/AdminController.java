@@ -64,6 +64,7 @@ public class AdminController {
         return "redirect:/adm/accounts/list/";
     }
 
+    // Edit other non-admin users' accountType ...
     @PostMapping(value = {"/accounts/list/edit", "/accounts/list/edit/"})
     public String admEditAccount(@RequestParam("accountId") int accountID,
                                  @RequestParam Map<String, String> allParams, // Capture all parameters
@@ -84,4 +85,7 @@ public class AdminController {
             return "redirect:/";
         }
     }
+
+    // Getmapping for edit
+    // Postmapping for edit
 }

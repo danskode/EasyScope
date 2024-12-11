@@ -94,8 +94,8 @@ public class TaskRepository {
     public Task createNewTask(Task task, int memberID, float estimatedHours) {
 
         String insertTaskSQL = """
-            INSERT INTO task (task_name, task_description, sub_project_id_fk, task_is_finished) 
-            VALUES (?, ?, ?, 0)
+            INSERT INTO task (task_name, task_description, task_is_finished, sub_project_id_fk) 
+            VALUES (?, ?, ?, ?)
             """;
 
         String assignTeamMemberSQL = """
@@ -122,7 +122,8 @@ public class TaskRepository {
             var ps = connection.prepareStatement(insertTaskSQL, new String[] { "task_id" });
             ps.setString(1, task.getTaskName());
             ps.setString(2, task.getTaskDescription());
-            ps.setInt(3, task.getSubProjectID());
+            ps.setBoolean(3, task.isTaskIsFinished());
+            ps.setInt(4, task.getSubProjectID());
             return ps;
         }, keyHolder);
 
@@ -182,8 +183,8 @@ public class TaskRepository {
             task.setTaskName(rs.getString("task_name"));
             task.setTaskDescription(rs.getString("task_description"));
             task.setTaskIsFinished(rs.getBoolean("task_is_finished"));
-            task.setEstimatedHours(rs.getFloat("task_hours_estimated"));
-            task.setRealizedHours(rs.getFloat("task_hours_realized"));
+            task.setEstimatedHours(rs.getFloat("estimated_hours"));
+            task.setRealizedHours(rs.getFloat("realized_hours"));
             return task;
         });
     }

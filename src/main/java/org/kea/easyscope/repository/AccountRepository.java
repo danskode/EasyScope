@@ -87,6 +87,13 @@ public class AccountRepository {
         }
     }
 
+    // Update own account (only name) ...
+    public void updateAccount(Account account, String newAccountName) {
+        int accountID = account.getAccountID();
+        String sql = "UPDATE accounts SET account_name=? WHERE account_id=?";
+        jdbcTemplate.update(sql, newAccountName, accountID);
+    }
+
     // Admin specific ...
     public void updateAccountType(int accountID, Account.AccountType newAccountType) {
         String sql = "UPDATE accounts SET account_type=? WHERE account_id=?";
