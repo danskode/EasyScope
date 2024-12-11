@@ -26,6 +26,10 @@ public class AccountService {
         return  accountRepository.getAccountFromID(id);
     }
 
+    public void updateAccount(Account account, String newAccountName) {
+        accountRepository.updateAccount(account, newAccountName);
+    }
+
     public void updateAccountType(int accountID, Account.AccountType newAccountType) {
         accountRepository.updateAccountType(accountID, newAccountType);
     }
