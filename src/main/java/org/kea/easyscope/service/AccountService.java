@@ -55,4 +55,8 @@ public class AccountService {
     public Account getTeamMemberByTaskID(int taskID) {
         return accountRepository.getTeamMemberByTaskID(taskID);
     }
+
+    public void updateOwnAccount(String newAccountName, int accountID) {
+        accountRepository.updateOwnAccount(newAccountName, accountID);
+    }
 }

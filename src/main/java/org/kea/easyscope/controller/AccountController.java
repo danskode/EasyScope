@@ -23,18 +23,29 @@ public class AccountController {
     public String showEditAccount(HttpSession session, Model model) {
         Account account = (Account) session.getAttribute("account");
 
-        if (account != null && account.getAccountType() == Account.AccountType.ADMIN) {
-            List<Account> otherAccounts = accountService.getAllNonAdminAccounts(account.getAccountID());
-            model.addAttribute("otherAccounts", otherAccounts);
-            model.addAttribute("account", account);
-            model.addAttribute("accountType", account.getAccountType().name());  // Add accountType as a string
-            return "accountedit";
-        } else if (account != null && account.getAccountType() != Account.AccountType.ADMIN){
+        if (account != null ){
             model.addAttribute("account", account);
             return "accountedit";
         } else {
             return "redirect:/";
         }
     }
+
+    @PostMapping("/edit")
+    public String editAccount(@RequestParam("newAccountName") String newAccountName,
+                              HttpSession session,
+                              Model model) {
+        Account account = (Account) session.getAttribute("account");
+        if (account != null) {
+            int accountID = account.getAccountID();
+            accountService.updateOwnAccount(newAccountName, accountID);
+            account.setAccountName(newAccountName);
+            return "redirect:/";
+        }
+        else {
+            return "redirect:/";
+        }
+    }
+
 
 }
