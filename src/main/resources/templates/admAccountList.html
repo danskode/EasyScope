@@ -31,11 +31,24 @@
 
       <div class="form-group">
         <label for="accountType">Account Type</label>
-        <select th:name="'newAccountType_' + ${account.accountID}" required>
+        <select th:name="'newAccountType_' + ${account.accountID}" id="accountType" >
+          <option value="">-- Select account typ --</option>
           <option th:each="type : ${accountTypes}"
                   th:value="${type}"
                   th:text="${type.getAccountTypeName()}"
                   th:selected="${type == account.accountType}">
+          </option>
+        </select>
+      </div>
+      <!-- Give all projects to another project manager .... -->
+      <div class="form-group"th:if="${account.accountType?.name() == 'PROJECT_MANAGER'}">
+        <label for="newProjectManager">Transfer all projects to:</label>
+        <select th:name="'newProjectManagerID_' + ${account.accountID}" id="newProjectManager" >
+          <option value="">-- Select Project Manager --</option>
+          <option th:each="projectManager : ${projectManagers}"
+                  th:if="${projectManager.accountID != account.accountID}"
+                  th:value="${projectManager.accountID}"
+                  th:text="${projectManager.getAccountName()}">
           </option>
         </select>
       </div>
