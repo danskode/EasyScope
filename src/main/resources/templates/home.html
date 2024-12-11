@@ -68,7 +68,7 @@
                 <h2>Team member menu</h2>
                 <ul>
                     <li><a th:href="@{/projects/subprojects/tasks/assigned(accountID=${account.accountID})}">See all your open tasks</a></li>
-                    <li><a th:href="@{/projects/subprojects/tasks/finished}">See all your finished tasks</a></li>
+                    <li><a th:href="@{/projects/subprojects/tasks/finished(accountID=${account.accountID})}">See all your finished tasks</a></li>
                     <li><a href="/account/edit">Edit your account details</a></li>
                     <li><a href="/logout">Log out</a></li>
                 </ul>
