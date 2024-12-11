@@ -11,65 +11,32 @@
 
 <body>
 
-<h1>Change account types for non-admins</h1>
 
-<div th:if="${accountType == 'ADMIN'}">
-  <form action="#" th:action="@{/adm/accounts/list/edit}" method="post" class="form-container">
+<h1>See all accounts</h1>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Account type</th>
+    <th>Actions</th>
+  </tr>
+  <tr th:each="otherAccount : ${otherAccounts}">
+    <td><span th:text="${otherAccount.getAccountName()}"></span></td>
+    <td><span th:text="${otherAccount.accountType.getAccountTypeName()}"></span></td>
+    <td>
+      <form th:action="@{/adm/accounts/edit/{id}(id=${otherAccount.accountID})}" method="get">
+      <button type="submit">Edit Account</button>
+    </form>
+    </td>
+  </tr>
+</table>
 
-    <!-- Loop through the 'otherAccounts' list -->
-    <div th:each="account : ${otherAccounts}" class="form-row">
-
-      <div class="form-group">
-        <label for="accountID">Account ID</label>
-        <input type="text" id="accountID" name="accountID" th:value="${account.accountID}" disabled />
-      </div>
-
-      <div class="form-group">
-        <label for="accountName">Account Name</label>
-        <input type="text" id="accountName" name="accountName" th:value="${account.accountName}" disabled />
-      </div>
-
-      <div class="form-group">
-        <label for="accountType">Account Type</label>
-        <select th:name="'newAccountType_' + ${account.accountID}" id="accountType" >
-          <option value="">-- Select account typ --</option>
-          <option th:each="type : ${accountTypes}"
-                  th:value="${type}"
-                  th:text="${type.getAccountTypeName()}"
-                  th:selected="${type == account.accountType}">
-          </option>
-        </select>
-      </div>
-      <!-- Give all projects to another project manager .... -->
-      <div class="form-group"th:if="${account.accountType?.name() == 'PROJECT_MANAGER'}">
-        <label for="newProjectManager">Transfer all projects to:</label>
-        <select th:name="'newProjectManagerID_' + ${account.accountID}" id="newProjectManager" >
-          <option value="">-- Select Project Manager --</option>
-          <option th:each="projectManager : ${projectManagers}"
-                  th:if="${projectManager.accountID != account.accountID}"
-                  th:value="${projectManager.accountID}"
-                  th:text="${projectManager.getAccountName()}">
-          </option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <!-- Edit button -->
-        <button type="submit" name="accountId" th:value="${account.accountID}">Save</button>
-      </div>
-
-      <div class="form-group">
-        <!-- Delete button not programmed yet ... -->
-        <!-- <button type="button">Delete</button> -->
-      </div>
-
-    </div>
-
-  </form>
-</div>
-<div>
+<!-- Admin Section (for logged-in admin users) -->
+<div class="grid-item" th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'admin'}">
+  <h2>Admin menu</h2>
   <ul>
     <li><a href="/adm/accounts/add">Add new account</a></li>
+    <li><a href="/account/edit">Edit your account details</a></li>
+    <li><a href="/logout">Log out</a></li>
   </ul>
 </div>
 

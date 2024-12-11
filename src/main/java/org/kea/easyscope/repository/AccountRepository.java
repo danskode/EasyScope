@@ -94,7 +94,7 @@ public class AccountRepository {
     }
 
     // Admin specific ...
-    public void updateAccountType(int accountID, Account.AccountType newAccountType, int newProjectManagerID) {
+    public void updateProjectManager(int accountID, Account.AccountType newAccountType, int newProjectManagerID) {
         // First we update the account to the new accountType ...
         String sql = "UPDATE accounts SET account_type=? WHERE account_id=?";
         // Then we update the active projects to set a new project_manager to handle them after wards...
@@ -104,8 +104,37 @@ public class AccountRepository {
         jdbcTemplate.update(sql2, newProjectManagerID, accountID);
     }
 
-    public List<Account> getAllOtherProjectManagers(int accountID) {
+    public void updateTeamMember(int accountID, Account.AccountType newAccountType, int newTeamMemberID) {
+        // First we update the account to the new accountType ...
+        String sql = "UPDATE accounts SET account_type=? WHERE account_id=?";
+        // Then we update the active projects to set a new project_manager to handle them after wards...
+        String sql2 = "UPDATE task_member SET account_id_fk=? WHERE account_id_fk=?";
+
+        jdbcTemplate.update(sql, newAccountType.name(), accountID);
+        jdbcTemplate.update(sql2, newTeamMemberID, accountID);
+    }
+
+    public List<Account> getAllProjectManagers(int accountID) {
         String sql = "SELECT account_id, account_name, account_type FROM accounts WHERE account_id != ? AND account_type = 'PROJECT_MANAGER'";
+        RowMapper<Account> rowMapper = new RowMapper<>() {
+            public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
+                int accountID = rs.getInt("account_id");
+                String accountName = rs.getString("account_name");
+                String accountTypeString = rs.getString("account_type");
+                Account.AccountType accountType = Account.AccountType.valueOf(accountTypeString);
+                return new Account(accountID, accountName, accountType);
+            }
+        };
+        try {
+            // Adds the account objects to a list automatically ...
+            return jdbcTemplate.query(sql, rowMapper, accountID);
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<>(); // Just an empty ArrayList if nothing is returning ...
+        }
+    }
+
+    public List<Account> getAllTeamMembers(int accountID) {
+        String sql = "SELECT account_id, account_name, account_type FROM accounts WHERE account_id != ? AND account_type = 'TEAM_MEMBER'";
         RowMapper<Account> rowMapper = new RowMapper<>() {
             public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
                 int accountID = rs.getInt("account_id");

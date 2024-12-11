@@ -22,8 +22,12 @@ public class AccountService {
         return accountRepository.getAllNonAdminAccounts(accountID);
     }
 
-    public List<Account> getAllOtherProjectManagers(int accountID){
-        return accountRepository.getAllOtherProjectManagers(accountID);
+    public List<Account> getAllProjectManagers(int accountID){
+        return accountRepository.getAllProjectManagers(accountID);
+    }
+
+    public List<Account> getAllTeamMembers(int accountID){
+        return accountRepository.getAllTeamMembers(accountID);
     }
 
     // bliver ikke brugt?
@@ -31,12 +35,12 @@ public class AccountService {
         return  accountRepository.getAccountFromID(id);
     }
 
-    public void updateAccount(Account account, String newAccountName) {
-        accountRepository.updateAccount(account, newAccountName);
+    public void updateProjectManager(int accountID, Account.AccountType newAccountType, int newProjectManagerID){
+        accountRepository.updateProjectManager(accountID, newAccountType, newProjectManagerID);
     }
 
-    public void updateAccountType(int accountID, Account.AccountType newAccountType, int newProjectManagerID) {
-        accountRepository.updateAccountType(accountID, newAccountType, newProjectManagerID);
+    public void updateTeamMember(int accountID, Account.AccountType newAccountType, int newTeamMemberID){
+        accountRepository.updateTeamMember(accountID, newAccountType, newTeamMemberID);
     }
 
     public void addAccount(String accountName, String accountPassword, Account.AccountType accountType) {
