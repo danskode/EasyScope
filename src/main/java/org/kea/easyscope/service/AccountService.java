@@ -22,6 +22,7 @@ public class AccountService {
         return accountRepository.getAllNonAdminAccounts(accountID);
     }
 
+    // bliver ikke brugt?
     public Account getAccountFromID(int id) {
         return  accountRepository.getAccountFromID(id);
     }
@@ -38,6 +39,7 @@ public class AccountService {
         return accountRepository.getAllTeamMembers();
     }
 
+    // skal måske ikke bruges alligevel
     public Account getTeamMemberByTaskID(int taskID) {
         return accountRepository.getTeamMemberByTaskID(taskID);
     }
