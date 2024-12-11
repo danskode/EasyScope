@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Finished Tasks</title>
+</head>
+<body>
+<h1>Your Finished Tasks</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Task Name</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Estimated Hours</th>
+        <th>Realized Hours</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${finishedTasks}">
+        <td th:text="${task.taskName}">Task Name</td>
+        <td th:text="${task.taskDescription}">Description</td>
+        <td th:text="${task.taskIsFinished ? 'Finished' : 'Active'}">Status</td>
+        <td th:text="${task.estimatedHours != 0.0 ? task.estimatedHours : 'N/A'}">Estimated Hours</td>
+        <td th:text="${task.realizedHours != 0.0 ? task.realizedHours : 'N/A'}">Realized Hours</td>
+    </tr>
+    </tbody>
+</table>
+<a href="/">Go back to start</a>
+</body>
+</html>

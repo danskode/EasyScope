@@ -1,10 +1,8 @@
 package org.kea.easyscope.controller;
 
-import jakarta.servlet.http.HttpSession;
 import org.kea.easyscope.model.Account;
 import org.kea.easyscope.model.SubProject;
 import org.kea.easyscope.model.Task;
-import org.kea.easyscope.repository.AccountRepository;
 import org.kea.easyscope.service.AccountService;
 import org.kea.easyscope.service.SubProjectService;
 import org.kea.easyscope.service.TaskService;
@@ -134,6 +132,68 @@ public class TaskController {
         // redirect back to the task list for the given project and subproject
         return "redirect:/projects/subprojects/tasks/" + projectID + "/" + subProjectID;
     }
+
+    @GetMapping("/assigned")
+    public String showAssignedTasks(@RequestParam int accountID,
+                                    Model model) {
+        List <Task> assignedTask = taskService.getTasksAssignedTo(accountID);
+        model.addAttribute("assignedTask", assignedTask);
+        model.addAttribute("accountID", accountID);
+
+        return "assignedTaskList";
+    }
+
+    @GetMapping("/finish/{taskID}/{accountID}")
+    public String showFinishTaskForm(@PathVariable int taskID,
+                                     @PathVariable int accountID,
+                                     Model model) {
+        // retrieve the task by its task ID
+        Task task = taskService.getTaskByID(taskID);
+
+        // add the task and account ID to the model
+        model.addAttribute("task", task);
+        model.addAttribute("accountID", accountID);
+
+        return "finishTask";
+    }
+
+
+    // This method handles the process of finishing a task
+    // when a team member submits the realized hours
+    @PostMapping("/finish")
+    public String finishTask(@RequestParam int taskID,
+                             @RequestParam int accountID,
+                             @RequestParam boolean taskIsFinished,
+                             @RequestParam float realizedHours,
+                             Model model) {
+
+        // retrieve the task by its ID
+        Task task = taskService.getTaskByID(taskID);
+
+        // update the tasks status and realized hours
+        taskService.finishTask(task, taskIsFinished, realizedHours);
+
+        // retrieve the updated list of assigned tasks
+        List<Task> assignedTasks = taskService.getTasksAssignedTo(accountID);
+
+        // add the updated list of assigned tasks and account ID to the model
+        model.addAttribute("assignedTask", assignedTasks);
+        model.addAttribute("accountID", accountID);
+
+        return "assignedTaskList";
+    }
+
+    // list of finished tasks
+    @GetMapping("/finished")
+    public String showFinishedTasks(Model model) {
+        List<Task> finishedTasks = taskService.getFinishedTasks();
+        model.addAttribute("finishedTasks", finishedTasks);
+
+        return "assignedFinishedTaskList";
+    }
+
+
+
 
     // method to delete a task
     @PostMapping("/delete")
