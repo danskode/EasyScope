@@ -164,7 +164,7 @@ public class TaskRepository {
     }
 
     // retrieves a list of finished tasks
-    public List<Task> getFinishedTasks() {
+    public List<Task> getFinishedTasks(int accountID) {
         String sql = """
         SELECT t.task_id, t.task_name, t.task_description, t.task_is_finished,
                te.task_hours_estimated AS estimated_hours,
@@ -172,12 +172,12 @@ public class TaskRepository {
         FROM task t
         LEFT JOIN task_hours_estimated te ON t.task_id = te.task_id_fk
         LEFT JOIN task_hours_realized tr ON t.task_id = tr.task_id_fk
+        INNER JOIN task_member tm ON t.task_id = tm.task_id_fk
         WHERE t.task_is_finished = 1
+        AND tm.account_id_fk = ?
     """;
 
-
-
-        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+        return jdbcTemplate.query(sql, new Object[]{accountID}, (rs, rowNum) -> {
             Task task = new Task();
             task.setTaskID(rs.getInt("task_id"));
             task.setTaskName(rs.getString("task_name"));

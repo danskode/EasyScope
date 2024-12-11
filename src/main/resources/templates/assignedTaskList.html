@@ -18,7 +18,6 @@
     </tr>
     </thead>
     <tbody>
-    <!-- Kun vis aktive opgaver -->
     <tr th:each="task : ${assignedTask}" th:if="${!task.taskIsFinished}">
         <td th:text="${task.taskName}">Task Name</td>
         <td th:text="${task.taskDescription}">Description</td>
@@ -33,6 +32,6 @@
     </tr>
     </tbody>
 </table>
-<a href="/">Go back to start</a>
+<a href="/">Go back</a>
 </body>
 </html>
