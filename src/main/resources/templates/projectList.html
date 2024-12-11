@@ -3,62 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <title>Clients/Projects</title>
+    <link rel="stylesheet" href="/stylesProjectList.css">
 </head>
 <body>
 
-<h1>These are your clients/projects!</h1>
+<header>
+    <a href="/" class="go-back">Go back</a>
+    <h1>EasyScope - time2track ...</h1>
+    <a href="/logout" class="logout-btn">Logout</a>
+</header>
+
+<h1>These are your clients/projects</h1>
 
 <h2>Active</h2>
-<table border="1">
+<table>
+
+    <thead>
     <tr>
         <th>Project | Client</th>
         <th>Description</th>
         <th>Progress Status</th>
-        <th>Status</th>
         <th>Actions</th>
+        <th>View Subprojects</th>
     </tr>
     </thead>
+
     <tbody>
-    <tr
-            th:each="project : ${projects}" th:if="${!project.finished}">
+    <tr th:each="project : ${projects}" th:if="${!project.finished}">
         <td th:text="${project.projectName}">Client</td>
         <td th:text="${project.projectDescription}">Project description</td>
         <td th:if="${!cs.isAnyTasksInProjectExceedingDeadline(project)}">You're on track with client / project</td>
         <td th:if="${cs.isAnyTasksInProjectExceedingDeadline(project)}">Estimated hours left exceeds a deadline!</td>
-        <td>Active</td>
         <td>
             <a th:href="@{/projects/update/{projectID}(projectID=${project.projectID})}">Update</a>
+        </td>
+        <td>
             <a th:href="@{/projects/subprojects/{projectID}(projectID=${project.projectID})}">Subprojects</a>
         </td>
-
     </tr>
     </tbody>
 </table>
 
+
 <h2>Completed</h2>
-<table border="1">
+<table>
+
     <thead>
     <tr>
-        <th>Client</th>
-        <th>Project description</th>
-        <th>Status</th>
+        <th>Project | Client</th>
+        <th>Description</th>
+        <th>Progress Status</th>
         <th>Actions</th>
+        <th>View Subprojects</th>
     </tr>
     </thead>
+
     <tbody>
-    <tr th:each="project : ${projects}" th:if="${project.finished}"> <!-- Finished subprojects -->
+    <tr th:each="project : ${projects}" th:if="${project.finished}">
         <td th:text="${project.projectName}">Client</td>
         <td th:text="${project.projectDescription}">Project description</td>
         <td>Finished</td>
         <td>
             <a th:href="@{/projects/update/{projectID}(projectID=${project.projectID})}">Update</a>
+        </td>
+        <td>
             <a th:href="@{/projects/subprojects/{projectID}(projectID=${project.projectID})}">Subprojects</a>
         </td>
     </tr>
     </tbody>
 </table>
 
-<a href="/">Back to main</a>
+<footer>
+    <p>EasyScope – Project Calculation Tool – Contact</p>
+    <p><span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
+</footer>
 
 </body>
 </html>

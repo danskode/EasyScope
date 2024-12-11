@@ -3,15 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>Tasks</title>
+  <link rel="stylesheet" href="/stylesTaskList.css">
 </head>
 <body>
 
-<h1>Tasks for Subproject: <span th:text="${subProject.subProjectName}"></span></h1>
+<header>
+  <a th:href="@{/projects/subprojects/{projectID}(projectID=${projectID})}" class="back-link">Back to Subprojects</a>
+  <h1>EasyScope - time2track ...</h1>
+  <a href="/logout" class="logout-btn">Logout</a>
+</header>
 
-<form th:action="@{/projects/subprojects/tasks/create/{projectID}/{subProjectID}(projectID=${projectID}, subProjectID=${subProject.subProjectID})}" method="get">
-  <input type="hidden" name="accountID" th:value="${accountID}" />
-  <button type="submit">Create Task</button>
-</form>
+<h1>Tasks for: <span th:text="${subProject.subProjectName}"></span></h1>
+
 
 <h2>Active Tasks</h2>
 <table border="1">
@@ -77,10 +80,17 @@
   </tbody>
 </table>
 
-<!-- Tilbage til SubProjects -->
-<a th:href="@{/projects/subprojects/{projectID}(projectID=${projectID})}">
-  <button>Back to Subprojects</button>
-</a>
+
+<form th:action="@{/projects/subprojects/tasks/create/{projectID}/{subProjectID}(projectID=${projectID}, subProjectID=${subProject.subProjectID})}" method="get">
+  <input type="hidden" name="accountID" th:value="${accountID}" />
+  <button type="submit">Create Task</button>
+</form>
+
+
+<footer>
+  <p>EasyScope – Project Calculation Tool – Contact</p>
+  <p><span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
+</footer>
 
 </body>
 </html>

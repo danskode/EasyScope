@@ -185,6 +185,11 @@ public class ProjectController {
 
         // retrieves the existing project from the db
         Project existingProject = projectService.getProjectByProjectID(projectID);
+        if (existingProject == null) {
+            System.out.println("Project not found for ID: " + projectID);
+        } else {
+            System.out.println("Existing project: " + existingProject);
+        }
 
         if (existingProject == null) {
             model.addAttribute("error", "Project not found.");

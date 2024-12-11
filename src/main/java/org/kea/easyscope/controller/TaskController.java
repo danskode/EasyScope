@@ -47,6 +47,7 @@ public class TaskController {
             // add projectID to the model for the back button functionality
             model.addAttribute("projectID", projectID);
 
+
             // return the task list view
             return "taskList";
         } else {
