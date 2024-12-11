@@ -32,10 +32,21 @@ public class TaskService {
         return taskRepository.updateTask(task, memberID, estimatedHours);
     }
 
+    public List<Task> getTasksAssignedTo(int accountID){
+        return taskRepository.getTasksAssignedTo(accountID);
+    }
+
+    public Task finishTask(Task task, boolean isFinished, float realizedHours) {
+        return taskRepository.finishTask(task, isFinished, realizedHours);
+    }
+
+    public List<Task> getFinishedTasks() {
+        return taskRepository.getFinishedTasks();
+    }
+
     public void deleteTaskByID(int taskID) {
         taskRepository.deleteTaskMembers(taskID);
         taskRepository.deleteTaskHoursRealized(taskID);
-
         taskRepository.deleteTask(taskID);
     }
 

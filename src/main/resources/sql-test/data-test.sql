@@ -2,6 +2,8 @@
 INSERT INTO accounts (account_name, account_password, account_type) VALUES ('Anna', 'minkode', 'ADMIN');
 INSERT INTO accounts (account_name, account_password, account_type) VALUES ('Jens', '1234', 'PROJECT_MANAGER');
 INSERT INTO accounts (account_name, account_password, account_type) VALUES ('Otto', 'password', 'TEAM_MEMBER');
+INSERT INTO accounts (account_name, account_password, account_type) VALUES ('Bent', 'kode', 'TEAM_MEMBER');
+
 
 -- Data in project table --
 INSERT INTO project (project_name, project_description, project_is_finished, account_id_fk) VALUES ('Novo Nordisk', 'The client wants to establish a new digital footprint for its new weightloss medicine', 1, 2);
