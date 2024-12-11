@@ -107,11 +107,15 @@ public class AccountRepository {
     public void updateTeamMember(int accountID, Account.AccountType newAccountType, int newTeamMemberID) {
         // First we update the account to the new accountType ...
         String sql = "UPDATE accounts SET account_type=? WHERE account_id=?";
-        // Then we update the active projects to set a new project_manager to handle them after wards...
-        String sql2 = "UPDATE task_member SET account_id_fk=? WHERE account_id_fk=?";
+        // Then we update the active projects to set a new team member to handle them after wards...
+        String sql2 = "UPDATE task_member tm " +
+                "JOIN task t ON tm.task_id_fk = t.task_id " +
+                "JOIN task_hours_estimated the ON tm.task_id_fk = the.task_id_fk " +
+                "SET tm.account_id_fk = ?, the.account_id_fk = ? " +
+                "WHERE tm.account_id_fk = ? AND t.task_is_finished = 0";
 
         jdbcTemplate.update(sql, newAccountType.name(), accountID);
-        jdbcTemplate.update(sql2, newTeamMemberID, accountID);
+        jdbcTemplate.update(sql2, newTeamMemberID, newTeamMemberID, accountID);
     }
 
     public List<Account> getAllProjectManagers(int accountID) {
