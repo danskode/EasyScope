@@ -25,7 +25,6 @@ public class CalcRepository {
 
         // Get numbers of team members associated with sub project ...
         int numMembers = numbersOfTeamMembersOnSubProject(subProject);
-        System.out.println(numMembers);
 
         // Each team member can work for 7 hours a day
         numMembers = numMembers * 7;
