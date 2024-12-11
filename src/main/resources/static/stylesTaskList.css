@@ -1,0 +1,168 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #f9f9f9;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+/* Header */
+header {
+    background-color: #003366;
+    color: #fff;
+    padding: 1rem 2rem;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+/* Go Back Link */
+header a:first-child {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    position: absolute;
+    left: 20px; /* Placering af linket til venstre */
+}
+
+/* Logout Button */
+.logout-btn {
+    background-color: #003366;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: none;
+    position: absolute;
+    top: 50%;
+    right: 50px; /* Placering af logout-knappen til højre */
+    transform: translateY(-50%);
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #00509e;
+}
+
+/* Header text (EasyScope) */
+header h1 {
+    font-size: 2rem;
+    margin: 0;
+    text-align: center;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    table-layout: fixed; /* Ensures equal distribution of space */
+    border-collapse: collapse; /* Ensures table cells share borders */
+    margin-bottom: 2rem; /* Adds space below tables */
+}
+
+th, td {
+    padding: 8px;  /* Add padding to make sure text doesn't touch edges */
+    text-align: left;
+    word-wrap: break-word; /* Allows text to wrap within cells */
+    border: 1px solid #ddd; /* Adds border to table cells */
+}
+
+/* Column widths for uniformity */
+table td:nth-child(1), table th:nth-child(1) {
+    width: 7%;
+}
+
+table td:nth-child(2), table th:nth-child(2) {
+    width: 15%;
+}
+
+table td:nth-child(3), table th:nth-child(3) {
+    width: 7%;
+}
+
+table td:nth-child(4), table th:nth-child(4) {
+    width: 15%;
+}
+
+table td:nth-child(5), table th:nth-child(5) {
+    width: 5%;
+}
+
+table td:nth-child(6), table th:nth-child(6) {
+    width: 9%;
+}
+
+table td:nth-child(7), table th:nth-child(7) {
+    width: 9%;
+}
+
+table td:nth-child(8), table th:nth-child(8) {
+    width: 5%;
+}
+
+table td:nth-child(9), table th:nth-child(9) {
+    width: 5%;
+}
+
+/* Alternating row colors for readability */
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Table links */
+table a {
+    text-decoration: none;
+    color: #003366;
+    font-weight: bold;
+}
+
+table a:hover {
+    color: #00509e;
+}
+
+form button {
+    background-color: #00509e;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #0066cc;
+}
+
+/* Footer */
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #003366;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 2rem;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+}
+
+footer p {
+    margin: 0;
+}

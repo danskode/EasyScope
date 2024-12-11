@@ -3,90 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <title>Subprojects</title>
+  <link rel="stylesheet" href="/stylesSubprojectList.css">
 </head>
 <body>
 
-<h1>These are your subprojects!</h1>
+<header>
+  <a href="/projects/list" class="back-link">Back to projects</a>
+  <h1>EasyScope - time2track ...</h1>
+  <a href="/logout" class="logout-btn">Logout</a>
+</header>
 
-<h2>Active</h2>
-<table border="1">
-  <tr>
-    <th>Subproject</th>
-    <th>Description</th>
-    <th>Deadline</th>
-    <th>Deadline Notice</th>
-    <th>Team Members</th>
-    <th>Estimated Hours Left</th>
-    <th>Total Hours Realized</th>
-    <th>Status</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="subProject : ${subProjects}" th:if="${!subProject.finished}">
-    <td th:text="${subProject.subProjectName}">Name</td>
-    <td th:text="${subProject.subProjectDescription}">Subproject description</td>
-    <td th:text="${#temporals.format(subProject.subProjectDeadline, 'dd/MM/yyyy')}"></td>
-    <td th:text="${cs.giveNoticeAboutDeadline(subProject)}"></td>
-    <td th:text="${cs.numbersOfTeamMembersOnSubProject(subProject)}"></td>
-    <td th:text="${cs.getTotalHoursForASubProject(subProject)}" ></td>
-    <td th:text="${cs.getTotalHoursRealizedForASubProject(subProject)}" ></td>
+  <h1>Subprojects for: <span th:text="${project.projectName}"></span></h1>
 
-    <td>Active</td>
-    <td>
-      <a th:href="@{/projects/subprojects/update/{subProjectID}(subProjectID=${subProject.subProjectID})}">
-        <button>Update</button>
-      </a>
-      <a th:href="@{/projects/subprojects/tasks/{projectID}/{subProjectID}(projectID=${project.projectID}, subProjectID=${subProject.subProjectID})}">
-        <button>Tasks</button>
-      </a>
-    </td>
+    <h2>Active</h2>
+    <table class="active-table">
+      <thead>
+      <tr>
+        <th>Subproject</th>
+        <th>Description</th>
+        <th>Deadline</th>
+        <th>Deadline Notice</th>
+        <th>Team Members</th>
+        <th>Estimated Hours Left</th>
+        <th>Total Hours Realized</th>
+        <th>Actions</th>
+        <th>View</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="subProject : ${subProjects}" th:if="${!subProject.finished}">
+        <td th:text="${subProject.subProjectName}">Name</td>
+        <td th:text="${subProject.subProjectDescription}">Subproject description</td>
+        <td th:text="${#temporals.format(subProject.subProjectDeadline, 'dd/MM/yyyy')}"></td>
+        <td th:text="${cs.giveNoticeAboutDeadline(subProject)}"></td>
+        <td th:text="${cs.numbersOfTeamMembersOnSubProject(subProject)}"></td>
+        <td th:text="${cs.getTotalHoursForASubProject(subProject)}"></td>
+        <td th:text="${cs.getTotalHoursRealizedForASubProject(subProject)}"></td>
+        <td>
+          <a th:href="@{/projects/subprojects/update/{subProjectID}(subProjectID=${subProject.subProjectID})}">Update</a>
+        </td>
+        <td>
+          <a th:href="@{/projects/subprojects/tasks/{projectID}/{subProjectID}(projectID=${project.projectID}, subProjectID=${subProject.subProjectID})}">Tasks</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
 
-  </tr>
-  </tbody>
-</table>
+    <h2>Completed</h2>
+    <table class="completed-table">
+      <thead>
+      <tr>
+        <th>Subproject</th>
+        <th>Description</th>
+        <th>Deadline</th>
+        <th>Estimated Hours Left</th>
+        <th>Total Hours Realized</th>
+        <th>Actions</th>
+        <th>View</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="subProject : ${subProjects}" th:if="${subProject.finished}">
+        <td th:text="${subProject.subProjectName}">Name</td>
+        <td th:text="${subProject.subProjectDescription}">Subproject description</td>
+        <td th:text="${#temporals.format(subProject.subProjectDeadline, 'dd/MM/yyyy')}"></td>
+        <td th:text="${subProject.getTotalEstimatedHours()}"></td>
+        <td th:text="${cs.getTotalHoursRealizedForASubProject(subProject)}"></td>
+        <td>
+          <a th:href="@{/projects/subprojects/update/{subProjectID}(subProjectID=${subProject.subProjectID})}">Update
+          </a>
+        </td>
+        <td>
+          <a th:href="@{/projects/subprojects/tasks/{projectID}/{subProjectID}(projectID=${project.projectID}, subProjectID=${subProject.subProjectID})}">Tasks
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
 
-<h2>Completed</h2>
-<table border="1">
-  <tr>
-    <th>Subproject</th>
-    <th>Description</th>
-    <th>Deadline</th>
-    <th>Estimated Hours Left</th>
-    <th>Total Hours Realized</th>
-    <th>Status</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="subProject : ${subProjects}" th:if="${subProject.finished}"> <!-- Finished subprojects -->
-    <td th:text="${subProject.subProjectName}">Name</td>
-    <td th:text="${subProject.subProjectDescription}">Subproject description</td>
-    <td th:text="${#temporals.format(subProject.subProjectDeadline, 'dd/MM/yyyy')}"></td>
-    <td th:text="${subProject.getTotalEstimatedHours()}" ></td>
-<!--    <td th:text="${subProject.getTotalRealizedHours()}" ></td>-->
-    <td th:text="${cs.getTotalHoursRealizedForASubProject(subProject)}" ></td>
-    <td>Finished</td>
-    <td>
-      <a th:href="@{/projects/subprojects/update/{subProjectID}(subProjectID=${subProject.subProjectID})}">
-        <button>Update</button>
-      </a>
-      <a th:href="@{/projects/subprojects/tasks/{projectID}/{subProjectID}(projectID=${project.projectID}, subProjectID=${subProject.subProjectID})}">
-        <button>Tasks</button>
-      </a>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<form th:action="@{/projects/subprojects/create/{projectID}(projectID=${project.projectID})}" method="get">
+  <input type="hidden" name="projectID" th:value="${projectID}" />
+  <button type="submit">Create Subproject</button>
+</form>
 
-<br>
-<a th:href="@{/projects/subprojects/create/{projectID}(projectID=${project.projectID})}">
-  <button>Add Subproject</button>
-</a>
-
-<br>
-
-<a href="/projects/list">Back to projects</a>
+<footer>
+  <p>EasyScope – Project Calculation Tool – Contact</p>
+  <p><span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
+</footer>
 
 </body>
 </html>

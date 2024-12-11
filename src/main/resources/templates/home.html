@@ -2,17 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>EasyScope - get it done right the first time!</title>
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/stylesHome.css">
 </head>
 <body>
 <header>
     <h1>EasyScope - time2track ...</h1>
+    <a href="/logout" class="logout-btn">Logout</a>
 </header>
 
 <div class="container">
     <div class="grid-container">
         <!-- Welcome Section (for logged-in users) -->
-        <div class="grid-item" th:if="${account != null}">
+        <div th:if="${account != null}">
             <h1>Welcome, <span th:text="${account.accountName}">!</span></h1>
             <p>You're logged in as <span th:if="${account != null}" th:text="${account.accountType.getAccountTypeName()}">...</span></p>
         </div>
@@ -41,41 +42,41 @@
         </div>
 
         <!-- Admin Section (for logged-in admin users) -->
-        <div class="grid-item" th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'admin'}">
+        <div th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'admin'}">
             <h2>Admin menu</h2>
             <ul>
                 <li><a href="/adm/accounts/list">See all non admin accounts</a></li>
                 <li><a href="/adm/accounts/add">Add new account</a></li>
                 <li><a href="/account/edit">Edit your account details</a></li>
-                <li><a href="/logout">Log out</a></li>
             </ul>
         </div>
+
         <!-- Section for project managers -->
-        <div>
-            <div class="grid-item" th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'project manager'}">
-                <h2>Project manager menu</h2>
-                <ul>
-                    <li><a href="/projects/list">See all your projects</a></li>
-                    <li><a href="/projects/create">Add a new project</a></li>
-                    <li><a href="/account/edit">Edit your account details</a></li>
-                    <li><a href="/logout">Log out</a></li>
-                </ul>
-            </div>
+        <div th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'project manager'}">
+            <h2>Project manager menu</h2>
+            <ul>
+                <li><a href="/projects/list">See all your projects</a></li>
+                <li><a href="/projects/create">Add a new project</a></li>
+                <li><a href="/account/edit">Edit your account details</a></li>
+            </ul>
         </div>
+
         <!-- Section for team members -->
-        <div>
-            <div class="grid-item" th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'team member'}">
-                <h2>Team member menu</h2>
-                <ul>
-                    <li><a th:href="@{/projects/subprojects/tasks/assigned(accountID=${account.accountID})}">See all your open tasks</a></li>
-                    <li><a th:href="@{/projects/subprojects/tasks/finished(accountID=${account.accountID})}">See all your finished tasks</a></li>
-                    <li><a href="/account/edit">Edit your account details</a></li>
-                    <li><a href="/logout">Log out</a></li>
-                </ul>
-            </div>
+        <div th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'team member'}">
+            <h2>Team member menu</h2>
+            <ul>
+                <li><a th:href="@{/projects/subprojects/tasks/assigned(accountID=${account.accountID})}">See all your open tasks</a></li>
+                <li><a th:href="@{/projects/subprojects/tasks/finished(accountID=${account.accountID})}">See all your finished tasks</a></li>
+                <li><a href="/account/edit">Edit your account details</a></li>
+            </ul>
         </div>
     </div>
 </div>
+
+<footer>
+    <p>EasyScope – Project Calculation Tool – Contact</p>
+    <p><span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
+</footer>
 
 </body>
 </html>
