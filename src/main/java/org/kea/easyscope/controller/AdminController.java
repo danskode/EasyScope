@@ -119,42 +119,4 @@ public class AdminController {
         accountService.updateTeamMember(accountId, newAccountType, newTeamMemberID);
         return "redirect:/adm/accounts/list";
     }
-
-
-
-
-
-
-
-
-
-//    // Edit other non-admin users' accountType ...
-//    @PostMapping(value = {"/accounts/list/edit", "/accounts/list/edit/"})
-//    public String admEditAccount(@RequestParam("accountId") int accountID,
-//                                 //@RequestParam("newProjectManagerID") int newProjectManagerID,
-//                                 @RequestParam Map<String, String> allParams, // Capture all parameters
-//                                 HttpSession session, Model model) {
-//        Account account = (Account) session.getAttribute("account");
-//
-//        if (account != null && account.getAccountType() == Account.AccountType.ADMIN) {
-//            // Extract the correct newAccountType using the dynamic parameter name
-//            String newAccountTypeParam = allParams.get("newAccountType_" + accountID);
-//            // Get the newProjectManagerID ...
-//            //int newProjectManagerID =  allParams.get("newProjectManagerID_" + (int) newProjectManagerID);
-//            // Parse the enum value from the string
-//            Account.AccountType newAccountType = Account.AccountType.valueOf(newAccountTypeParam);
-//            // Make a int out of the end of param ...
-//            //int newProjectManagerID = Integer.parseInt(newProjectManagerParam);
-//            // Call the service to update the account type
-//            accountService.updateAccountType(accountID, newAccountType, newProjectManagerID);
-//            // Redirect to accounts page after the update
-//            return "redirect:/adm/accounts/list";
-//        } else {
-//            model.addAttribute("account", account);
-//            return "redirect:/";
-//        }
-//    }
-
-    // Getmapping for edit
-    // Postmapping for edit
 }

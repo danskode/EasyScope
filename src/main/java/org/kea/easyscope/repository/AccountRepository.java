@@ -187,4 +187,10 @@ public class AccountRepository {
                     return account;
                 });
     }
+
+    // Let a user change their account name ...
+    public void updateOwnAccount(String newAccountName, int accountID) {
+        String sql = "UPDATE accounts SET account_name=? WHERE account_id=?";
+        jdbcTemplate.update(sql, newAccountName, accountID);
+    }
 }
