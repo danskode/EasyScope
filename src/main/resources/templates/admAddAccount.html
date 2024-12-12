@@ -2,46 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/stylesHome.css">
     <title>Add new account</title>
 </head>
 <body>
-<h1>Add new account</h1>
-<!-- Form to add new account to system ... -->
-<form action="/adm/accounts/add" method="POST">
-  <div>
-    <label for="accountName">Account holder's username:</label>
-    <input type="text" id="accountName" name="accountName" required>
-  </div>
+<header>
+  <a href="/adm/accounts/list" class="back-link">Go back</a>
+  <h1>EasyScope - time2track ...</h1>
+  <a href="/logout" class="logout-btn">Logout</a>
+</header>
+<div class="grid-item">
 
-  <div>
-    <label for="accountPassword">Password: </label>
-    <input type="password" id="accountPassword" name="accountPassword" required></input>
-  </div>
+  <h1>Add new account</h1>
+  <!-- Form to add new account to system ... -->
+  <form action="/adm/accounts/add" method="POST">
+    <div>
+      <label for="accountName">Account holder's username:</label>
+      <input type="text" id="accountName" name="accountName" required>
+    </div>
 
-  <div class="form-group">
-    <label for="accountType">Account type: </label>
-    <select name="accountType" id="accountType" required>
-      <option th:each="type : ${accountTypes}"
-              th:value="${type.name()}"
-              th:text="${type.getAccountTypeName()}"
-      </option>
-    </select>
-  </div>
+    <div>
+      <label for="accountPassword">Password: </label>
+      <input type="password" id="accountPassword" name="accountPassword" required></input>
+    </div>
 
-  <div>
-    <button type="submit">Add new account</button>
-    <a href="/"><button type="button">Back</button></a>
-  </div>
-</form>
+    <div class="form-group">
+      <label for="accountType">Account type: </label>
+      <select name="accountType" id="accountType" required>
+        <option th:each="type : ${accountTypes}"
+                th:value="${type.name()}"
+                th:text="${type.getAccountTypeName()}"
+        </option>
+      </select>
+    </div>
 
-<div>
-  <ul>
-    <li><a href="/adm/accounts/list">All accounts</a></li>
-    <li><a href="/">Main</a></li>
-    <li><a href="/projects/list">All projects</a></li>
-    <li><a href="/logout">Log out</a></li>
-  </ul>
+    <div>
+      <button type="submit">Save new account</button>
+    </div>
+  </form>
+
 </div>
+
+<footer>
+  <p>EasyScope – Project Calculation Tool – Contact</p>
+  <p><span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
+</footer>
 
 </body>
 </html>

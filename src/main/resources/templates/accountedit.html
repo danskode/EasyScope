@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" href="/stylesHome.css">
     <title>Edit your account, <span th:text="${account.accountName}">Account Name</span></title>
 </head>
 <body>
+
+<header>
+    <a href="/" class="back-link">Go back</a>
+    <h1>EasyScope - time2track ...</h1>
+    <a href="/logout" class="logout-btn">Logout</a>
+</header>
+
+<div class="grid-item">
 
 <h1>Make changes to your account</h1>
 
@@ -19,10 +28,9 @@
     </form>
 </div>
 
-<div>
-    <!-- Links -->
-    <a href="/">Go back to start</a>
-    <a href="/logout">Logout</a>
-</div>
+<footer>
+    <p>EasyScope – Project Calculation Tool – Contact</p>
+    <p><span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
+</footer>
 </body>
 </html>

@@ -4,41 +4,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Accounts - Admin</title>
+  <title>See all non-admin Accounts</title>
   <link rel="stylesheet" href="/stylesHome.css">
-
 </head>
 
 <body>
 
+<header>
+  <a href="/" class="back-link">Go back</a>
+  <h1>EasyScope - time2track ...</h1>
+  <a href="/logout" class="logout-btn">Logout</a>
+</header>
 
-<h1>See all accounts</h1>
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Account type</th>
-    <th>Actions</th>
-  </tr>
-  <tr th:each="otherAccount : ${otherAccounts}">
-    <td><span th:text="${otherAccount.getAccountName()}"></span></td>
-    <td><span th:text="${otherAccount.accountType.getAccountTypeName()}"></span></td>
-    <td>
-      <form th:action="@{/adm/accounts/edit/{id}(id=${otherAccount.accountID})}" method="get">
-      <button type="submit">Edit Account</button>
-    </form>
-    </td>
-  </tr>
-</table>
-
-<!-- Admin Section (for logged-in admin users) -->
-<div class="grid-item" th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'admin'}">
-  <h2>Admin menu</h2>
-  <ul>
-    <li><a href="/adm/accounts/add">Add new account</a></li>
-    <li><a href="/account/edit">Edit your account details</a></li>
-    <li><a href="/logout">Log out</a></li>
-  </ul>
+<div class="grid-item">
+  <h1>See all accounts</h1>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Account type</th>
+      <th>Actions</th>
+    </tr>
+    <tr th:each="otherAccount : ${otherAccounts}">
+      <td><span th:text="${otherAccount.getAccountName()}"></span></td>
+      <td><span th:text="${otherAccount.accountType.getAccountTypeName()}"></span></td>
+      <td>
+        <form th:action="@{/adm/accounts/edit/{id}(id=${otherAccount.accountID})}" method="get">
+        <button type="submit">Edit Account</button>
+      </form>
+      </td>
+    </tr>
+  </table>
 </div>
+<footer>
+  <p>EasyScope – Project Calculation Tool – Contact</p>
+  <p><span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
+</footer>
 
 </body>
 

@@ -159,6 +159,16 @@ ul li a:hover {
     color: #00509e;
 }
 
+/* Go Back Link */
+header a:first-child {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    position: absolute;
+    left: 20px; /* Placering af linket til venstre */
+}
+
 /* Footer */
 footer {
     position: absolute;
