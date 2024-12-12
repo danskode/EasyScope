@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>See all non-admin Accounts</title>
-  <link rel="stylesheet" href="/stylesHome.css">
+  <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
@@ -29,7 +29,7 @@
       <td><span th:text="${otherAccount.accountType.getAccountTypeName()}"></span></td>
       <td>
         <form th:action="@{/adm/accounts/edit/{id}(id=${otherAccount.accountID})}" method="get">
-        <button type="submit">Edit Account</button>
+        <button type="submit" class="button">Edit Account</button>
       </form>
       </td>
     </tr>

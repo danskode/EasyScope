@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Subprojects</title>
-  <link rel="stylesheet" href="/stylesSubprojectList.css">
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 
@@ -13,10 +13,11 @@
   <a href="/logout" class="logout-btn">Logout</a>
 </header>
 
+<main>
   <h1>Subprojects for: <span th:text="${project.projectName}"></span></h1>
 
     <h2>Active</h2>
-    <table class="active-table">
+    <table class="subprojectList-active-table">
       <thead>
       <tr>
         <th>Subproject</th>
@@ -50,7 +51,7 @@
     </table>
 
     <h2>Completed</h2>
-    <table class="completed-table">
+    <table class="subprojectList-completed-table">
       <thead>
       <tr>
         <th>Subproject</th>
@@ -83,8 +84,10 @@
 
 <form th:action="@{/projects/subprojects/create/{projectID}(projectID=${project.projectID})}" method="get">
   <input type="hidden" name="projectID" th:value="${projectID}" />
-  <button type="submit">Create Subproject</button>
+  <button type="submit" class="button">Add a New Subproject</button>
 </form>
+
+</main>
 
 <footer>
   <p>EasyScope – Project Calculation Tool – Contact</p>

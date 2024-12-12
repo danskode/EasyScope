@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Update Project</title>
-    <link rel="stylesheet" href="/stylesCreateUpdate.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 
@@ -12,6 +12,9 @@
     <h1>EasyScope - time2track ...</h1>
     <a href="/logout" class="logout-btn">Logout</a>
 </header>
+
+<div class="grid-container">
+    <div class="grid-item">
 
 <h1>Update project</h1>
 
@@ -24,11 +27,15 @@
     <label for="projectDescription">Description:</label>
     <input type="text" id="projectDescription" name="projectDescription" th:value="${project.projectDescription}" required>
 
-    <label for="isFinished">Finished:</label>
-    <input type="checkbox" id="isFinished" name="isFinished" th:checked="${project.isFinished()}">
+    <label for="isFinished" class="checkbox-container">
+        Finished:
+        <input type="checkbox" id="isFinished" name="isFinished" th:checked="${project.isFinished()}">
+    </label>
 
-    <button type="submit">Update</button>
+    <button type="submit" class="button">Update</button>
 </form>
+</div>
+</div>
 
 <footer>
     <p>EasyScope – Project Calculation Tool – Contact</p>
