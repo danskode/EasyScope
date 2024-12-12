@@ -20,6 +20,6 @@ class AccountRepositoryTest {
         // Act: Retrieve the account by ID
         Account account = accountRepository.getAccountFromID(testId);
         // Assert: Verify the result
-        assertEquals("Anna", account.getAccountName(), "Account should not be null for a valid ID");
+        assertEquals("Anna", account.getAccountName());
     }
 }
