@@ -11,34 +11,50 @@
 
 <body>
 
-
-<h1>See all accounts</h1>
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Account type</th>
-    <th>Actions</th>
-  </tr>
-  <tr th:each="otherAccount : ${otherAccounts}">
-    <td><span th:text="${otherAccount.getAccountName()}"></span></td>
-    <td><span th:text="${otherAccount.accountType.getAccountTypeName()}"></span></td>
-    <td>
-      <form th:action="@{/adm/accounts/edit/{id}(id=${otherAccount.accountID})}" method="get">
-      <button type="submit">Edit Account</button>
-    </form>
-    </td>
-  </tr>
-</table>
-
-<!-- Admin Section (for logged-in admin users) -->
-<div class="grid-item" th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'admin'}">
-  <h2>Admin menu</h2>
-  <ul>
-    <li><a href="/adm/accounts/add">Add new account</a></li>
-    <li><a href="/account/edit">Edit your account details</a></li>
-    <li><a href="/logout">Log out</a></li>
-  </ul>
+<!-- Welcome Section (for logged-in users) -->
+<div th:if="${account != null}">
+  <header>
+    <h1>EasyScope - time2track ...</h1>
+    <a href="/logout" class="logout-btn">Logout</a>
+  </header>
+  <h1>Welcome, <span th:text="${account.accountName}">!</span></h1>
+  <p>You're logged in as <span th:if="${account != null}" th:text="${account.accountType.getAccountTypeName()}">...</span></p>
 </div>
+
+<div class="grid-item">
+  <h1>See all accounts</h1>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Account type</th>
+      <th>Actions</th>
+    </tr>
+    <tr th:each="otherAccount : ${otherAccounts}">
+      <td><span th:text="${otherAccount.getAccountName()}"></span></td>
+      <td><span th:text="${otherAccount.accountType.getAccountTypeName()}"></span></td>
+      <td>
+        <form th:action="@{/adm/accounts/edit/{id}(id=${otherAccount.accountID})}" method="get">
+        <button type="submit">Edit Account</button>
+      </form>
+      </td>
+    </tr>
+  </table>
+
+  <!-- Admin Section (for logged-in admin users) -->
+  <div th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'admin'}">
+    <h2>Admin menu</h2>
+    <ul>
+      <li><a href="/adm/accounts/add">Add new account</a></li>
+      <li><a href="/account/edit">Edit your account details</a></li>
+      <li><a href="/">Go back</a></li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  <p>EasyScope – Project Calculation Tool – Contact</p>
+  <p><span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
+</footer>
 
 </body>
 
