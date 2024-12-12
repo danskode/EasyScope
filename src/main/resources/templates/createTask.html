@@ -3,8 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Create a Task</title>
+  <link rel="stylesheet" href="/stylesCreateUpdate.css">
 </head>
 <body>
+
+<header>
+  <a th:href="@{/projects/subprojects/tasks/{projectID}/{subProjectID}(projectID=${projectID}, subProjectID=${subProjectID})}" class="back-link">Back to Tasks</a>
+  <h1>EasyScope - time2track ...</h1>
+  <a href="/logout" class="logout-btn">Logout</a>
+</header>
 
 <h1>Create New Task</h1>
 
@@ -32,9 +39,11 @@
   <button type="submit">Create Task</button>
 </form>
 
-<a th:href="@{/projects/subprojects/tasks/{projectID}/{subProjectID}(projectID=${projectID}, subProjectID=${subProjectID})}">
-  <button>Back to list of tasks</button>
-</a>
+
+<footer>
+  <p>EasyScope – Project Calculation Tool – Contact</p>
+  <p><span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
+</footer>
 
 </body>
 </html>
