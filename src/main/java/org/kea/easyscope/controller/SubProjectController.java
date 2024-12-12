@@ -8,6 +8,7 @@ import org.kea.easyscope.repository.CalcRepository;
 import org.kea.easyscope.service.CalcService;
 import org.kea.easyscope.service.ProjectService;
 import org.kea.easyscope.service.SubProjectService;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +23,13 @@ public class SubProjectController {
     private final SubProjectService subProjectService;
     private final ProjectService projectService;
     private final CalcService calcService;
+    private final ChatClient chatClient;
 
-    public SubProjectController(SubProjectService subProjectService, ProjectService projectService, CalcService calcService) {
+    public SubProjectController(SubProjectService subProjectService, ProjectService projectService, CalcService calcService, ChatClient chatClient) {
         this.subProjectService = subProjectService;
         this.projectService = projectService;
         this.calcService = calcService;
+        this.chatClient = chatClient;
     }
 
 
@@ -77,6 +80,26 @@ public class SubProjectController {
 
         if (project != null) {
             subproject.setProjectID(projectID);
+
+            String subProjectDescription = subproject.getSubProjectDescription();
+
+            // Generate taskDescription using AI
+            String aiPrompt =   "Return an evaluation of " + subproject.getSubProjectName() + " described like this:" + subProjectDescription +
+                                ". The reader of the evaluation is a project manager, that wrote the subProject description." +
+                                "The project manager needs a time estimate, and ideas to split up the subprojet in minor tasks to make it more feasible. Answer most be short. Max 400 characters!";
+
+            // We let AI give time estimates according to the description made by project manager ...
+            String aiResponse = this.chatClient.prompt().user(aiPrompt).call().content();
+            // Enforce the length limit
+            int maxLength = 500;
+            // ChatGPT doesn't always respect length, so we cut it off ...
+            if (aiResponse.length() > maxLength) {
+                // Truncate the response to fit the maximum allowed length
+                aiResponse = aiResponse.substring(0, maxLength).trim();
+            }
+            subProjectDescription = subProjectDescription + ". Consider this: " + aiResponse;
+            subproject.setSubProjectDescription(subProjectDescription);
+
             subProjectService.createNewSubProject(subproject);
 
             List<SubProject> subProjects = subProjectService.getSubProjectsByProjectID(projectID);

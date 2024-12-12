@@ -6,6 +6,7 @@ import org.kea.easyscope.model.Task;
 import org.kea.easyscope.service.AccountService;
 import org.kea.easyscope.service.SubProjectService;
 import org.kea.easyscope.service.TaskService;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +20,14 @@ public class TaskController {
     private final TaskService taskService;
     private final SubProjectService subProjectService;
     private final AccountService accountService;
+    private final ChatClient chatClient;
 
     // constructor for dependency injection
-    public TaskController(TaskService taskService, SubProjectService subProjectService, AccountService accountService) {
+    public TaskController(TaskService taskService, SubProjectService subProjectService, AccountService accountService, ChatClient chatClient) {
         this.taskService = taskService;
         this.subProjectService = subProjectService;
         this.accountService = accountService;
+        this.chatClient = chatClient;
     }
 
     // method to display the list of tasks for a given project and subproject
@@ -82,6 +85,22 @@ public class TaskController {
                              @RequestParam String taskName,
                              @RequestParam String taskDescription,
                              @RequestParam float estimatedHours) {
+
+        // Generate taskDescription using AI
+        String aiPrompt =   "Generate an short numbered list of five good advise to the team member, that has to complete the task " + taskName +":" + taskDescription +
+                            ". The list must give the team member advise on how to solve the task and comply with ESG and be more efficient. " +
+                            "Do not include a time estimate. Response must not be longer than 400 characters, including spaces.";
+
+        String aiResponse = this.chatClient.prompt().user(aiPrompt).call().content();
+
+        // Enforce the length limit
+        int maxLength = 350;
+        if (aiResponse.length() > maxLength) {
+            // Truncate the response to fit the maximum allowed length
+            aiResponse = aiResponse.substring(0, maxLength).trim();
+        }
+        taskDescription = taskDescription + "\n\nSome AI pointers to make task more ESG friendly:\n" + aiResponse;
+
         // create a new task object
         Task task = new Task();
         task.setTaskName(taskName);

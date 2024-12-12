@@ -75,15 +75,14 @@ public class ProjectController {
                 String projectDescription = "";
                 if ("ai".equals(option)) {
                     // Generate project description using AI
-                    //String aiPrompt = "Generate a description for about the company: " + projectName + ". Include notes from " + aiProjectDescription + ". Take into  consideration the company's specific stand on environment in formation is available else don't comment on it. Don't do a time estimate. Answer most not exceed 200 characters spaces incl.";
-                    String aiPrompt = "Generate a concise description of our client: " + projectName +
-                            ". Include knowledge about the company's specific stand on environment and UN goals if available. " +
-                            "Do not include a time estimate. Response must not exceed 200 characters, including spaces.";
+                    String aiPrompt =   "Generate a concise description of our client: " + projectName +
+                                        ". Include knowledge about the company's specific stand on environment and UN goals if available. " +
+                                        "Do not include a time estimate. Response must not exceed 300 characters, including spaces.";
 
                     String aiResponse = this.chatClient.prompt().user(aiPrompt).call().content();
 
                     // Enforce the length limit
-                    int maxLength = 200;
+                    int maxLength = 350;
                     if (aiResponse.length() > maxLength) {
                         // Truncate the response to fit the maximum allowed length
                         aiResponse = aiResponse.substring(0, maxLength).trim();
@@ -91,8 +90,6 @@ public class ProjectController {
 
                     projectDescription = aiResponse;
 
-                    // Add AI response to the model (for debugging or showing on the frontend)
-                    model.addAttribute("completion", projectDescription);
                 } else if ("manual".equals(option)) {
                     // Use the manually provided description
                     projectDescription = manualProjectDescription;
@@ -120,8 +117,6 @@ public class ProjectController {
             return "redirect:/login";  // Redirect to the login page if no account is found in session
         }
     }
-
-
 
     // a GET method to show the list of projects for the project manager
     @GetMapping("/list")
@@ -208,14 +203,6 @@ public class ProjectController {
         // redirect to list of projects
         return "redirect:/projects/list";
     }
-
-
-    // mark project as done
-
-
-
-
-
 
 }
 
