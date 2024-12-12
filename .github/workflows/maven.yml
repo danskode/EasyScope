@@ -29,3 +29,15 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+
+      # Run tests with debug and capture output
+    - name: Run Tests with Debug
+      run: mvn test -e -X || true
+
+      # Upload Surefire Reports in case of failure
+    - name: Upload Surefire Reports
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: surefire-reports
+        path: target/surefire-reports
