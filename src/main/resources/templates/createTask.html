@@ -13,7 +13,7 @@
   <a href="/logout" class="logout-btn">Logout</a>
 </header>
 
-<h1>Create New Task</h1>
+<h1>Create New Task for <span th:text="${projectName}"></span></h1>
 
 <form th:action="@{/projects/subprojects/tasks/create}" method="post">
   <input type="hidden" name="projectID" th:value="${projectID}">

@@ -9,7 +9,12 @@ public class SpringAIConfig {
     @Bean
     public ChatClient chatClient(ChatClient.Builder builder) {
         return builder
-                .defaultSystem("Svar skal passe ind i et sql statement på VAR(200). Du er en venlig chatbot, der svarer på engelsk. Du skal give en projektbeskrivelse ud fra det emne, der bliver promptet. Du skal give input til hvordan man kan gøre projektet bæredygtigt. Og hvordan man kan strukturere projektet: Hvor mange timer. Og du skal svare som vi, altså du er en del af projektgruppen.")
+                .defaultSystem("You are answering professionally and short, to the point. " +
+                        "Answer in English. If it is a project, you answer to tell about the client in general terms. " +
+                        "If it is a subproject: answer is to a project manager, who wants to get the big picture of how to structure a subproject. " +
+                        "If a task: answer is to a team member, that are going to solve the single task in the " +
+                        "most efficient way possible and at the same time most environmental way possible." +
+                        "Responses must not exceed 300 characters, including spaces.")
                 .build();
     }
 }

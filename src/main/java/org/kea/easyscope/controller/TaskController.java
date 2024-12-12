@@ -1,9 +1,11 @@
 package org.kea.easyscope.controller;
 
 import org.kea.easyscope.model.Account;
+import org.kea.easyscope.model.Project;
 import org.kea.easyscope.model.SubProject;
 import org.kea.easyscope.model.Task;
 import org.kea.easyscope.service.AccountService;
+import org.kea.easyscope.service.ProjectService;
 import org.kea.easyscope.service.SubProjectService;
 import org.kea.easyscope.service.TaskService;
 import org.springframework.ai.chat.client.ChatClient;
@@ -21,13 +23,15 @@ public class TaskController {
     private final SubProjectService subProjectService;
     private final AccountService accountService;
     private final ChatClient chatClient;
+    private final ProjectService projectService;
 
     // constructor for dependency injection
-    public TaskController(TaskService taskService, SubProjectService subProjectService, AccountService accountService, ChatClient chatClient) {
+    public TaskController(TaskService taskService, SubProjectService subProjectService, AccountService accountService, ChatClient chatClient, ProjectService projectService) {
         this.taskService = taskService;
         this.subProjectService = subProjectService;
         this.accountService = accountService;
         this.chatClient = chatClient;
+        this.projectService = projectService;
     }
 
     // method to display the list of tasks for a given project and subproject
@@ -47,9 +51,12 @@ public class TaskController {
             model.addAttribute("tasks", tasks);
             model.addAttribute("subProject", subProject);
 
+            Project project = projectService.getProjectByProjectID(projectID);
+            String projectName = project.getProjectName();;
+
             // add projectID to the model for the back button functionality
             model.addAttribute("projectID", projectID);
-
+            model.addAttribute("projectName", projectName);
 
             // return the task list view
             return "taskList";
@@ -65,8 +72,13 @@ public class TaskController {
                                      @PathVariable int subProjectID,
                                      Model model) {
 
+        // We need the projectName to be passed to task ...
+        Project project = projectService.getProjectByProjectID(projectID);
+        String projectName = project.getProjectName();
         // add necessary data to the model
+
         model.addAttribute("projectID", projectID);
+        model.addAttribute("projectName", projectName);
         model.addAttribute("subProjectID", subProjectID);
 
         // retrieve team members and add them to the model for selection in the form
@@ -86,8 +98,11 @@ public class TaskController {
                              @RequestParam String taskDescription,
                              @RequestParam float estimatedHours) {
 
+        Project project = projectService.getProjectByProjectID(projectID);
+
         // Generate taskDescription using AI
-        String aiPrompt =   "Generate an short numbered list of five good advise to the team member, that has to complete the task " + taskName +":" + taskDescription +
+        String aiPrompt =   "This is a task for our client " + project.getProjectName() +": Generate an short numbered list of five good advises " +
+                            "to the team member, that has to complete the task for the client. The task is " + taskName +" and we want to " + taskDescription +
                             ". The list must give the team member advise on how to solve the task and comply with ESG and be more efficient. " +
                             "Do not include a time estimate. Response must not be longer than 400 characters, including spaces.";
 

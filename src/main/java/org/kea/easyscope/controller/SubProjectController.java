@@ -84,7 +84,7 @@ public class SubProjectController {
             String subProjectDescription = subproject.getSubProjectDescription();
 
             // Generate taskDescription using AI
-            String aiPrompt =   "Return an evaluation of " + subproject.getSubProjectName() + " described like this:" + subProjectDescription +
+            String aiPrompt =   "This is a subproject, and the client is "+ project.getProjectName() +": Return an evaluation of " + subproject.getSubProjectName() + " described like this:" + subProjectDescription +
                                 ". The reader of the evaluation is a project manager, that wrote the subProject description." +
                                 "The project manager needs a time estimate, and ideas to split up the subprojet in minor tasks to make it more feasible. Answer most be short. Max 400 characters!";
 
