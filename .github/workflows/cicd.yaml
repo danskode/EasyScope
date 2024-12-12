@@ -49,13 +49,19 @@ jobs:
           path: target/*.jar
 
   deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write
+deploy:
+  runs-on: ubuntu-latest
+  needs: build
+  env:
+    SPRING_PROFILES_ACTIVE: prod
+  permissions:
+    id-token: write
+  steps:
+    # Download build artifact
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v4
+      with:
+        name: java-app
 
     steps:
       # Download build artifact
@@ -80,7 +86,3 @@ jobs:
           app-name: 'EasyScope'
           slot-name: 'Production'
           package: '*.jar'
-
-      # Set Spring Profile for Production
-      - name: Set Production Profile
-        run: echo "SPRING_PROFILES_ACTIVE=prod" >> $GITHUB_ENV
