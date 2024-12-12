@@ -30,7 +30,8 @@ public class ProjectController {
 
     // a GET method to show the "createProject" html
     @GetMapping("/create")
-    public String showCreateProjectPage(HttpSession session, Model model) {
+    public String showCreateProjectPage(HttpSession session,
+                                        Model model) {
         // get the account from the ongoing session
         Account account = (Account) session.getAttribute("account");
 

@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Update Subproject</title>
+    <link rel="stylesheet" href="/stylesCreateUpdate.css">
 </head>
 <body>
+
+<header>
+    <a th:href="@{/projects/subprojects/{projectID}(projectID=${subProject.projectID})}" class="back-link">Back to Tasks</a>
+    <h1>EasyScope - time2track ...</h1>
+    <a href="/logout" class="logout-btn">Logout</a>
+</header>
 
 <h1>Update Subproject</h1>
 
@@ -26,7 +33,11 @@
     <button type="submit">Update Subproject</button>
 </form>
 
-<a th:href="@{/projects/subprojects/{projectID}(projectID=${subProject.projectID})}">Back to Subproject list</a>
+
+<footer>
+    <p>EasyScope – Project Calculation Tool – Contact</p>
+    <p><span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
+</footer>
 
 </body>
 </html>

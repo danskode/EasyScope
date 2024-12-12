@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Update Project</title>
+    <link rel="stylesheet" href="/stylesCreateUpdate.css">
 </head>
 <body>
+
+<header>
+    <a href="/projects/list" class="back-link">Back to Projects</a>
+    <h1>EasyScope - time2track ...</h1>
+    <a href="/logout" class="logout-btn">Logout</a>
+</header>
 
 <h1>Update project</h1>
 
@@ -23,7 +30,11 @@
     <button type="submit">Update</button>
 </form>
 
-<a href="/projects/list">Back to the list of projects</a>
+<footer>
+    <p>EasyScope – Project Calculation Tool – Contact</p>
+    <p><span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
+</footer>
+
 
 </body>
 </html>

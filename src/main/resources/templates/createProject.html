@@ -9,8 +9,16 @@
             display: none;
         }
     </style>
+    <link rel="stylesheet" href="/stylesCreateUpdate.css">
 </head>
 <body>
+
+<header>
+    <a href="/projects/list" class="back-link">Back to Projects</a>
+    <h1>EasyScope - time2track ...</h1>
+    <a href="/logout" class="logout-btn">Logout</a>
+</header>
+
 <h1>Add a new client to the system!</h1>
 
 <form action="/projects/create" method="POST">
@@ -66,5 +74,11 @@
         }
     }
 </script>
+
+<footer>
+    <p>EasyScope – Project Calculation Tool – Contact</p>
+    <p><span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
+</footer>
+
 </body>
 </html>
