@@ -5,7 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
+// @SpringBootTest
 @SpringBootTest(properties = "spring.profiles.active=test")
 public class BasicTest {
 
