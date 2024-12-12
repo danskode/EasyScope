@@ -7,13 +7,16 @@
 <body>
 <header>
     <h1>EasyScope - time2track ...</h1>
-    <a href="/logout" class="logout-btn">Logout</a>
 </header>
 
 <div class="container">
     <div class="grid-container">
         <!-- Welcome Section (for logged-in users) -->
         <div th:if="${account != null}">
+            <header>
+                <h1>EasyScope - time2track ...</h1>
+                <a href="/logout" class="logout-btn">Logout</a>
+            </header>
             <h1>Welcome, <span th:text="${account.accountName}">!</span></h1>
             <p>You're logged in as <span th:if="${account != null}" th:text="${account.accountType.getAccountTypeName()}">...</span></p>
         </div>
@@ -21,7 +24,8 @@
         <!-- Login Form Section (for non-logged-in users) -->
         <div class="grid-item login-section" th:if="${account == null}">
             <div class="login-form">
-                <p><b>Don't be a stranger.</b> You are not logged. If you don't have an account please contact an administrator.</p>
+                <p><b>Don't be a stranger.</b> </p>
+                <p>If you don't have an account please contact an administrator.</p>
                 <form action="#" th:action="@{/login}" method="post">
                     <div>
                         <label for="accountName">Account Name:</label>
@@ -43,6 +47,10 @@
 
         <!-- Admin Section (for logged-in admin users) -->
         <div th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'admin'}">
+            <header>
+                <h1>EasyScope - time2track ...</h1>
+                <a href="/logout" class="logout-btn">Logout</a>
+            </header>
             <h2>Admin menu</h2>
             <ul>
                 <li><a href="/adm/accounts/list">See all non admin accounts</a></li>
@@ -53,6 +61,10 @@
 
         <!-- Section for project managers -->
         <div th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'project manager'}">
+            <header>
+                <h1>EasyScope - time2track ...</h1>
+                <a href="/logout" class="logout-btn">Logout</a>
+            </header>
             <h2>Project manager menu</h2>
             <ul>
                 <li><a href="/projects/list">See all your projects</a></li>
@@ -63,6 +75,10 @@
 
         <!-- Section for team members -->
         <div th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'team member'}">
+            <header>
+                <h1>EasyScope - time2track ...</h1>
+                <a href="/logout" class="logout-btn">Logout</a>
+            </header>
             <h2>Team member menu</h2>
             <ul>
                 <li><a th:href="@{/projects/subprojects/tasks/assigned(accountID=${account.accountID})}">See all your open tasks</a></li>

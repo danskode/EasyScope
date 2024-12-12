@@ -47,7 +47,7 @@ header a:first-child {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 1.2rem;
     text-decoration: none;
     position: absolute;
     top: 50%;
@@ -82,42 +82,53 @@ th, td {
     border: 1px solid #ddd; /* Adds border to table cells */
 }
 
-/* Column widths for uniformity */
-table td:nth-child(1), table th:nth-child(1) {
-    width: 7%;
+/* Adjust column widths for active table */
+.active-table th:nth-child(1), .active-table td:nth-child(1) {
+    width: 5%;
 }
 
-table td:nth-child(2), table th:nth-child(2) {
+.active-table th:nth-child(2), .active-table td:nth-child(2) {
     width: 15%;
 }
-
-table td:nth-child(3), table th:nth-child(3) {
+.active-table th:nth-child(3), .active-table td:nth-child(3) {
+    width: 5%;
+}
+.active-table th:nth-child(4), .active-table td:nth-child(4) {
+    width: 6%;
+}
+.active-table th:nth-child(5), .active-table td:nth-child(5) {
     width: 7%;
 }
-
-table td:nth-child(4), table th:nth-child(4) {
-    width: 15%;
+.active-table th:nth-child(6), .active-table td:nth-child(6) {
+    width: 5%;
+}
+.active-table th:nth-child(7), .active-table td:nth-child(7) {
+    width: 3%;
 }
 
-table td:nth-child(5), table th:nth-child(5) {
+
+
+/* Adjust column widths for completed table */
+.completed-table th:nth-child(1), .completed-table td:nth-child(1) {
     width: 5%;
 }
 
-table td:nth-child(6), table th:nth-child(6) {
-    width: 9%;
+.completed-table th:nth-child(2), .completed-table td:nth-child(2) {
+    width: 10%;
 }
-
-table td:nth-child(7), table th:nth-child(7) {
-    width: 9%;
+.completed-table th:nth-child(3), .completed-table td:nth-child(3) {
+    width: 5%;
 }
-
-table td:nth-child(8), table th:nth-child(8) {
+.completed-table th:nth-child(4), .completed-table td:nth-child(4) {
+    width: 6%;
+}
+.completed-table th:nth-child(5), .completed-table td:nth-child(5) {
+    width: 7%;
+}
+.completed-table th:nth-child(6), .completed-table td:nth-child(6) {
     width: 5%;
 }
 
-table td:nth-child(9), table th:nth-child(9) {
-    width: 5%;
-}
 
 /* Alternating row colors for readability */
 table tr:nth-child(even) {
