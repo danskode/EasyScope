@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/stylesHome.css">
+    <title>Error Page</title>
+</head>
+<body>
+
+<header>
+    <h1>EasyScope - time2track ...</h1>
+</header>
+
+<img src="/images/error.png" alt="Error Image" width="300" height="auto" />
+
+
+<h1>An error occurred</h1>
+<p th:text="${error}"></p> <!-- From GlobalExceptionHandler!!! -->
+<a href="/">Go back</a>
+
+
+
+<footer>
+    <p>EasyScope – Project Calculation Tool – Contact</p>
+    <p><span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
+</footer>
+
+</body>
+</html>

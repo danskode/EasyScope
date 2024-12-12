@@ -23,27 +23,29 @@ public class AccountController {
     public String showEditAccount(HttpSession session, Model model) {
         Account account = (Account) session.getAttribute("account");
 
-        if (account != null ){
+        // If account is not found in the session, throw an IllegalArgumentException
+        if (account != null) {
             model.addAttribute("account", account);
             return "accountedit";
         } else {
-            return "redirect:/";
+            throw new IllegalArgumentException("No account found in session. Please log in.");
         }
     }
 
     @PostMapping("/edit")
     public String editAccount(@RequestParam("newAccountName") String newAccountName,
-                              HttpSession session,
-                              Model model) {
+                              HttpSession session) {
+
         Account account = (Account) session.getAttribute("account");
+
+        // If account is not found in session, throw IllegalArgumentException
         if (account != null) {
             int accountID = account.getAccountID();
             accountService.updateOwnAccount(newAccountName, accountID);
             account.setAccountName(newAccountName);
             return "redirect:/";
-        }
-        else {
-            return "redirect:/";
+        } else {
+            throw new IllegalArgumentException("No account found in session. Please log in.");
         }
     }
 
