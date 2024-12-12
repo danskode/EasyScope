@@ -17,7 +17,7 @@
 
 
 <h2>Active Tasks</h2>
-<table border="1">
+<table class="active-table">
   <thead>
   <tr>
     <th>Task</th>
@@ -26,6 +26,7 @@
     <th>Assigned to</th>
     <th>Estimated Hours</th>
     <th>Actions</th>
+    <th>Delete</th>
   </tr>
   </thead>
   <tbody>
@@ -37,9 +38,10 @@
     <td th:text="${task.assignedTo != null ? task.assignedTo.accountName : 'Not assigned'}">Assigned to</td>
     <td th:text="${task.estimatedHours != 0.0 ? task.estimatedHours : 'N/A'}">Estimated hours</td>
     <td>
-      <a th:href="@{/projects/subprojects/tasks/update/{taskID}(taskID=${task.taskID})}">
-        <button>Update</button>
+      <a th:href="@{/projects/subprojects/tasks/update/{taskID}(taskID=${task.taskID})}">Update
       </a>
+    </td>
+      <td>
       <form th:action="@{/projects/subprojects/tasks/delete}" method="post">
         <input type="hidden" name="taskID" th:value="${task.taskID}" />
         <input type="hidden" name="projectID" th:value="${projectID}" />
@@ -52,7 +54,7 @@
 </table>
 
 <h2>Completed Tasks</h2>
-<table border="1">
+<table class="completed-table">
   <thead>
   <tr>
     <th>Task</th>
@@ -61,7 +63,6 @@
     <th>Assigned to</th>
     <th>Estimated Hours</th>
     <th>Realized Hours</th>
-    <th>Actions</th>
   </tr>
   </thead>
   <tbody>
@@ -73,9 +74,6 @@
     <td th:text="${task.assignedTo != null ? task.assignedTo.accountName : 'Not assigned'}">Assigned to</td>
     <td th:text="${task.estimatedHours != 0.0 ? task.estimatedHours: 'N/A'}">Estimated hours</td>
     <td th:text="${task.realizedHours != 0.0 ? task.realizedHours : 'N/A'}">Realized hours</td>
-    <td>
-      <!-- Actions for completed tasks can go here -->
-    </td>
   </tr>
   </tbody>
 </table>
