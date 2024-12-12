@@ -75,9 +75,9 @@ public class ProjectController {
                 String projectDescription = "";
                 if ("ai".equals(option)) {
                     // Generate project description using AI
-                    String aiPrompt =   "Generate a concise description of our client: " + projectName +
+                    String aiPrompt =   "This is a project: Generate a concise description of our client: " + projectName +
                                         ". Include knowledge about the company's specific stand on environment and UN goals if available. " +
-                                        "Do not include a time estimate. Response must not exceed 300 characters, including spaces.";
+                                        "Do not include a time estimate.";
 
                     String aiResponse = this.chatClient.prompt().user(aiPrompt).call().content();
 
