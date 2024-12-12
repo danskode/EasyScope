@@ -2,8 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Finish Task</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+
+<header>
+    <a href="/projects/list" class="back-link">Back to Projects</a>
+    <h1>EasyScope - time2track ...</h1>
+    <a href="/logout" class="logout-btn">Logout</a>
+</header>
+
+<div class="grid-container">
+    <div class="grid-item">
 
 <h2>Finish Task</h2>
 
@@ -21,9 +31,16 @@
         <input type="number" id="realizedHours" name="realizedHours" th:field="${task.realizedHours}" required />
     </div>
     <div>
-        <button type="submit">Finish Task</button>
+        <button type="submit" class="button">Finish Task</button>
     </div>
 
+    </div>
+</div>
+
+    <footer>
+        <p>EasyScope – Project Calculation Tool – Contact</p>
+        <p><span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
+    </footer>
 
 </form>
 </body>

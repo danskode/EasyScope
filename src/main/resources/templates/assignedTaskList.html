@@ -3,10 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Your Assigned Tasks</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
+
+<header>
+    <a href="/" class="go-back">Go back</a>
+    <h1>EasyScope - time2track ...</h1>
+    <a href="/logout" class="logout-btn">Logout</a>
+</header>
+
 <body>
+
+<main>
+
 <h1>Your Assigned Tasks</h1>
-<table border="1">
+
+<table>
     <thead>
     <tr>
         <th>Task Name</th>
@@ -25,13 +37,19 @@
         <td th:text="${task.estimatedHours != 0.0 ? task.estimatedHours : 'N/A'}">Estimated Hours</td>
         <td th:text="${task.realizedHours != 0.0 ? task.realizedHours : 'N/A'}">Realized Hours</td>
         <td>
-            <a th:href="@{/projects/subprojects/tasks/finish/{taskID}/{accountID}(taskID=${task.taskID}, accountID=${accountID})}">
-                <button>Finish task</button>
-            </a>
+            <a th:href="@{/projects/subprojects/tasks/finish/{taskID}/{accountID}(taskID=${task.taskID}, accountID=${accountID})}">Finish task</a>
         </td>
     </tr>
     </tbody>
 </table>
-<a href="/">Go back</a>
+
+</main>
+
+<footer>
+    <p>EasyScope – Project Calculation Tool – Contact</p>
+    <p><span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
+</footer>
+
+
 </body>
 </html>

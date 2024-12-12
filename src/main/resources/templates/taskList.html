@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Tasks</title>
-  <link rel="stylesheet" href="/stylesTaskList.css">
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 
@@ -13,11 +13,13 @@
   <a href="/logout" class="logout-btn">Logout</a>
 </header>
 
+<main>
+
 <h1>Tasks for <span th:text="${projectName}"></span> in the subproject <span th:text="${subProject.subProjectName}"></span></h1>
 
 
 <h2>Active Tasks</h2>
-<table class="active-table">
+<table class="taskList-active-table">
   <thead>
   <tr>
     <th>Task</th>
@@ -46,15 +48,16 @@
         <input type="hidden" name="taskID" th:value="${task.taskID}" />
         <input type="hidden" name="projectID" th:value="${projectID}" />
         <input type="hidden" name="subProjectID" th:value="${subProjectID}" />
-        <button type="submit">Delete</button>
+        <button type="submit" class="button">Delete</button>
       </form>
     </td>
   </tr>
   </tbody>
 </table>
 
+
 <h2>Completed Tasks</h2>
-<table class="completed-table">
+<table class="taskList-completed-table">
   <thead>
   <tr>
     <th>Task</th>
@@ -81,9 +84,10 @@
 
 <form th:action="@{/projects/subprojects/tasks/create/{projectID}/{subProjectID}(projectID=${projectID}, subProjectID=${subProject.subProjectID})}" method="get">
   <input type="hidden" name="accountID" th:value="${accountID}" />
-  <button type="submit">Create Task</button>
+  <button type="submit" class="button">Create Task</button>
 </form>
 
+</main>
 
 <footer>
   <p>EasyScope – Project Calculation Tool – Contact</p>

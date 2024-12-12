@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Create a Task</title>
-  <link rel="stylesheet" href="/stylesCreateUpdate.css">
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 
@@ -12,6 +12,9 @@
   <h1>EasyScope - time2track ...</h1>
   <a href="/logout" class="logout-btn">Logout</a>
 </header>
+
+<div class="grid-container">
+  <div class="grid-item">
 
 <h1>Create New Task for <span th:text="${projectName}"></span></h1>
 
@@ -36,9 +39,11 @@
   <label for="estimatedHours">Estimated Hours:</label>
   <input type="number" id="estimatedHours" name="estimatedHours" step="0.1" required>
 
-  <button type="submit">Create Task</button>
+  <button type="submit" class="button">Create Task</button>
 </form>
 
+  </div>
+</div>
 
 <footer>
   <p>EasyScope – Project Calculation Tool – Contact</p>

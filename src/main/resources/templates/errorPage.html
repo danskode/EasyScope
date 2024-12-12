@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/stylesHome.css">
+    <link rel="stylesheet" href="/styles.css">
     <title>Error Page</title>
 </head>
 <body>
@@ -11,14 +11,17 @@
     <h1>EasyScope - time2track ...</h1>
 </header>
 
+<main>
+
 <img src="/images/error.png" alt="Error Image" width="300" height="auto" />
 
 
-<h1>An error occurred</h1>
+<h1>Oh no... An error occurred</h1>
 <p th:text="${error}"></p> <!-- From GlobalExceptionHandler!!! -->
-<a href="/">Go back</a>
+<a href="/" class="button">Take me back</a>
 
 
+</main>
 
 <footer>
     <p>EasyScope – Project Calculation Tool – Contact</p>

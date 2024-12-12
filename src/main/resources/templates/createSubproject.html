@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Create Subproject</title>
-  <link rel="stylesheet" href="/stylesCreateUpdate.css">
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 
@@ -12,6 +12,9 @@
   <h1>EasyScope - time2track ...</h1>
   <a href="/logout" class="logout-btn">Logout</a>
 </header>
+
+<div class="grid-container">
+  <div class="grid-item">
 
 <h1>Create a New Subproject for <span th:text="${project.projectName}">Project name</span></h1>
 
@@ -24,12 +27,17 @@
   <label for="description">Description:</label>
   <textarea id="description" name="subProjectDescription" required></textarea>
 
-  <label for="deadline">Deadline:</label>
+  <label for="deadline" class="deadline-container">
+    Deadline:
   <input type="date" id="deadline" name="subProjectDeadline" required/>
+  </label>
 
-  <button type="submit">Create subproject</button>
+
+  <button type="submit" class="button">Create subproject</button>
 </form>
 
+  </div>
+</div>
 
 <footer>
   <p>EasyScope – Project Calculation Tool – Contact</p>

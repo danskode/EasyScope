@@ -1,46 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="/stylesHome.css">
-    <title>Add new account</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles.css">
+  <title>Add new account</title>
 </head>
 <body>
 <header>
-  <a href="/adm/accounts/list" class="back-link">Go back</a>
+  <a href="/" class="back-link">Go back</a>
   <h1>EasyScope - time2track ...</h1>
   <a href="/logout" class="logout-btn">Logout</a>
 </header>
-<div class="grid-item">
 
-  <h1>Add new account</h1>
-  <!-- Form to add new account to system ... -->
-  <form action="/adm/accounts/add" method="POST">
-    <div>
-      <label for="accountName">Account holder's username:</label>
-      <input type="text" id="accountName" name="accountName" required>
-    </div>
+<div class="grid-container">
+  <div class="grid-item">
+    <h1>Add new account</h1>
+    <!-- Form to add new account to system -->
+    <form action="/adm/accounts/add" method="POST">
+      <div>
+        <label for="accountName">Account holder's username:</label>
+        <input type="text" id="accountName" name="accountName" required>
+      </div>
 
-    <div>
-      <label for="accountPassword">Password: </label>
-      <input type="password" id="accountPassword" name="accountPassword" required></input>
-    </div>
+      <div>
+        <label for="accountPassword">Password: </label>
+        <input type="password" id="accountPassword" name="accountPassword" required>
+      </div>
 
-    <div class="form-group">
-      <label for="accountType">Account type: </label>
-      <select name="accountType" id="accountType" required>
-        <option th:each="type : ${accountTypes}"
-                th:value="${type.name()}"
-                th:text="${type.getAccountTypeName()}"
-        </option>
-      </select>
-    </div>
+      <div class="form-group">
+        <label for="accountType">Account type: </label>
+        <select name="accountType" id="accountType" required>
+          <option th:each="type : ${accountTypes}"
+                  th:value="${type.name()}"
+                  th:text="${type.getAccountTypeName()}">
+          </option>
+        </select>
+      </div>
 
-    <div>
-      <button type="submit">Save new account</button>
-    </div>
-  </form>
-
+      <div>
+        <button type="submit" class="button">Save new account</button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <footer>

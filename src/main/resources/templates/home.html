@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>EasyScope - get it done right the first time!</title>
-    <link rel="stylesheet" href="/stylesHome.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 <header>
@@ -53,9 +53,9 @@
             </header>
             <h2>Admin menu</h2>
             <ul>
-                <li><a href="/adm/accounts/list">See all non admin accounts</a></li>
-                <li><a href="/adm/accounts/add">Add new account</a></li>
-                <li><a href="/account/edit">Edit your account details</a></li>
+                <li><a href="/adm/accounts/list" class="button">See all non admin accounts</a></li>
+                <li><a href="/adm/accounts/add" class="button">Add new account</a></li>
+                <li><a href="/account/edit" class="button">Edit your account details</a></li>
             </ul>
         </div>
 
@@ -67,9 +67,8 @@
             </header>
             <h2>Project manager menu</h2>
             <ul>
-                <li><a href="/projects/list">See all your projects</a></li>
-                <li><a href="/projects/create">Add a new project</a></li>
-                <li><a href="/account/edit">Edit your account details</a></li>
+                <li><a href="/projects/list" class="button">See all your projects</a></li>
+                <li><a href="/account/edit" class="button">Edit your account details</a></li>
             </ul>
         </div>
 
@@ -81,9 +80,9 @@
             </header>
             <h2>Team member menu</h2>
             <ul>
-                <li><a th:href="@{/projects/subprojects/tasks/assigned(accountID=${account.accountID})}">See all your open tasks</a></li>
-                <li><a th:href="@{/projects/subprojects/tasks/finished(accountID=${account.accountID})}">See all your finished tasks</a></li>
-                <li><a href="/account/edit">Edit your account details</a></li>
+                <li><a th:href="@{/projects/subprojects/tasks/assigned(accountID=${account.accountID})}" class="button">See all your open tasks</a></li>
+                <li><a th:href="@{/projects/subprojects/tasks/finished(accountID=${account.accountID})}" class="button">See all your finished tasks</a></li>
+                <li><a href="/account/edit" class="button">Edit your account details</a></li>
             </ul>
         </div>
     </div>

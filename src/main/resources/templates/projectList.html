@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Clients/Projects</title>
-    <link rel="stylesheet" href="/stylesProjectList.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 
@@ -13,68 +13,65 @@
     <a href="/logout" class="logout-btn">Logout</a>
 </header>
 
-<h1>These are your clients/projects</h1>
+<main>
+    <h1>These are your clients/projects</h1>
 
-<h2>Active</h2>
-<table>
+    <h2>Active</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Project | Client</th>
+            <th>Description</th>
+            <th>Progress Status</th>
+            <th>Actions</th>
+            <th>View</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="project : ${projects}" th:if="${!project.finished}">
+            <td th:text="${project.projectName}">Client</td>
+            <td th:text="${project.projectDescription}">Project description</td>
+            <td th:if="${!cs.isAnyTasksInProjectExceedingDeadline(project)}">You're on track with client / project</td>
+            <td th:if="${cs.isAnyTasksInProjectExceedingDeadline(project)}">Estimated hours left exceeds a deadline!</td>
+            <td>
+                <a th:href="@{/projects/update/{projectID}(projectID=${project.projectID})}">Update</a>
+            </td>
+            <td>
+                <a th:href="@{/projects/subprojects/{projectID}(projectID=${project.projectID})}">Subprojects</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
-    <thead>
-    <tr>
-        <th>Project | Client</th>
-        <th>Description</th>
-        <th>Progress Status</th>
-        <th>Actions</th>
-        <th>View</th>
-    </tr>
-    </thead>
+    <h2>Completed</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Project | Client</th>
+            <th>Description</th>
+            <th>Progress Status</th>
+            <th>Actions</th>
+            <th>View</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="project : ${projects}" th:if="${project.finished}">
+            <td th:text="${project.projectName}">Client</td>
+            <td th:text="${project.projectDescription}">Project description</td>
+            <td>Finished</td>
+            <td>
+                <a th:href="@{/projects/update/{projectID}(projectID=${project.projectID})}">Update</a>
+            </td>
+            <td>
+                <a th:href="@{/projects/subprojects/{projectID}(projectID=${project.projectID})}">Subprojects</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
-    <tbody>
-    <tr th:each="project : ${projects}" th:if="${!project.finished}">
-        <td th:text="${project.projectName}">Client</td>
-        <td th:text="${project.projectDescription}">Project description</td>
-        <td th:if="${!cs.isAnyTasksInProjectExceedingDeadline(project)}">You're on track with client / project</td>
-        <td th:if="${cs.isAnyTasksInProjectExceedingDeadline(project)}">Estimated hours left exceeds a deadline!</td>
-        <td>
-            <a th:href="@{/projects/update/{projectID}(projectID=${project.projectID})}">Update</a>
-        </td>
-        <td>
-            <a th:href="@{/projects/subprojects/{projectID}(projectID=${project.projectID})}">Subprojects</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+    <a href="/projects/create" class="button">Add a New Project</a>
 
-
-<h2>Completed</h2>
-<table>
-
-    <thead>
-    <tr>
-        <th>Project | Client</th>
-        <th>Description</th>
-        <th>Progress Status</th>
-        <th>Actions</th>
-        <th>View</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <tr th:each="project : ${projects}" th:if="${project.finished}">
-        <td th:text="${project.projectName}">Client</td>
-        <td th:text="${project.projectDescription}">Project description</td>
-        <td>Finished</td>
-        <td>
-            <a th:href="@{/projects/update/{projectID}(projectID=${project.projectID})}">Update</a>
-        </td>
-        <td>
-            <a th:href="@{/projects/subprojects/{projectID}(projectID=${project.projectID})}">Subprojects</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-
- <a href="/projects/create" class = "button">Add a New Project</a>
+</main>
 
 <footer>
     <p>EasyScope – Project Calculation Tool – Contact</p>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>EasyScope - get it done right the first time!</title>
-    <link rel="stylesheet" href="/stylesHome.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 
@@ -12,6 +12,7 @@
   <h1>EasyScope - time2track ...</h1>
   <a href="/logout" class="logout-btn">Logout</a>
 </header>
+<main>
 
 <div class="grid-item">
 
@@ -50,7 +51,7 @@
 
           <div class="form-group">
             <!-- Edit button -->
-            <button type="submit" name="accountId" th:value="${otherAccount.accountID}">Save</button>
+            <button type="submit" name="accountId" th:value="${otherAccount.accountID}" class="button">Save</button>
           </div>
   </div>
 
@@ -100,6 +101,8 @@
 
   </div>
 </div>
+
+</main>
 <footer>
   <p>EasyScope – Project Calculation Tool – Contact</p>
   <p><span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
