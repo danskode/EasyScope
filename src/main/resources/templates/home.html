@@ -10,7 +10,7 @@
 </header>
 
 <div class="container">
-    <div class="grid-container grid-item">
+    <div class=" grid-item">
         <!-- Welcome Section (for logged-in users) -->
         <div th:if="${account != null}">
             <header>
@@ -22,7 +22,7 @@
         </div>
 
         <!-- Login Form Section (for non-logged-in users) -->
-        <div class="grid-item login-section" th:if="${account == null}">
+        <div class="login-section" th:if="${account == null}">
             <div class="login-form">
                 <p><b>Don't be a stranger.</b> </p>
                 <p>If you don't have an account please contact an administrator.</p>

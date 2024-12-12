@@ -2,9 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Edit account</title>
+    <title>EasyScope - get it done right the first time!</title>
+    <link rel="stylesheet" href="/stylesHome.css">
 </head>
 <body>
+
+<header>
+  <a href="/" class="back-link">Go back</a>
+  <h1>EasyScope - time2track ...</h1>
+  <a href="/logout" class="logout-btn">Logout</a>
+</header>
+
+<div class="grid-item">
+
   <h1>Make changes to <span th:text="${otherAccount.getAccountName()}"></span>'s account</h1>
   <div th:if="${otherAccount.accountType?.name() == 'PROJECT_MANAGER'}">
         <form action="#" th:action="@{/adm/accounts/edit/projectmanager}" method="post">
@@ -42,13 +52,6 @@
             <!-- Edit button -->
             <button type="submit" name="accountId" th:value="${otherAccount.accountID}">Save</button>
           </div>
-
-        <div>
-          <!-- Links -->
-          <a href="/adm/accounts/list">Go back</a>
-          <a href="/">Go home</a>
-          <a href="/logout">Logout</a>
-        </div>
   </div>
 
   <div th:if="${otherAccount.accountType?.name() == 'TEAM_MEMBER'}">
@@ -95,12 +98,11 @@
         <button type="submit" name="accountId" th:value="${otherAccount.accountID}">Save</button>
       </div>
 
-      <div>
-        <!-- Links -->
-        <a href="/adm/accounts/list">Go back</a>
-        <a href="/">Go home</a>
-        <a href="/logout">Logout</a>
-      </div>
   </div>
+</div>
+<footer>
+  <p>EasyScope – Project Calculation Tool – Contact</p>
+  <p><span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
+</footer>
 </body>
 </html>

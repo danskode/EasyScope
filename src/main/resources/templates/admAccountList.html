@@ -4,22 +4,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Accounts - Admin</title>
+  <title>See all non-admin Accounts</title>
   <link rel="stylesheet" href="/stylesHome.css">
-
 </head>
 
 <body>
 
-<!-- Welcome Section (for logged-in users) -->
-<div th:if="${account != null}">
-  <header>
-    <h1>EasyScope - time2track ...</h1>
-    <a href="/logout" class="logout-btn">Logout</a>
-  </header>
-  <h1>Welcome, <span th:text="${account.accountName}">!</span></h1>
-  <p>You're logged in as <span th:if="${account != null}" th:text="${account.accountType.getAccountTypeName()}">...</span></p>
-</div>
+<header>
+  <a href="/" class="back-link">Go back</a>
+  <h1>EasyScope - time2track ...</h1>
+  <a href="/logout" class="logout-btn">Logout</a>
+</header>
 
 <div class="grid-item">
   <h1>See all accounts</h1>
@@ -39,18 +34,7 @@
       </td>
     </tr>
   </table>
-
-  <!-- Admin Section (for logged-in admin users) -->
-  <div th:if="${account != null and account.accountType != null and account.accountType.getAccountTypeName() == 'admin'}">
-    <h2>Admin menu</h2>
-    <ul>
-      <li><a href="/adm/accounts/add">Add new account</a></li>
-      <li><a href="/account/edit">Edit your account details</a></li>
-      <li><a href="/">Go back</a></li>
-    </ul>
-  </div>
 </div>
-
 <footer>
   <p>EasyScope – Project Calculation Tool – Contact</p>
   <p><span th:text="${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}"></span></p>
