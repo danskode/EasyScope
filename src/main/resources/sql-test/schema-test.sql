@@ -8,8 +8,8 @@ create table accounts (
 
 create table project (
                          project_id INT NOT NULL AUTO_INCREMENT,
-                         project_name VARCHAR(25) NOT NULL,
-                         project_description VARCHAR(255),
+                         project_name VARCHAR(100) NOT NULL,
+                         project_description VARCHAR(1000),
                          project_is_finished TINYINT,
                          account_id_fk INT,
                          PRIMARY KEY (project_id),
@@ -19,8 +19,8 @@ create table project (
 
 create table sub_project (
                              sub_project_id INT NOT NULL AUTO_INCREMENT,
-                             sub_project_name VARCHAR(25),
-                             sub_project_description VARCHAR(255),
+                             sub_project_name VARCHAR(100),
+                             sub_project_description VARCHAR(1000),
                              sub_project_is_finished TINYINT,
                              sub_project_deadline DATE,
                              project_id_fk INT,
@@ -30,8 +30,8 @@ create table sub_project (
 
 create table task (
                       task_id INT NOT NULL AUTO_INCREMENT,
-                      task_name VARCHAR(25),
-                      task_description VARCHAR(255),
+                      task_name VARCHAR(100),
+                      task_description VARCHAR(1000),
                       task_is_finished TINYINT,
                       sub_project_id_fk INT,
                       PRIMARY KEY (task_id),
