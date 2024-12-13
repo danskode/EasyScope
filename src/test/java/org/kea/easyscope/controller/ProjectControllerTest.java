@@ -24,8 +24,7 @@ public class ProjectControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private ProjectService projectService;
+
 
     private MockHttpSession session;
 
