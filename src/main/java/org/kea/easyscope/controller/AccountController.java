@@ -22,7 +22,6 @@ public class AccountController {
     @GetMapping(value = {"/edit", "/edit/"})
     public String showEditAccount(HttpSession session, Model model) {
         Account account = (Account) session.getAttribute("account");
-
         // If account is not found in the session, throw an IllegalArgumentException
         if (account != null) {
             model.addAttribute("account", account);
@@ -35,9 +34,7 @@ public class AccountController {
     @PostMapping("/edit")
     public String editAccount(@RequestParam("newAccountName") String newAccountName,
                               HttpSession session) {
-
         Account account = (Account) session.getAttribute("account");
-
         // If account is not found in session, throw IllegalArgumentException
         if (account != null) {
             int accountID = account.getAccountID();
@@ -48,6 +45,4 @@ public class AccountController {
             throw new IllegalArgumentException("No account found in session. Please log in.");
         }
     }
-
-
 }
