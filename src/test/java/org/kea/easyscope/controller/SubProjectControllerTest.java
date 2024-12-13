@@ -21,8 +21,6 @@ class SubProjectControllerTest {
 
     private MockHttpSession session;
 
-
-
     @Test
     public void testShowSubProjectList() throws Exception {
         session = new MockHttpSession();
