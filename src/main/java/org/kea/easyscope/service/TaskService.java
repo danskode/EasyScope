@@ -58,9 +58,4 @@ public class TaskService {
         LocalDate calculatedEndDate = taskStartDate.plusDays(daysToComplete - 1);
         return calculatedEndDate.isAfter(subProjectDeadline);
     }
-
-
-
-
-
 }

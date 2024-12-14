@@ -8,6 +8,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -25,6 +26,7 @@ public class TaskRepository {
         String sql = """
         SELECT t.task_id, t.task_name, t.task_description, t.task_is_finished, 
                t.sub_project_id_fk, 
+               t.task_start_date,
                thr.task_hours_realized, 
                the.task_hours_estimated,
                a.account_id, a.account_name AS account_name
@@ -44,6 +46,7 @@ public class TaskRepository {
             task.setTaskDescription(rs.getString("task_description"));
             task.setTaskIsFinished(rs.getBoolean("task_is_finished"));
             task.setSubProjectID(rs.getInt("sub_project_id_fk"));
+            task.setTaskStartDate(rs.getDate("task_start_date").toLocalDate());
 
             // Tilføj de enkelte kolonner for realized og estimated
             task.setRealizedHours(rs.getFloat("task_hours_realized")); // Kan være NULL
@@ -65,7 +68,7 @@ public class TaskRepository {
     public List<Task> getTasksAssignedTo(int accountID) {
         String sql = """
         SELECT t.task_id, t.task_name, t.task_description, 
-               t.task_is_finished, t.sub_project_id_fk,
+               t.task_is_finished, t.sub_project_id_fk, t.task_start_date,
                thr.task_hours_realized, 
                the.task_hours_estimated
         FROM task t
@@ -81,6 +84,7 @@ public class TaskRepository {
             task.setTaskDescription(rs.getString("task_description"));
             task.setTaskIsFinished(rs.getBoolean("task_is_finished"));
             task.setSubProjectID(rs.getInt("sub_project_id_fk"));
+            task.setTaskStartDate(rs.getDate("task_start_date").toLocalDate());
 
             // Set task hours (can be null)
             task.setRealizedHours(rs.getFloat("task_hours_realized"));
@@ -167,7 +171,7 @@ public class TaskRepository {
     // retrieves a list of finished tasks
     public List<Task> getFinishedTasks(int accountID) {
         String sql = """
-        SELECT t.task_id, t.task_name, t.task_description, t.task_is_finished,
+        SELECT t.task_id, t.task_name, t.task_description, t.task_is_finished, t.task_start_date,
                te.task_hours_estimated AS estimated_hours,
                tr.task_hours_realized AS realized_hours
         FROM task t
@@ -186,6 +190,7 @@ public class TaskRepository {
             task.setTaskIsFinished(rs.getBoolean("task_is_finished"));
             task.setEstimatedHours(rs.getFloat("estimated_hours"));
             task.setRealizedHours(rs.getFloat("realized_hours"));
+            task.setTaskStartDate(rs.getDate("task_start_date").toLocalDate());
             return task;
         });
     }
@@ -248,7 +253,6 @@ public class TaskRepository {
             return task;
         });
     }
-
 
     // Delete methods
     // delete task_id foreign key from tabels before you delete a task
