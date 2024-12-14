@@ -23,23 +23,29 @@
   <input type="hidden" name="subProjectID" th:value="${subProjectID}">
 
   <label for="taskName">Task Name:</label>
-  <input type="text" id="taskName" name="taskName" required maxlength="25">
+  <input type="text" id="taskName" name="taskName" th:value="${taskName}" required maxlength="25">
 
   <label for="taskDescription">Task Description:</label>
-  <textarea id="taskDescription" name="taskDescription" required></textarea>
+  <textarea id="taskDescription" name="taskDescription" th:text="${taskDescription}" required></textarea>
 
   <label for="teamMember">Assign to Team Member:</label>
   <select id="teamMember" name="accountID" required>
+    <option selected disabled>Choose a team member</option>
     <option th:each="member : ${teamMembers}"
             th:value="${member.accountID}"
             th:text="${member.accountName}">
     </option>
   </select>
 
-  <label for="estimatedHours">Estimated Hours:</label>
-  <input type="number" id="estimatedHours" name="estimatedHours" step="0.1" required>
+  <label for="startdate" class="deadline-container">Start date:</label>
+  <p><input type="date" id="startdate" name="taskStartDate" required/> <span style="color: #9a9898">Deadline for subproject: <span th:text="${deadline}"></span></span></p>
 
-  <button type="submit" class="button">Create Task</button>
+  <label for="estimatedHours">Estimated Hours:</label>
+  <input type="number" id="estimatedHours" name="estimatedHours" step="1" required>
+  <!-- Warning if task exceeds subproject's deadline ... -->
+  <div th:if="${errorMessage}" style="color: red;"><p th:text="${errorMessage}"></p></div>
+
+  <div><button type="submit" class="button">Create Task</button></div>
 </form>
 
   </div>

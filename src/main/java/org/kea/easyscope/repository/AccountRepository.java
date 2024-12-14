@@ -183,7 +183,7 @@ public class AccountRepository {
                 (rs, rowNum) -> {
                     Account account = new Account();
                     account.setAccountID(rs.getInt("account_id"));
-                    account.setAccountName(rs.getString("name"));
+                    account.setAccountName(rs.getString("account_name"));
                     return account;
                 });
     }

@@ -94,8 +94,8 @@ public class TaskRepository {
     public Task createNewTask(Task task, int memberID, float estimatedHours) {
 
         String insertTaskSQL = """
-            INSERT INTO task (task_name, task_description, task_is_finished, sub_project_id_fk) 
-            VALUES (?, ?, ?, ?)
+            INSERT INTO task (task_name, task_description, task_is_finished, sub_project_id_fk, task_start_date) 
+            VALUES (?, ?, ?, ?, ?)
             """;
 
         String assignTeamMemberSQL = """
@@ -124,6 +124,7 @@ public class TaskRepository {
             ps.setString(2, task.getTaskDescription());
             ps.setBoolean(3, task.isTaskIsFinished());
             ps.setInt(4, task.getSubProjectID());
+            ps.setDate(5, task.getTaskStartDate() != null ? java.sql.Date.valueOf(task.getTaskStartDate()) : null);
             return ps;
         }, keyHolder);
 
@@ -195,7 +196,7 @@ public class TaskRepository {
         // SQL statement that updates a task
         String updateTaskSQL = """
             UPDATE task
-            SET task_name = ?, task_description = ?, sub_project_id_fk = ?
+            SET task_name = ?, task_description = ?, sub_project_id_fk = ?, task_start_date = ?
             WHERE task_id = ?
             """;
 
@@ -215,7 +216,7 @@ public class TaskRepository {
 
 
         // Updates the tasks info
-        jdbcTemplate.update(updateTaskSQL, task.getTaskName(), task.getTaskDescription(), task.getSubProjectID(), task.getTaskID());
+        jdbcTemplate.update(updateTaskSQL, task.getTaskName(), task.getTaskDescription(), task.getSubProjectID(), task.getTaskStartDate(), task.getTaskID());
         // updates the team member
         jdbcTemplate.update(updateTeamMemberSQL, memberID, task.getTaskID());
         // updates estimated hours

@@ -1,5 +1,6 @@
 package org.kea.easyscope.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Task {
@@ -17,16 +18,19 @@ public class Task {
 
     private Account assignedTo;
 
+    // Give task a start date
+    private LocalDate taskStartDate;
 
 
 
-    public Task(String taskName, String taskDescription, int subProjectID, float estimatedHours, float realizedHours){
+    public Task(String taskName, String taskDescription, int subProjectID, float estimatedHours, float realizedHours, LocalDate taskStartDate) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.subProjectID = subProjectID;
         this.estimatedHours = estimatedHours;
         this.realizedHours = realizedHours;
         this.taskIsFinished = false; // a task is not finished when it just got created
+        this.taskStartDate = taskStartDate;
     }
 
     public Task(){
@@ -96,6 +100,10 @@ public class Task {
     public void setAssignedTo(Account assignedTo) {
         this.assignedTo = assignedTo;
     }
+
+    // Getter and setter for taskStartDate ...
+    public LocalDate getTaskStartDate() {return taskStartDate;}
+    public void setTaskStartDate(LocalDate taskStartDate) {this.taskStartDate = taskStartDate;}
 
     @Override
     public String toString() {
