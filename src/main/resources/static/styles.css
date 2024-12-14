@@ -430,19 +430,22 @@ form button[type="submit"]:hover {
     width: 25%;
 }
 .taskList-active-table th:nth-child(3), .taskList-active-table td:nth-child(3) {
-    width: 5%;
+    width: 7%;
 }
 .taskList-active-table th:nth-child(4), .taskList-active-table td:nth-child(4) {
     width: 7%;
 }
 .taskList-active-table th:nth-child(5), .taskList-active-table td:nth-child(5) {
-    width: 5%;
+    width: 7%;
 }
 .taskList-active-table th:nth-child(6), .taskList-active-table td:nth-child(6) {
-    width: 5%;
+    width: 7%;
 }
 .taskList-active-table th:nth-child(7), .taskList-active-table td:nth-child(7) {
-    width: 5%;
+    width: 7%;
+}
+.taskList-active-table th:nth-child(8), .taskList-active-table td:nth-child(8) {
+    width: 7%;
 }
 /* TASKLIST */
 /* COMPLETED */

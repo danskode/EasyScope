@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -59,6 +60,8 @@ public class TaskController {
 
         // Fetch tasks associated with the subProjectID
         List<Task> tasks = taskService.getTasksBySubProjectID(subProjectID);
+        // We sort the list
+        tasks.sort(Comparator.comparing(Task::getTaskEndDate, Comparator.nullsLast(Comparator.naturalOrder())));
 
         // Add tasks and subProject to the model for the view
         model.addAttribute("tasks", tasks);
@@ -314,6 +317,8 @@ public class TaskController {
 
         // Retrieve tasks assigned to the provided accountID
         List<Task> assignedTask = taskService.getTasksAssignedTo(accountID);
+        // We get the list and then we sort it by taskEndDate, so most urgent is in top ...
+        assignedTask.sort(Comparator.comparing(Task::getTaskEndDate, Comparator.nullsLast(Comparator.naturalOrder())));
 
         // Add the tasks and accountID to the model for the view
         model.addAttribute("assignedTask", assignedTask);

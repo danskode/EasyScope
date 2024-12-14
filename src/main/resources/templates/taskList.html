@@ -25,6 +25,7 @@
     <th>Task</th>
     <th>Description</th>
     <th>Status</th>
+    <th>Estimated end date</th>
     <th>Assigned to</th>
     <th>Estimated Hours</th>
     <th>Actions</th>
@@ -37,6 +38,7 @@
     <td th:text="${task.taskName}">Task</td>
     <td th:text="${task.taskDescription}">Task description</td>
     <td>Active</td>
+    <td th:text="${task.taskEndDate}"></td>
     <td th:text="${task.assignedTo != null ? task.assignedTo.accountName : 'Not assigned'}">Assigned to</td>
     <td th:text="${task.estimatedHours != 0.0 ? task.estimatedHours : 'N/A'}">Estimated hours</td>
     <td>
