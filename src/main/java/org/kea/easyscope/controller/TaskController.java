@@ -215,7 +215,6 @@ public class TaskController {
 
         // Fetch the task from the database based on taskID
         Task task = taskService.getTaskByID(taskID);
-
         if (task == null) {
             throw new IllegalArgumentException("Task not found.");
         }
@@ -270,11 +269,22 @@ public class TaskController {
         boolean exceedsDeadline = taskService.isTaskEstimatedHoursExceedingSubProjectDeadline(taskStartDate, estimatedHours, deadline);
         SubProject subProject = subProjectService.getSubProjectBySubProjectID(projectID);
 
+        // Fetch all team members, if they need to be displayed in the update form
+        List<Account> teamMembers = accountService.getAllTeamMembers();
+        // To preselect the team member who has the task now ...
+        Account selectedMember = accountService.getTeamMemberByTaskID(task.getTaskID());
+        if (selectedMember == null){
+            throw new IllegalArgumentException("No task owner found not found.");
+        }
+        int selectedMemberID = selectedMember.getAccountID();
+
         if (exceedsDeadline) {
             model.addAttribute("taskID", taskID);
             model.addAttribute("subProject", subProject);
             model.addAttribute("subProjectID", subProjectID);
             model.addAttribute("projectID", projectID);
+            model.addAttribute("teamMembers", teamMembers);
+            model.addAttribute("selectedMemberID", selectedMemberID);
             model.addAttribute("errorMessage", "Estimated hours exceed deadline of subproject!");
 
             return "updateTask";

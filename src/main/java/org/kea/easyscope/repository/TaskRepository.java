@@ -228,7 +228,7 @@ public class TaskRepository {
 
     public Task getTaskByID(int taskID) {
         String sql = """
-        SELECT t.task_id, t.task_name, t.task_description, t.task_is_finished, t.sub_project_id_fk,
+        SELECT t.task_id, t.task_name, t.task_description, t.task_is_finished, t.sub_project_id_fk, t.task_start_date,
                the.task_hours_estimated
         FROM task t
         LEFT JOIN task_hours_estimated the ON t.task_id = the.task_id_fk
@@ -242,6 +242,7 @@ public class TaskRepository {
             task.setTaskDescription(rs.getString("task_description"));
             task.setTaskIsFinished(rs.getBoolean("task_is_finished"));
             task.setSubProjectID(rs.getInt("sub_project_id_fk"));
+            task.setTaskStartDate(rs.getDate("task_start_date").toLocalDate());
             // from "mellemtabel" task_hours_estimated
             task.setEstimatedHours(rs.getFloat("task_hours_estimated"));
             return task;
