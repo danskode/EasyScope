@@ -29,7 +29,7 @@
   <textarea id="taskDescription" name="taskDescription" th:text="${taskDescription}" required></textarea>
 
   <label for="teamMember">Assign to Team Member:</label>
-  <select id="teamMember" name="accountID" required>
+  <select id="teamMember" name="accountID" required >
     <option selected disabled>Choose a team member</option>
     <option th:each="member : ${teamMembers}"
             th:value="${member.accountID}"

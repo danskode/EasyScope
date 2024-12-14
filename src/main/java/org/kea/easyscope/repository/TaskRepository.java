@@ -7,6 +7,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -92,7 +93,6 @@ public class TaskRepository {
 
     // Method to create new task and set fill out some data in task_hours_realized and task_hours_estimated ...
     public Task createNewTask(Task task, int memberID, float estimatedHours) {
-
         String insertTaskSQL = """
             INSERT INTO task (task_name, task_description, task_is_finished, sub_project_id_fk, task_start_date) 
             VALUES (?, ?, ?, ?, ?)
@@ -124,7 +124,7 @@ public class TaskRepository {
             ps.setString(2, task.getTaskDescription());
             ps.setBoolean(3, task.isTaskIsFinished());
             ps.setInt(4, task.getSubProjectID());
-            ps.setDate(5, task.getTaskStartDate() != null ? java.sql.Date.valueOf(task.getTaskStartDate()) : null);
+            ps.setDate(5, task.getTaskStartDate() != null ? java.sql.Date.valueOf(task.getTaskStartDate()) : java.sql.Date.valueOf(LocalDate.now()));
             return ps;
         }, keyHolder);
 
