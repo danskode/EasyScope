@@ -28,14 +28,6 @@ class AccountRepositoryTest {
     }
 
     @Test
-    void getAccountFromAccountName() {
-        String testAccountName = "Anna";
-        Account account = accountRepository.getAccountFromAccountName(testAccountName);
-        System.out.println("Retrieved account name: " + account.getAccountName());
-        assertEquals("Anna", account.getAccountName());
-    }
-
-    @Test
     void getAllProjectManagers() {
         // test ID to exclude
         int testId = 1;

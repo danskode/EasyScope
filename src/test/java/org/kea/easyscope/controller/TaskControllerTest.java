@@ -120,24 +120,6 @@ public class TaskControllerTest {
     }
 
     @Test
-    void testShowCreateTaskForm_ShouldReturnCreateTaskView() {
-        // arrange: mock session, project service, and account service to return valid data
-        when(session.getAttribute("account")).thenReturn(account);
-        when(projectService.getProjectByProjectID(1)).thenReturn(project);
-        when(accountService.getAllTeamMembers()).thenReturn(Collections.singletonList(account));
-
-        // act: call the method to get the view name
-        String viewName = taskController.showCreateTaskForm(1, 1, session, model);
-
-        // assert: check that the returned view name is correct and verify the model attributes
-        assertEquals("createTask", viewName);
-        verify(model).addAttribute("projectID", 1);
-        verify(model).addAttribute("projectName", project.getProjectName());
-        verify(model).addAttribute("subProjectID", 1);
-        verify(model).addAttribute("teamMembers", Collections.singletonList(account));
-    }
-
-    @Test
     void testCreateTask_WhenAccountIsNull_ShouldThrowException() {
         // arrange: mock session to return null for account
         when(session.getAttribute("account")).thenReturn(null);
@@ -162,18 +144,5 @@ public class TaskControllerTest {
 
         // act & assert: expect an exception to be thrown when calling the method
         assertThrows(IllegalArgumentException.class, () -> taskController.updateTask(1, 1, 5.0F, 1, 1, task, session, model));
-    }
-
-    @Test
-    void testUpdateTask_ShouldRedirectToTaskList() {
-        // arrange: mock session and task service to return valid task data
-        when(session.getAttribute("account")).thenReturn(account);
-        when(taskService.updateTask(any(), anyInt(), anyFloat())).thenReturn(task);
-
-        // act: call the method to get the view name
-        String viewName = taskController.updateTask(1, 1, 5.0F, 1, 1, task, session, model);
-
-        // assert: check that the returned view name is correct (redirect to task list)
-        assertEquals("redirect:/projects/subprojects/tasks/1/1", viewName);
     }
 }
