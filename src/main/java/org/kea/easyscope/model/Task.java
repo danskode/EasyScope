@@ -1,6 +1,8 @@
 package org.kea.easyscope.model;
 
-import java.util.List;
+import org.springframework.data.annotation.Transient;
+import java.time.LocalDate;
+
 
 public class Task {
 
@@ -17,16 +19,27 @@ public class Task {
 
     private Account assignedTo;
 
+    // Give task a start date
+    private LocalDate taskStartDate;
 
+    // Because it is not needed in databse, we use this annotation to use the entity on the fly when needed (hybrid approach) ...
+    @Transient
+    private LocalDate taskEndDate;
+    public LocalDate getTaskEndDate() {
+        if (taskStartDate != null && estimatedHours > 0) {
+            return taskStartDate.plusDays((long) Math.ceil((double) estimatedHours / 7));
+        }
+        return null;
+    }
 
-
-    public Task(String taskName, String taskDescription, int subProjectID, float estimatedHours, float realizedHours){
+    public Task(String taskName, String taskDescription, int subProjectID, float estimatedHours, float realizedHours, LocalDate taskStartDate) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.subProjectID = subProjectID;
         this.estimatedHours = estimatedHours;
         this.realizedHours = realizedHours;
         this.taskIsFinished = false; // a task is not finished when it just got created
+        this.taskStartDate = taskStartDate;
     }
 
     public Task(){
@@ -96,6 +109,10 @@ public class Task {
     public void setAssignedTo(Account assignedTo) {
         this.assignedTo = assignedTo;
     }
+
+    // Getter and setter for taskStartDate ...
+    public LocalDate getTaskStartDate() {return taskStartDate;}
+    public void setTaskStartDate(LocalDate taskStartDate) {this.taskStartDate = taskStartDate;}
 
     @Override
     public String toString() {

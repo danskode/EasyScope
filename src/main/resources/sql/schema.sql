@@ -37,6 +37,7 @@ create table task (
     task_name VARCHAR(100),
     task_description VARCHAR(1000),
     task_is_finished TINYINT,
+    task_start_date DATE,
     sub_project_id_fk INT,
     PRIMARY KEY (task_id),
     FOREIGN KEY (sub_project_id_fk) REFERENCES sub_project (sub_project_id)

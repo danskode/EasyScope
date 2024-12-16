@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -58,6 +60,8 @@ public class TaskController {
 
         // Fetch tasks associated with the subProjectID
         List<Task> tasks = taskService.getTasksBySubProjectID(subProjectID);
+        // We sort the list
+        tasks.sort(Comparator.comparing(Task::getTaskEndDate, Comparator.nullsLast(Comparator.naturalOrder())));
 
         // Add tasks and subProject to the model for the view
         model.addAttribute("tasks", tasks);
@@ -103,11 +107,15 @@ public class TaskController {
         }
 
         String projectName = project.getProjectName();
+        SubProject subProject = subProjectService.getSubProjectBySubProjectID(subProjectID);
+        LocalDate deadline = subProject.getSubProjectDeadline();
 
         // Add necessary data to the model
         model.addAttribute("projectID", projectID);
         model.addAttribute("projectName", projectName);
         model.addAttribute("subProjectID", subProjectID);
+        model.addAttribute("deadline", deadline);
+
 
         // Retrieve team members and add them to the model for selection in the form
         List<Account> teamMembers = accountService.getAllTeamMembers();
@@ -125,49 +133,73 @@ public class TaskController {
                              @RequestParam String taskName,
                              @RequestParam String taskDescription,
                              @RequestParam float estimatedHours,
+                             @RequestParam LocalDate taskStartDate,
+                             Model model,
                              HttpSession session) {
 
         // Retrieve the account from the ongoing session
         Account account = (Account) session.getAttribute("account");
-
         // Check if the account exists in session
         if (account == null) {
             throw new IllegalArgumentException("No account found in session. Please log in.");
         }
 
         Project project = projectService.getProjectByProjectID(projectID);
-
         if (project == null) {
             throw new IllegalArgumentException("Project not found.");
         }
 
-        // Generate taskDescription using AI
-        String aiPrompt =   "This is a task for our client " + project.getProjectName() +": Generate a short numbered list of five good advises " +
-                "to the team member that has to complete the task for the client. The task is " + taskName +" and we want to " + taskDescription +
-                ". The list must give the team member advice on how to solve the task and comply with ESG and be more efficient. " +
-                "Do not include a time estimate. Response must not be longer than 400 characters, including spaces.";
+        LocalDate deadline = subProjectService.getSubProjectBySubProjectID(subProjectID).getSubProjectDeadline();
+        boolean exceedsDeadline = taskService.isTaskEstimatedHoursExceedingSubProjectDeadline(taskStartDate, estimatedHours, deadline);
+        if (exceedsDeadline) {
 
-        String aiResponse = this.chatClient.prompt().user(aiPrompt).call().content();
+            // Add necessary data to GetMapping reload ...
+            String projectName = project.getProjectName();
+            model.addAttribute("projectName", projectName);
+            model.addAttribute("subProjectID", subProjectID);
+            model.addAttribute("projectID", projectID);
+            model.addAttribute("taskName", taskName);
+            model.addAttribute("taskDescription", taskDescription);
+            model.addAttribute("estimatedHours", estimatedHours);
+            model.addAttribute("taskStartDate", taskStartDate);
+            model.addAttribute("accountID", accountID);
+            model.addAttribute("deadline", deadline);
+            // Retrieve team members and add them to the model for selection in the form
+            List<Account> teamMembers = accountService.getAllTeamMembers();
+            model.addAttribute("teamMembers", teamMembers);
+            // Error to correct estimated hours ...
+            model.addAttribute("errorMessage", "Estimated hours exceed deadline of subproject!");
+            return "createTask";
+        } else {
+            // Generate taskDescription using AI
+            String aiPrompt = "This is a task for our client " + project.getProjectName() + ": Generate a short numbered list of five good advises " +
+                    "to the team member that has to complete the task for the client. The task is " + taskName + " and we want to " + taskDescription +
+                    ". The list must give the team member advice on how to solve the task and comply with ESG and be more efficient. " +
+                    "Do not include a time estimate. Response must not be longer than 400 characters, including spaces.";
 
-        // Enforce the length limit
-        int maxLength = 350;
-        if (aiResponse.length() > maxLength) {
-            aiResponse = aiResponse.substring(0, maxLength).trim();
+            String aiResponse = this.chatClient.prompt().user(aiPrompt).call().content();
+
+            // Enforce the length limit
+            int maxLength = 350;
+            if (aiResponse.length() > maxLength) {
+                aiResponse = aiResponse.substring(0, maxLength).trim();
+            }
+
+            taskDescription = taskDescription + "\n\nSome AI pointers to make task more ESG friendly:\n" + aiResponse;
+
+            // Create a new task object
+            Task task = new Task();
+            task.setTaskName(taskName);
+            task.setTaskDescription(taskDescription);
+            task.setSubProjectID(subProjectID);
+            task.setTaskStartDate(taskStartDate);
+
+            // Use the service to create the task and assign the team member
+            taskService.createNewTask(task, accountID, estimatedHours);
+
+            // Redirect back to the task list for the given project and subproject
+            return "redirect:/projects/subprojects/tasks/" + projectID + "/" + subProjectID;
         }
-
-        taskDescription = taskDescription + "\n\nSome AI pointers to make task more ESG friendly:\n" + aiResponse;
-
-        // Create a new task object
-        Task task = new Task();
-        task.setTaskName(taskName);
-        task.setTaskDescription(taskDescription);
-        task.setSubProjectID(subProjectID);
-
-        // Use the service to create the task and assign the team member
-        taskService.createNewTask(task, accountID, estimatedHours);
-
-        // Redirect back to the task list for the given project and subproject
-        return "redirect:/projects/subprojects/tasks/" + projectID + "/" + subProjectID;
     }
 
 
@@ -186,7 +218,6 @@ public class TaskController {
 
         // Fetch the task from the database based on taskID
         Task task = taskService.getTaskByID(taskID);
-
         if (task == null) {
             throw new IllegalArgumentException("Task not found.");
         }
@@ -200,11 +231,19 @@ public class TaskController {
 
         // Fetch all team members, if they need to be displayed in the update form
         List<Account> teamMembers = accountService.getAllTeamMembers();
+        // To preselect the team member who has the task now ...
+        Account selectedMember = accountService.getTeamMemberByTaskID(task.getTaskID());
+        if (selectedMember == null){
+            throw new IllegalArgumentException("No task owner found not found.");
+        }
+        int selectedMemberID = selectedMember.getAccountID();
 
         // Add the task, team members, and subproject to the model for the update form
         model.addAttribute("task", task);
         model.addAttribute("teamMembers", teamMembers);
         model.addAttribute("subProject", subProject);
+        model.addAttribute("subprojectDeadline", subProject.getSubProjectDeadline());
+        model.addAttribute("selectedMemberID", selectedMemberID);
 
         // Return the update task page
         return "updateTask";
@@ -218,13 +257,40 @@ public class TaskController {
                              @RequestParam int projectID,
                              @RequestParam int subProjectID,
                              @ModelAttribute Task task,
-                             HttpSession session) {
+                             HttpSession session, Model model) {
         // Retrieve the account from the ongoing session
         Account account = (Account) session.getAttribute("account");
 
         // Check if the account exists in session
         if (account == null) {
             throw new IllegalArgumentException("No account found in session. Please log in.");
+        }
+
+        LocalDate deadline = subProjectService.getSubProjectBySubProjectID(projectID).getSubProjectDeadline();
+        LocalDate taskStartDate = task.getTaskStartDate() == null ? LocalDate.now() : task.getTaskStartDate();
+
+        boolean exceedsDeadline = taskService.isTaskEstimatedHoursExceedingSubProjectDeadline(taskStartDate, estimatedHours, deadline);
+        SubProject subProject = subProjectService.getSubProjectBySubProjectID(projectID);
+
+        // Fetch all team members, if they need to be displayed in the update form
+        List<Account> teamMembers = accountService.getAllTeamMembers();
+        // To preselect the team member who has the task now ...
+        Account selectedMember = accountService.getTeamMemberByTaskID(task.getTaskID());
+        if (selectedMember == null){
+            throw new IllegalArgumentException("No task owner found not found.");
+        }
+        int selectedMemberID = selectedMember.getAccountID();
+
+        if (exceedsDeadline) {
+            model.addAttribute("taskID", taskID);
+            model.addAttribute("subProject", subProject);
+            model.addAttribute("subProjectID", subProjectID);
+            model.addAttribute("projectID", projectID);
+            model.addAttribute("teamMembers", teamMembers);
+            model.addAttribute("selectedMemberID", selectedMemberID);
+            model.addAttribute("errorMessage", "Estimated hours exceed deadline of subproject!");
+
+            return "updateTask";
         }
 
         // Set the taskID to the task object
@@ -251,6 +317,8 @@ public class TaskController {
 
         // Retrieve tasks assigned to the provided accountID
         List<Task> assignedTask = taskService.getTasksAssignedTo(accountID);
+        // We get the list and then we sort it by taskEndDate, so most urgent is in top ...
+        assignedTask.sort(Comparator.comparing(Task::getTaskEndDate, Comparator.nullsLast(Comparator.naturalOrder())));
 
         // Add the tasks and accountID to the model for the view
         model.addAttribute("assignedTask", assignedTask);

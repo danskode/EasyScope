@@ -4,6 +4,7 @@ import org.kea.easyscope.model.Task;
 import org.kea.easyscope.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -50,8 +51,11 @@ public class TaskService {
         taskRepository.deleteTask(taskID);
     }
 
-
-
-
-
+    // Check if task exceeds subproject deadline ...
+    public boolean isTaskEstimatedHoursExceedingSubProjectDeadline(LocalDate taskStartDate, float estimatedHours, LocalDate subProjectDeadline) {
+        int hoursPerDay = 7;
+        long daysToComplete = (long) Math.ceil(estimatedHours / hoursPerDay);
+        LocalDate calculatedEndDate = taskStartDate.plusDays(daysToComplete - 1);
+        return calculatedEndDate.isAfter(subProjectDeadline);
+    }
 }

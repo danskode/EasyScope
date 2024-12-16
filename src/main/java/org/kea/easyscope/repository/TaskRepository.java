@@ -7,6 +7,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -24,6 +26,7 @@ public class TaskRepository {
         String sql = """
         SELECT t.task_id, t.task_name, t.task_description, t.task_is_finished, 
                t.sub_project_id_fk, 
+               t.task_start_date,
                thr.task_hours_realized, 
                the.task_hours_estimated,
                a.account_id, a.account_name AS account_name
@@ -43,6 +46,7 @@ public class TaskRepository {
             task.setTaskDescription(rs.getString("task_description"));
             task.setTaskIsFinished(rs.getBoolean("task_is_finished"));
             task.setSubProjectID(rs.getInt("sub_project_id_fk"));
+            task.setTaskStartDate(rs.getDate("task_start_date").toLocalDate());
 
             // Tilføj de enkelte kolonner for realized og estimated
             task.setRealizedHours(rs.getFloat("task_hours_realized")); // Kan være NULL
@@ -64,7 +68,7 @@ public class TaskRepository {
     public List<Task> getTasksAssignedTo(int accountID) {
         String sql = """
         SELECT t.task_id, t.task_name, t.task_description, 
-               t.task_is_finished, t.sub_project_id_fk,
+               t.task_is_finished, t.sub_project_id_fk, t.task_start_date,
                thr.task_hours_realized, 
                the.task_hours_estimated
         FROM task t
@@ -80,6 +84,7 @@ public class TaskRepository {
             task.setTaskDescription(rs.getString("task_description"));
             task.setTaskIsFinished(rs.getBoolean("task_is_finished"));
             task.setSubProjectID(rs.getInt("sub_project_id_fk"));
+            task.setTaskStartDate(rs.getDate("task_start_date").toLocalDate());
 
             // Set task hours (can be null)
             task.setRealizedHours(rs.getFloat("task_hours_realized"));
@@ -92,10 +97,9 @@ public class TaskRepository {
 
     // Method to create new task and set fill out some data in task_hours_realized and task_hours_estimated ...
     public Task createNewTask(Task task, int memberID, float estimatedHours) {
-
         String insertTaskSQL = """
-            INSERT INTO task (task_name, task_description, task_is_finished, sub_project_id_fk) 
-            VALUES (?, ?, ?, ?)
+            INSERT INTO task (task_name, task_description, task_is_finished, sub_project_id_fk, task_start_date) 
+            VALUES (?, ?, ?, ?, ?)
             """;
 
         String assignTeamMemberSQL = """
@@ -124,6 +128,7 @@ public class TaskRepository {
             ps.setString(2, task.getTaskDescription());
             ps.setBoolean(3, task.isTaskIsFinished());
             ps.setInt(4, task.getSubProjectID());
+            ps.setDate(5, task.getTaskStartDate() != null ? java.sql.Date.valueOf(task.getTaskStartDate()) : java.sql.Date.valueOf(LocalDate.now()));
             return ps;
         }, keyHolder);
 
@@ -166,7 +171,7 @@ public class TaskRepository {
     // retrieves a list of finished tasks
     public List<Task> getFinishedTasks(int accountID) {
         String sql = """
-        SELECT t.task_id, t.task_name, t.task_description, t.task_is_finished,
+        SELECT t.task_id, t.task_name, t.task_description, t.task_is_finished, t.task_start_date,
                te.task_hours_estimated AS estimated_hours,
                tr.task_hours_realized AS realized_hours
         FROM task t
@@ -185,6 +190,7 @@ public class TaskRepository {
             task.setTaskIsFinished(rs.getBoolean("task_is_finished"));
             task.setEstimatedHours(rs.getFloat("estimated_hours"));
             task.setRealizedHours(rs.getFloat("realized_hours"));
+            task.setTaskStartDate(rs.getDate("task_start_date").toLocalDate());
             return task;
         });
     }
@@ -195,7 +201,7 @@ public class TaskRepository {
         // SQL statement that updates a task
         String updateTaskSQL = """
             UPDATE task
-            SET task_name = ?, task_description = ?, sub_project_id_fk = ?
+            SET task_name = ?, task_description = ?, sub_project_id_fk = ?, task_start_date = ?
             WHERE task_id = ?
             """;
 
@@ -215,7 +221,7 @@ public class TaskRepository {
 
 
         // Updates the tasks info
-        jdbcTemplate.update(updateTaskSQL, task.getTaskName(), task.getTaskDescription(), task.getSubProjectID(), task.getTaskID());
+        jdbcTemplate.update(updateTaskSQL, task.getTaskName(), task.getTaskDescription(), task.getSubProjectID(), task.getTaskStartDate(), task.getTaskID());
         // updates the team member
         jdbcTemplate.update(updateTeamMemberSQL, memberID, task.getTaskID());
         // updates estimated hours
@@ -227,7 +233,7 @@ public class TaskRepository {
 
     public Task getTaskByID(int taskID) {
         String sql = """
-        SELECT t.task_id, t.task_name, t.task_description, t.task_is_finished, t.sub_project_id_fk,
+        SELECT t.task_id, t.task_name, t.task_description, t.task_is_finished, t.sub_project_id_fk, t.task_start_date,
                the.task_hours_estimated
         FROM task t
         LEFT JOIN task_hours_estimated the ON t.task_id = the.task_id_fk
@@ -241,12 +247,12 @@ public class TaskRepository {
             task.setTaskDescription(rs.getString("task_description"));
             task.setTaskIsFinished(rs.getBoolean("task_is_finished"));
             task.setSubProjectID(rs.getInt("sub_project_id_fk"));
+            task.setTaskStartDate(rs.getDate("task_start_date").toLocalDate());
             // from "mellemtabel" task_hours_estimated
             task.setEstimatedHours(rs.getFloat("task_hours_estimated"));
             return task;
         });
     }
-
 
     // Delete methods
     // delete task_id foreign key from tabels before you delete a task

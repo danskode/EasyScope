@@ -18,7 +18,7 @@
 
 <h1>Update Task</h1>
 
-<!-- Formular til at opdatere task -->
+<!-- Form to update task -->
 <form th:action="@{/projects/subprojects/tasks/update}" method="post">
     <!-- Skjult felt for taskID -->
     <input type="hidden" name="taskID" th:value="*{task.taskID}" />
@@ -35,14 +35,20 @@
     <select id="teamMember" name="memberID">
         <option th:each="member : ${teamMembers}"
                 th:value="${member.accountID}"
-                th:text="${member.accountName}">
+                th:text="${member.accountName}"
+                th:selected="${member.accountID == selectedMemberID}">
         </option>
     </select>
 
-    <label for="estimatedHours">Estimated Hours:</label>
-    <input type="number" id="estimatedHours" name="estimatedHours" th:value="*{task.estimatedHours}" step="0.1" required />
+    <label for="startdate" class="deadline-container">Start date:</label>
+    <p><input type="date" id="startdate" name="taskStartDate" th:value="*{task.taskStartDate}" required/> <span style="color: #9a9898">Deadline for subproject: <span th:text="${subProject.getSubProjectDeadline()}"></span></span></p>
 
-    <button type="submit" class="button">Update Task</button>
+    <label for="estimatedHours">Estimated Hours:</label>
+    <input type="number" id="estimatedHours" name="estimatedHours" th:value="*{task.estimatedHours}" step="1" required />
+    <!-- Warning if task exceeds subproject's deadline ... -->
+    <div th:if="${errorMessage}" style="color: red;"><p th:text="${errorMessage}"></p></div>
+
+    <div><button type="submit" class="button">Update Task</button></div>
 </form>
 
     </div>

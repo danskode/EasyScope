@@ -293,11 +293,11 @@ table td:nth-child(1), table th:nth-child(1) {
 }
 
 table td:nth-child(2), table th:nth-child(2) {
-    width: 50%;
+    width: 35%;
 }
 
 table td:nth-child(3), table th:nth-child(3) {
-    width: 15%;
+    width: 10%;
 }
 
 table td:nth-child(4), table th:nth-child(4) {
@@ -427,22 +427,25 @@ form button[type="submit"]:hover {
 }
 
 .taskList-active-table th:nth-child(2), .taskList-active-table td:nth-child(2) {
-    width: 45%;
+    width: 25%;
 }
 .taskList-active-table th:nth-child(3), .taskList-active-table td:nth-child(3) {
-    width: 3%;
+    width: 7%;
 }
 .taskList-active-table th:nth-child(4), .taskList-active-table td:nth-child(4) {
-    width: 5%;
+    width: 7%;
 }
 .taskList-active-table th:nth-child(5), .taskList-active-table td:nth-child(5) {
-    width: 5%;
+    width: 7%;
 }
 .taskList-active-table th:nth-child(6), .taskList-active-table td:nth-child(6) {
-    width: 4%;
+    width: 7%;
 }
 .taskList-active-table th:nth-child(7), .taskList-active-table td:nth-child(7) {
-    width: 5%;
+    width: 7%;
+}
+.taskList-active-table th:nth-child(8), .taskList-active-table td:nth-child(8) {
+    width: 7%;
 }
 /* TASKLIST */
 /* COMPLETED */
@@ -452,10 +455,10 @@ form button[type="submit"]:hover {
 }
 
 .taskList-completed-table th:nth-child(2), .taskList-completed-table td:nth-child(2) {
-    width: 47%;
+    width: 25%;
 }
 .taskList-completed-table th:nth-child(3), .taskList-completed-table td:nth-child(3) {
-    width: 4%;
+    width: 5%;
 }
 .taskList-completed-table th:nth-child(4), .taskList-completed-table td:nth-child(4) {
     width: 7%;

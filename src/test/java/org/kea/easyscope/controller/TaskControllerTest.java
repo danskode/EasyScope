@@ -17,6 +17,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ui.Model;
 
 import jakarta.servlet.http.HttpSession;
+
+import java.time.LocalDate;
 import java.util.Collections;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -141,7 +143,7 @@ public class TaskControllerTest {
         when(session.getAttribute("account")).thenReturn(null);
 
         // act & assert: expect an exception to be thrown when calling the method
-        assertThrows(IllegalArgumentException.class, () -> taskController.createTask(1, 1, 1, "task", "description", 5, session));
+        assertThrows(IllegalArgumentException.class, () -> taskController.createTask(1, 1, 1, "task", "description", 5,  LocalDate.of(2025, 12, 24), model, session));
     }
 
     @Test
@@ -159,7 +161,7 @@ public class TaskControllerTest {
         when(session.getAttribute("account")).thenReturn(null);
 
         // act & assert: expect an exception to be thrown when calling the method
-        assertThrows(IllegalArgumentException.class, () -> taskController.updateTask(1, 1, 5, 1, 1, task, session));
+        assertThrows(IllegalArgumentException.class, () -> taskController.updateTask(1, 1, 5.0F, 1, 1, task, session, model));
     }
 
     @Test
@@ -169,7 +171,7 @@ public class TaskControllerTest {
         when(taskService.updateTask(any(), anyInt(), anyFloat())).thenReturn(task);
 
         // act: call the method to get the view name
-        String viewName = taskController.updateTask(1, 1, 5, 1, 1, task, session);
+        String viewName = taskController.updateTask(1, 1, 5.0F, 1, 1, task, session, model);
 
         // assert: check that the returned view name is correct (redirect to task list)
         assertEquals("redirect:/projects/subprojects/tasks/1/1", viewName);
