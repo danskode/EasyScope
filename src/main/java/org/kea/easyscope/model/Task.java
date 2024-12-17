@@ -20,8 +20,9 @@ public class Task {
     // Give task a start date
     private LocalDate taskStartDate;
 
-    // Because it is not needed in databse, we use this annotation to use the entity on the fly when needed (hybrid approach) ...
-    private LocalDate taskEndDate; // is used in taskList.html
+    // Because taskEndDate is not needed in database as it is calculate from other variables / data ...
+    // entries we just make a method in the model to get this to show when listing tasks ...
+    // Is in use in taskList.html
     public LocalDate getTaskEndDate() {
         if (taskStartDate != null && estimatedHours > 0) {
             return taskStartDate.plusDays((long) Math.ceil((double) estimatedHours / 7));
