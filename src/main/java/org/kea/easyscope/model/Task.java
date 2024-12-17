@@ -23,7 +23,6 @@ public class Task {
     private LocalDate taskStartDate;
 
     // Because it is not needed in databse, we use this annotation to use the entity on the fly when needed (hybrid approach) ...
-    @Transient
     private LocalDate taskEndDate;
     public LocalDate getTaskEndDate() {
         if (taskStartDate != null && estimatedHours > 0) {
