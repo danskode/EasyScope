@@ -1,8 +1,6 @@
 package org.kea.easyscope.model;
 
-import org.springframework.data.annotation.Transient;
 import java.time.LocalDate;
-
 
 public class Task {
 
@@ -23,7 +21,7 @@ public class Task {
     private LocalDate taskStartDate;
 
     // Because it is not needed in databse, we use this annotation to use the entity on the fly when needed (hybrid approach) ...
-    private LocalDate taskEndDate;
+    private LocalDate taskEndDate; // is used in taskList.html
     public LocalDate getTaskEndDate() {
         if (taskStartDate != null && estimatedHours > 0) {
             return taskStartDate.plusDays((long) Math.ceil((double) estimatedHours / 7));
