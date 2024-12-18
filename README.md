@@ -44,16 +44,16 @@ This online project calculation tool was developed as part of an assignment for 
    - Install dependencies using **Maven**.  
 
 3. **Run the Application:**
-   If you use intellij, then push the play button.
+  If you use intellij: push the play button.
 
-5. **Access the Tool:**  
+6. **Access the Tool:**  
    Open your browser and navigate to `http://localhost:8080`.  
 
 ---
 
 ### 👩‍💻 **Meet the Developers**  
 
-This project is proudly developed by **@danskode** and **@kvetny** as part of their second-semester exam project.  
+This project is proudly developed by **[@danskode](https://github.com/danskode)** and **[@kvetny](https://github.com/kvetny)** as part of our second-semester exam project.  
 
 ---
 
