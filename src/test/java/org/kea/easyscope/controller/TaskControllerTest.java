@@ -35,8 +35,6 @@ public class TaskControllerTest {
     @Mock
     private SubProjectService subProjectService; // Mock the SubProjectService dependency
     @Mock
-    private AccountService accountService;  // Mock the AccountService dependency
-    @Mock
     private ProjectService projectService;  // Mock the ProjectService dependency
     @Mock
     private Model model;                    // Mock the Model interface used for passing data to the view

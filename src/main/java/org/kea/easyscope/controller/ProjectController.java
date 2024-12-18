@@ -75,7 +75,7 @@ public class ProjectController {
         }
 
         // Initialize the project description based on the selected option
-        String projectDescription = "";
+        String projectDescription;
         if ("ai".equals(option)) {
             // Generate project description using AI
             String aiPrompt = "This is a project: Generate a concise description of our client: " + projectName +
@@ -127,14 +127,12 @@ public class ProjectController {
             throw new IllegalArgumentException("No account found in session. Please log in.");
         }
 
-        CalcService cs = calcService;
-
         // Get the list of projects associated with the logged-in account
         List<Project> projects = projectService.getProjectFromAccountID(account.getAccountID());
 
         // Add the list of projects to the model for use in HTML
         model.addAttribute("projects", projects);
-        model.addAttribute("cs", cs);
+        model.addAttribute("cs", calcService);
 
         // Return the HTML where the projects are listed
         return "projectList";
