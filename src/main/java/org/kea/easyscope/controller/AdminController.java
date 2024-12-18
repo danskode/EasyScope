@@ -20,7 +20,8 @@ public class AdminController {
     }
 
     @GetMapping(value = {"/accounts/list", "/accounts/list/"})
-    public String adminAccounts(HttpSession session, Model model) {
+    public String adminAccounts(HttpSession session,
+                                Model model) {
         // Retrieve the account from session
         Account account = (Account) session.getAttribute("account");
 
@@ -45,25 +46,6 @@ public class AdminController {
         return "admAccountList";
     }
 
-//    @GetMapping(value = {"/accounts/list", "/accounts/list/"})
-//    public String adminAccounts(HttpSession session, Model model) {
-//        Account account = (Account) session.getAttribute("account");
-//
-//        if (account != null && account.getAccountType() == Account.AccountType.ADMIN) {
-//            // Get a list of all other accounts which are not admins ...
-//            List<Account> otherAccounts = accountService.getAllNonAdminAccounts(account.getAccountID());
-//
-//            // Set thymeleaf models ...
-//            model.addAttribute("otherAccounts", otherAccounts);
-//            model.addAttribute("account", account);
-//
-//            return "admAccountList";
-//        } else {
-//            // If a visitor is not admin, send them home ...
-//            model.addAttribute("account", account);
-//            return "redirect:/";
-//        }
-//    }
 
     @GetMapping(value = {"/accounts/edit/{id}", "/accounts/edit/{id}"})
     public String adminAccounts(HttpSession session,
@@ -72,17 +54,17 @@ public class AdminController {
         Account account = (Account) session.getAttribute("account");
         Account otherAccount = accountService.getAccountFromID(id);
 
-        // Tjek om kontoen findes i sessionen
+        // does the account exist?
         if (account == null) {
             throw new IllegalArgumentException("No account found in session. Please log in.");
         }
 
-        // Tjek om brugeren er admin
+        // is the account an admin?
         if (account.getAccountType() != Account.AccountType.ADMIN) {
             throw new IllegalArgumentException("You don't have permission to edit accounts.");
         }
 
-        // Hvis den ønskede konto ikke findes
+        // if account is not found
         if (otherAccount == null) {
             throw new IllegalArgumentException("The account you are trying to edit does not exist.");
         }
@@ -112,40 +94,6 @@ public class AdminController {
         }
     }
 
-//    @GetMapping(value = {"/accounts/edit/{id}", "/accounts/edit/{id}"})
-//    public String adminAccounts(HttpSession session, Model model, @PathVariable int id) {
-//        Account account = (Account) session.getAttribute("account");
-//        Account otherAccount = accountService.getAccountFromID(id);
-//
-//        if (account != null && account.getAccountType() == Account.AccountType.ADMIN) {
-//
-//            if (otherAccount != null && otherAccount.getAccountType() == Account.AccountType.PROJECT_MANAGER) {
-//                // Get a list of project managers ..
-//                List<Account> projectManagers = accountService.getAllProjectManagers(account.getAccountID());
-//                model.addAttribute("otherAccount", otherAccount); // the account we want to edit ...
-//                model.addAttribute("account", account); // the logged in admin ...
-//                model.addAttribute("projectManagers", projectManagers); // to make a list of other project managers to give projects to ...
-//                model.addAttribute("accountType", account.getAccountType().name());  // Add accountType as a string to edit accounttype
-//                model.addAttribute("accountTypes", Account.AccountType.values());  // Add enum values for dropdown
-//                // set view ...
-//                return "admAccountEdit";
-//            } else if (otherAccount != null && otherAccount.getAccountType() == Account.AccountType.TEAM_MEMBER) {
-//                // Get a list of team members ..
-//                List<Account> teamMembers = accountService.getAllTeamMembers(otherAccount.getAccountID());
-//                model.addAttribute("otherAccount", otherAccount); // the account we want to edit ...
-//                model.addAttribute("account", account); // the logged in admin ...
-//                model.addAttribute("teamMembers", teamMembers); // to make a list of other team members to give projects to ...
-//                model.addAttribute("accountType", account.getAccountType().name());  // Add accountType as a string to edit accounttype
-//                model.addAttribute("accountTypes", Account.AccountType.values());  // Add enum values for dropdown
-//                // set view ...
-//                return "admAccountEdit";
-//            } else {
-//                return "redirect:/";
-//            }
-//        }
-//        // If a visitor is not admin, send them home ...
-//        return "redirect:/";
-//    }
 
     @GetMapping(value = {"accounts/add", "accounts/add/"})
     public String addAccount(HttpSession session,
@@ -168,18 +116,6 @@ public class AdminController {
         }
     }
 
-//    @GetMapping(value = {"accounts/add","accounts/add/" })
-//    public String addAccount(HttpSession session, Model model) {
-//        Account account = (Account) session.getAttribute("account");
-//        if (account != null && account.getAccountType() == Account.AccountType.ADMIN) {
-//            model.addAttribute("account", account);
-//            model.addAttribute("accountTypes", Account.AccountType.values());  // Add enum values for dropdown
-//            return "admAddAccount";
-//        }
-//        else {
-//            return "redirect:/";
-//        }
-//    }
 
     @PostMapping("/accounts/add")
     public String addAccount(@RequestParam("accountName") String accountName,

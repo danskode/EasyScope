@@ -35,6 +35,7 @@ public class ProjectControllerTest {
 
         // act: perform a GET request to /projects/create with the session
         mockMvc.perform(get("/projects/create").session(session))
+                // assert:
                 .andExpect(status().isOk()) // expect a 200 OK status
                 .andExpect(view().name("createProject")) // expect the view name to be "createProject"
                 .andExpect(model().attributeExists("account")); // expect that "account" exists in the model
@@ -57,6 +58,7 @@ public class ProjectControllerTest {
                         .param("manualProjectDescription", "Test description") // send the project description
                         .session(session) // include the session in the request
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)) // set content-type to form-data
+                // assert:
                 .andExpect(status().is3xxRedirection()) // expect a 3xx (redirect) status code
                 .andExpect(redirectedUrl("/projects/list")); // expect that the user is redirected to /projects/list
     }

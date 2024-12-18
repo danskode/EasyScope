@@ -43,13 +43,14 @@ create table task (
     FOREIGN KEY (sub_project_id_fk) REFERENCES sub_project (sub_project_id)
     );
 
+
 create table task_hours_realized (
 	task_hours_realized_id INT NOT NULL AUTO_INCREMENT,
     task_hours_realized FLOAT,
     task_id_fk INT,
     account_id_fk INT,
     PRIMARY KEY (task_hours_realized_id),
-    FOREIGN KEY (task_id_fk) REFERENCES task (task_id),
+    FOREIGN KEY (task_id_fk) REFERENCES task (task_id) ON DELETE CASCADE,
     FOREIGN KEY (account_id_fk) REFERENCES accounts (account_id)
     );
 
@@ -59,7 +60,7 @@ create table task_hours_estimated (
     task_id_fk INT,
     account_id_fk INT,
     PRIMARY KEY (task_hours_estimated_id),
-    FOREIGN KEY (task_id_fk) REFERENCES task (task_id),
+    FOREIGN KEY (task_id_fk) REFERENCES task (task_id) ON DELETE CASCADE,
     FOREIGN KEY (account_id_fk) REFERENCES accounts (account_id)
     );
     
@@ -69,7 +70,7 @@ create table task_member (
     task_id_fk INT,
     PRIMARY KEY (task_member_id),
     FOREIGN KEY (account_id_fk) REFERENCES accounts (account_id),
-    FOREIGN KEY (task_id_fk) REFERENCES task (task_id)
+    FOREIGN KEY (task_id_fk) REFERENCES task (task_id) ON DELETE CASCADE
     );
     
 create table sub_project_member (

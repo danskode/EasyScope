@@ -23,41 +23,43 @@ import java.util.Collections;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(MockitoExtension.class)  // Enables Mockito extension for JUnit 5
 public class TaskControllerTest {
 
+    // Mock dependencies for the TaskController class
     @InjectMocks
-    private TaskController taskController;
+    private TaskController taskController; // This creates an instance of TaskController and injects mocks into it
 
     @Mock
-    private TaskService taskService;
+    private TaskService taskService;        // Mock the TaskService dependency
     @Mock
-    private SubProjectService subProjectService;
+    private SubProjectService subProjectService; // Mock the SubProjectService dependency
     @Mock
-    private AccountService accountService;
+    private AccountService accountService;  // Mock the AccountService dependency
     @Mock
-    private ProjectService projectService;
+    private ProjectService projectService;  // Mock the ProjectService dependency
     @Mock
-    private Model model;
+    private Model model;                    // Mock the Model interface used for passing data to the view
     @Mock
-    private HttpSession session;
+    private HttpSession session;            // Mock the HttpSession used in the methods
 
-    private Account account;
-    private Project project;
-    private SubProject subProject;
-    private Task task;
+    private Account account;                // A mock account object
+    private Project project;                // A mock project object
+    private SubProject subProject;          // A mock subproject object
+    private Task task;                      // A mock task object
 
     @BeforeEach
     void setUp() {
+        // Initialize mock objects with default values before each test
         account = new Account();
         project = new Project();
         subProject = new SubProject();
         task = new Task();
-        project.setProjectID(1);
-        subProject.setSubProjectID(1);
-        task.setTaskID(1);
+        project.setProjectID(1);             // Set a project ID
+        subProject.setSubProjectID(1);       // Set a subproject ID
+        task.setTaskID(1);                   // Set a task ID
 
-        // setup session mock to return account
+        // Mock the session to return the account object when getAttribute("account") is called
         when(session.getAttribute("account")).thenReturn(account);
     }
 
@@ -68,6 +70,7 @@ public class TaskControllerTest {
 
         // act & assert: expect an exception to be thrown when calling the method
         assertThrows(IllegalArgumentException.class, () -> taskController.showTasksList(1, 1, session, model));
+        // The lambda expression '() -> taskController.showTasksList(1, 1, session, model)' is expected to throw an exception
     }
 
     @Test
@@ -104,6 +107,7 @@ public class TaskControllerTest {
 
         // assert: check that the returned view name is correct and verify the model attributes
         assertEquals("taskList", viewName);
+        // Verifying that the model attributes are correctly added
         verify(model).addAttribute("tasks", Collections.singletonList(task));
         verify(model).addAttribute("subProject", subProject);
         verify(model).addAttribute("projectID", 1);

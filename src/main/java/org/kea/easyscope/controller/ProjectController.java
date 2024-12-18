@@ -57,7 +57,6 @@ public class ProjectController {
     public String createProject(
             @RequestParam String projectName,
             @RequestParam String option, // Option: "ai" or "manual"
-            @RequestParam(required = false) String aiProjectDescription, // From AI
             @RequestParam(required = false) String manualProjectDescription, // From user
             HttpSession session) {
 
@@ -174,8 +173,7 @@ public class ProjectController {
                                 @RequestParam String projectName,
                                 @RequestParam String projectDescription,
                                 @RequestParam(value = "isFinished", defaultValue = "false") boolean isFinished,
-                                HttpSession session,
-                                Model model) {
+                                HttpSession session) {
         // retrieve the logged-in account
         Account account = (Account) session.getAttribute("account");
 

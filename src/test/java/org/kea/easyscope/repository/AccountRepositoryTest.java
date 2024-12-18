@@ -37,6 +37,7 @@ class AccountRepositoryTest {
         // Assert: Check if the result contains the expected number of project managers
         assertFalse(projectManagers.isEmpty(), "The list of project managers should not be empty");
 
+        // should print out Project Manager: Jens
         projectManagers.forEach(pm -> System.out.println("Project Manager: " + pm.getAccountName()));
     }
 }
