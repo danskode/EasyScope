@@ -26,7 +26,7 @@ class ProjectRepositoryTest {
         assertNotNull(retrievedProject, "the project should not be null.");
         assertEquals(projectID, retrievedProject.getProjectID(), "the project id should match.");
         assertEquals("Tesla", retrievedProject.getProjectName(), "the project name should match.");
-        assertEquals("the client wants an app for more republican votes", retrievedProject.getProjectDescription(), "the project description should match.");
+        assertEquals("The client wants an app for more republican votes", retrievedProject.getProjectDescription(), "the project description should match.");
         assertFalse(retrievedProject.isFinished(), "the project should not be finished.");
     }
 }
