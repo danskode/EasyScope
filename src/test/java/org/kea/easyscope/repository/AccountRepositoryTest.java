@@ -9,6 +9,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+// this is an integration test
 @SpringBootTest(properties = "spring.profiles.active=test")
 class AccountRepositoryTest {
 

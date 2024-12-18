@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/account")
+
 public class AccountController {
     private final AccountService accountService;
     public AccountController(AccountService accountService) {

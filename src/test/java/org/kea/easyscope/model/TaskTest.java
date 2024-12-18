@@ -6,9 +6,9 @@ import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+// unit test of method in Task to get at an end date on a task ...
 class TaskTest {
 
-    // Unit test of method in Task to get at an end date on a task ...
     @Test
     public void testGetTaskEndDate_WithValidInputs() {
         // Arrange
