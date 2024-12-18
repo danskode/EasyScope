@@ -5,7 +5,6 @@
     <title>Update Project</title>
     <link rel="stylesheet" href="/styles.css">
     <link rel="icon" type="image/png" href="/images/favicon.png">
-
 </head>
 <body>
 
@@ -18,12 +17,12 @@
 <div class="grid-container">
     <div class="grid-item">
 
-<h1>Update project</h1>
+<h1>Update Client</h1>
 
 <form th:action="@{/projects/update}" method="post">
     <input type="hidden" name="projectID" th:value="${project.projectID}" /> <!-- This is hidden. -->
 
-    <label for="projectName">Project Name:</label>
+    <label for="projectName">Client name:</label>
     <input type="text" id="projectName" name="projectName" th:value="${project.projectName}" required maxlength="25">
 
     <label for="projectDescription">Description:</label>

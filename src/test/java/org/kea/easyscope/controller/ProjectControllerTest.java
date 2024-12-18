@@ -44,22 +44,21 @@ public class ProjectControllerTest {
     // test to verify that creating a project works correctly
     @Test
     public void testCreateProject() throws Exception {
-        // arrange: create a new session and an account
-        session = new MockHttpSession();
-        Account account = new Account();
-        account.setAccountID(1); // set account id to 1
-        account.setAccountType(Account.AccountType.PROJECT_MANAGER); // set account type to project manager
-        session.setAttribute("account", account); // store the account in the session
+        // arrange: create a new session and add an account to it
+        session = new MockHttpSession(); // create a mock session
+        Account account = new Account(); // create a new account object
+        account.setAccountID(1); // set the account id to 1
+        account.setAccountType(Account.AccountType.PROJECT_MANAGER); // set the account type to project manager
+        session.setAttribute("account", account); // add the account object to the session
 
-        // act: perform a POST request to /projects/create with form parameters and the session
-        mockMvc.perform(post("/projects/create")
-                        .param("projectName", "Test Project") // send the project name as a parameter
-                        .param("option", "manual") // send "manual" as the option
-                        .param("manualProjectDescription", "Test description") // send the project description
-                        .session(session) // include the session in the request
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)) // set content-type to form-data
-                // assert:
-                .andExpect(status().is3xxRedirection()) // expect a 3xx (redirect) status code
-                .andExpect(redirectedUrl("/projects/list")); // expect that the user is redirected to /projects/list
+        // act: perform a post request to /projects/create with form parameters and session data
+        mockMvc.perform(post("/projects/create") // simulate a post request to the endpoint
+                        .param("projectName", "Test Project") // include project name as a form parameter
+                        .param("option", "manual") // include the option parameter with value "manual"
+                        .param("manualProjectDescription", "Test description") // include project description
+                        .session(session)) // attach the mock session to the request
+                // assert: verify the response status and redirection
+                .andExpect(status().is3xxRedirection()) // check that the status code indicates a redirect
+                .andExpect(redirectedUrl("/projects/list")); // check that the user is redirected to /projects/list
     }
 }
