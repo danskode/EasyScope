@@ -4,7 +4,9 @@
 
 EasyScope is your ultimate project planning tool, designed to help project managers streamline their workflows and gain clarity on their next big project. With EasyScope, scoping and estimating project tasks has never been easier!  
 
-This online project calculation tool was developed as part of an assignment for the **AP in Computer Science** program at **KEA** (Copenhagen School of Design and Technology).  
+This online project calculation tool was developed as part of an assignment for the **AP in Computer Science** program at **KEA** (Copenhagen School of Design and Technology).
+
+![flow](https://github.com/danskode/EasyScope/blob/main/docs/wireframes/flow.gif)
 
 ---
 
