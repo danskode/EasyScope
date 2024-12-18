@@ -1,64 +1,86 @@
 package org.kea.easyscope.controller;
 
+import jakarta.servlet.http.HttpSession;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.kea.easyscope.model.Account;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpSession;
-import org.springframework.test.web.servlet.MockMvc;
+import org.kea.easyscope.service.CalcService;
+import org.kea.easyscope.service.ProjectService;
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ui.Model;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+// unit test
+class ProjectControllerTest {
 
-// annotates the test as a Spring Boot test, using the test profile
-@SpringBootTest(properties = "spring.profiles.active=test")
-@AutoConfigureMockMvc // configures mockMvc, which is used to simulate HTTP requests
-public class ProjectControllerTest {
+    private ProjectController underTest;
+    private HttpSession mockSession;
+    private Model mockModel;
 
-    @Autowired
-    private MockMvc mockMvc; // mockMvc is used to simulate web requests
+    @BeforeEach
+    void setUp() {
+        // mock dependencies
+        ProjectService projectService = mock(ProjectService.class);
+        ChatClient chatClient = mock(ChatClient.class);
+        CalcService calcService = mock(CalcService.class);
 
-    private MockHttpSession session; // session, which we need to mock the user's session
+        // inject mocks into the controller
+        underTest = new ProjectController(projectService, chatClient, calcService);
 
-    // test to verify that the "create project" page is displayed correctly
-    @Test
-    public void testShowCreateProjectPage() throws Exception {
-        // arrange: create a new session and an account
-        session = new MockHttpSession();
-        Account account = new Account();
-        account.setAccountID(1);// set account id to 1
-        account.setAccountType(Account.AccountType.PROJECT_MANAGER);// set account type to project manager
-        session.setAttribute("account", account);// store the account in the session
-
-        // act: perform a GET request to /projects/create with the session
-        mockMvc.perform(get("/projects/create").session(session))
-                // assert:
-                .andExpect(status().isOk()) // expect a 200 OK status
-                .andExpect(view().name("createProject")) // expect the view name to be "createProject"
-                .andExpect(model().attributeExists("account")); // expect that "account" exists in the model
+        // mock session and model
+        mockSession = mock(HttpSession.class);
+        mockModel = mock(Model.class);
     }
 
-    // test to verify that creating a project works correctly
     @Test
-    public void testCreateProject() throws Exception {
-        // arrange: create a new session and add an account to it
-        session = new MockHttpSession(); // create a mock session
-        Account account = new Account(); // create a new account object
-        account.setAccountID(1); // set the account id to 1
-        account.setAccountType(Account.AccountType.PROJECT_MANAGER); // set the account type to project manager
-        session.setAttribute("account", account); // add the account object to the session
+    void showCreateProjectPage_withValidProjectManagerAccount_shouldReturnCreateProject() {
+        // arrange: create a mock project manager account
+        Account mockAccount = new Account(1, "projectManager", "password", Account.AccountType.PROJECT_MANAGER);
+        when(mockSession.getAttribute("account")).thenReturn(mockAccount);
 
-        // act: perform a post request to /projects/create with form parameters and session data
-        mockMvc.perform(post("/projects/create") // simulate a post request to the endpoint
-                        .param("projectName", "Test Project") // include project name as a form parameter
-                        .param("option", "manual") // include the option parameter with value "manual"
-                        .param("manualProjectDescription", "Test description") // include project description
-                        .session(session)) // attach the mock session to the request
-                // assert: verify the response status and redirection
-                .andExpect(status().is3xxRedirection()) // check that the status code indicates a redirect
-                .andExpect(redirectedUrl("/projects/list")); // check that the user is redirected to /projects/list
+        // act: call the method to show the create project page
+        String viewName = underTest.showCreateProjectPage(mockSession, mockModel);
+
+        // assert: verify the view name and that the account is added to the model
+        assertEquals("createProject", viewName);
+        verify(mockModel).addAttribute("account", mockAccount); // verify account added to model
+    }
+
+    @Test
+    void showCreateProjectPage_withValidAdminAccount_shouldReturnCreateProject() {
+        // arrange: create a mock admin account
+        Account mockAccount = new Account(2, "admin", "password", Account.AccountType.ADMIN);
+        when(mockSession.getAttribute("account")).thenReturn(mockAccount);
+
+        // act: call the method to show the create project page
+        String viewName = underTest.showCreateProjectPage(mockSession, mockModel);
+
+        // assert: verify the view name and that the account is added to the model
+        assertEquals("createProject", viewName);
+        verify(mockModel).addAttribute("account", mockAccount); // verify account added to model
+    }
+
+    @Test
+    void showCreateProjectPage_withNoAccountInSession_shouldThrowException() {
+        // arrange: simulate no account in session
+        when(mockSession.getAttribute("account")).thenReturn(null);
+
+        // act & assert: verify that an exception is thrown when no account is found in session
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> underTest.showCreateProjectPage(mockSession, mockModel));
+        assertEquals("No account found in session. Please log in.", exception.getMessage());
+    }
+
+    @Test
+    void showCreateProjectPage_withUnauthorizedAccount_shouldThrowException() {
+        // arrange: create a mock unauthorized account (team member)
+        Account mockAccount = new Account(3, "unauthorizedUser", "password", Account.AccountType.TEAM_MEMBER);
+        when(mockSession.getAttribute("account")).thenReturn(mockAccount);
+
+        // act & assert: verify that an exception is thrown for unauthorized account
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> underTest.showCreateProjectPage(mockSession, mockModel));
+        assertEquals("You don't have permission to create a project.", exception.getMessage());
     }
 }
