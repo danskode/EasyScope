@@ -97,7 +97,6 @@ public class CalcRepository {
                 "JOIN task t ON the.task_id_fk = t.task_id " +
                 "JOIN sub_project sp ON t.sub_project_id_fk = sp.sub_project_id " +
                 "WHERE t.sub_project_id_fk = ? AND t.task_is_finished=0";
-//                "WHERE t.sub_project_id_fk = ? AND sp.sub_project_is_finished=0 AND t.task_is_finished=0";
         //Here's a list to collect all estemated hours per task for subproject ...
         List<Float> totalHoursEstimatedOnSubProject = new ArrayList<>();
 

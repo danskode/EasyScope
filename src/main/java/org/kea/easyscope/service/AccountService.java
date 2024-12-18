@@ -30,7 +30,6 @@ public class AccountService {
         return accountRepository.getAllTeamMembers(accountID);
     }
 
-    // bliver ikke brugt?
     public Account getAccountFromID(int id) {
         return  accountRepository.getAccountFromID(id);
     }

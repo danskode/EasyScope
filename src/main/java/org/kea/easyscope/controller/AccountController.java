@@ -16,7 +16,8 @@ public class AccountController {
     }
 
     @GetMapping(value = {"/edit", "/edit/"})
-    public String showEditAccount(HttpSession session, Model model) {
+    public String showEditAccount(HttpSession session,
+                                  Model model) {
         Account account = (Account) session.getAttribute("account");
         // If account is not found in the session, throw an IllegalArgumentException
         if (account != null) {

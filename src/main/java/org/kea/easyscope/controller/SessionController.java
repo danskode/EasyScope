@@ -40,7 +40,10 @@ public class SessionController {
 
     // Then we add the postmapping method to manage the input from the form on home.html ...
     @PostMapping("/login")
-    public String loginLogic(@RequestParam String accountName, @RequestParam String accountPassword, HttpSession session, Model model, RedirectAttributes redirectAttributes){
+    public String loginLogic(@RequestParam String accountName,
+                             @RequestParam String accountPassword,
+                             HttpSession session,
+                             RedirectAttributes redirectAttributes){
         // First we find an account in our table ...
         Account account = accountService.getAccountFromAccountName(accountName);
         // And then we return it as an account object to be checked against null, name and password provided by visitor ...

@@ -1,7 +1,6 @@
 package org.kea.easyscope.repository;
 
 import org.kea.easyscope.model.SubProject;
-import org.kea.easyscope.service.CalcService;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
