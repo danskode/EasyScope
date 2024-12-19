@@ -9,7 +9,7 @@
 <body>
 
 <header>
-    <a href="/projects/list" class="back-link">Back to Projects</a>
+    <a th:href="@{/projects/subprojects/tasks/assigned(accountID=${accountID})}" class="back-link">Back to Tasks</a>
     <h1>EasyScope - time2track ...</h1>
     <a href="/logout" class="logout-btn">Logout</a>
 </header>

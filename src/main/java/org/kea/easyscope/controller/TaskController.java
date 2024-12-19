@@ -351,9 +351,24 @@ public class TaskController {
             throw new IllegalArgumentException("Task not found.");
         }
 
+        // is needed for the model, so we can go back to a list of tasks
+        int subProjectID = task.getSubProjectID();
+        // use SubProjectService to get the corresponding SubProject
+        SubProject subProject = subProjectService.getSubProjectBySubProjectID(subProjectID);
+        if (subProject == null) {
+            throw new IllegalArgumentException("SubProject not found for subProjectID: " + subProjectID);
+        }
+        int projectID = subProject.getProjectID();
+        //
+
         // Add the task and account ID to the model
         model.addAttribute("task", task);
         model.addAttribute("accountID", accountID);
+
+        // these makes it possible to go back to a list of tasks
+        model.addAttribute("projectID", projectID);
+        model.addAttribute("subProjectID", subProjectID);
+
 
         // Return the view to finish the task
         return "finishTask";
